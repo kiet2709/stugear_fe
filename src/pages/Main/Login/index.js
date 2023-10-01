@@ -4,6 +4,8 @@ import "./index.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebookF, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
+import OauthSection from "../../../components/OauthSection";
+import Divider from "../../../components/Divider";
 
 const Login = () => {
 
@@ -16,19 +18,9 @@ const Login = () => {
             <div className="row my-3 justify-content-center w-100">
                 <div className="col col-3 box-shadow px-5">
                   
-                        <div className="social mt-5  d-flex flex-row align-items-center  justify-content-lg-start">
-                            <p className="lead fw-normal mb-0 me-3">Đăng nhập với: </p>
-                            <button type="button" className="btn btn-secondary btn-floating mx-1">
-                                <FontAwesomeIcon icon={faFacebookF}/>
-                            </button>
-                            <button type="button" className="btn btn-secondary btn-floating mx-1">
-                                <FontAwesomeIcon icon={faGoogle}/>
-                            </button>
-                        </div>
-                        <div className="divider d-flex align-items-center my-4">
-                            <p className="text-center fw-bold mx-3 mb-0">Hoặc</p>
-                        </div>
-                 
+                       <OauthSection text="Đăng nhập với: "/>
+                       <Divider/>
+
 
                     <form action="#"  >
 
@@ -48,7 +40,7 @@ const Login = () => {
                                     Nhớ mật khẩu
                                 </label>
                             </div>
-                            <a href="/find-account" style={{textDecoration: 'none'}} className="text-body">Quên mật khẩu?</a>
+                            <a href="/find-account" className="text-body">Quên mật khẩu?</a>
                         </div>
 
                         <div className="my-4">

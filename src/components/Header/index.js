@@ -10,8 +10,8 @@ const Header = () => {
 
                     <div className="m-auto my-2 text-center">
                         <div className="input-group">
-                            <div className="form-outline ">
-                                <input id="search-input" placeholder="TÌm kiếm..." type="search" className="form-control" />
+                            <div className="form-outline">
+                                <input style={{width:400}} id="search-input" placeholder="TÌm kiếm..." type="search" className="form-control" />
                             </div>
                             <button id="search-button" type="button" className="btn btn-dark">
                                 <FontAwesomeIcon icon={faSearch} />
@@ -22,8 +22,8 @@ const Header = () => {
                     <div className="buttons text-center">
 
 
-                        <Link to="/login" className="btn btn-outline-dark m-2"><i className="fa fa-sign-in-alt mr-1"></i> Login</Link>
-                        <Link to="/register" className="btn btn-outline-dark m-2"><i className="fa fa-user-plus mr-1"></i> Register</Link>
+                        <Link to="/login" className="btn btn-outline-dark m-2"><i className="fa fa-sign-in-alt mr-1"></i> Đăng nhập</Link>
+                        <Link to="/register" className="btn btn-outline-dark m-2"><i className="fa fa-user-plus mr-1"></i> Đăng ký</Link>
 
                     </div>
             

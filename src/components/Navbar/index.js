@@ -1,9 +1,8 @@
 import { NavLink, Link } from "react-router-dom"
-import { faFacebookF, faGoogle, faInstagram, faGithub } from "@fortawesome/free-brands-svg-icons"
-import { faSearch } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
 import Header from "../Header/index.js"
 import "./index.css"
+import SocialContact from "../SocialContact/index.js"
 const Navbar = () => {
 
     return (
@@ -34,25 +33,11 @@ const Navbar = () => {
                             </div>
 
 
-                            <Link className="nav-item btn btn-outline-dark m-2 border-0">TÌm kiếm</Link>
+                            <Link className="nav-item btn btn-outline-dark m-2 border-0">Tìm kiếm</Link>
                         </ul>
                     </div>
 
-                    <div className="">
-
-                        <button type="button" className="btn btn-secondary btn-floating mx-1">
-                            <FontAwesomeIcon icon={faFacebookF} />
-                        </button>
-                        <button type="button" className="btn btn-secondary btn-floating mx-1">
-                            <FontAwesomeIcon icon={faGoogle} />
-                        </button>
-                        <button type="button" className="btn btn-secondary btn-floating mx-1">
-                            <FontAwesomeIcon icon={faInstagram} />
-                        </button>
-                        <button type="button" className="btn btn-secondary btn-floating mx-1">
-                            <FontAwesomeIcon icon={faGithub} />
-                        </button>
-                    </div>
+                    <SocialContact/>
                 </div>
 
 
