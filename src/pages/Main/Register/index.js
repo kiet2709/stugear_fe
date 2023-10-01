@@ -1,7 +1,5 @@
-import { Link } from "react-router-dom"
 import "./index.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebookF, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faUser, faEnvelope, faPhone, faLock } from "@fortawesome/free-solid-svg-icons";
 import OauthSection from "../../../components/OauthSection";
 import Divider from "../../../components/Divider";
