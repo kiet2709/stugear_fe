@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import { faSearch } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import useAuth from "../../hooks/useAuth"
 const Header = () => {
     return (
             <div className="container d-flex justify-content-between">

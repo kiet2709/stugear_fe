@@ -6,14 +6,53 @@ import { faFacebookF, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 import OauthSection from "../../../components/OauthSection";
 import Divider from "../../../components/Divider";
-
+import AuthService from "../../../service/AuthService";
+import useAuth from "../../../hooks/useAuth";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 const Login = () => {
 
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const handleSubmit = () => {
+    const [user, setUser] = useState({})
+    const { setAuth } = useAuth();
+    // const location = useLocation();
+    // const dispatch = useDispatch();
+    const navigate = useNavigate();
 
+    //console.log(location)
+    const handleSubmit = async (e) => {
+        e.preventDefault(); 
+        try {
+            const response = await AuthService.login(user);
+            const authUser = response?.data?.data
+            const accessToken = authUser.access_token;
+            const refreshToken = authUser.refresh_token;
+            const roles = authUser.role;
+
+            localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('refreshToken', refreshToken);
+
+            setAuth({ authUser });
+
+            //  thunk function
+            // dispatch(createAccount(userId));
+            // dispatch(getCart(userId));
+            // dispatch(getAddresses(userId));
+            // dispatch(getDeliveries());
+            navigate(roles.includes('ADMIN') ? "/admin" : "/landing-page", {
+                replace: true,
+            });
+            
+        } catch (err) {
+            // toast.error(config.message.error.login);
+            // console.log(err);
+        }
     }
+
+    const handleChange = (e) => {
+        setUser({ ...user, [e.target.name]: e.target.value })
+    }
+
     return (
             <div className="row my-3 justify-content-center w-100">
                 <div className="col col-3 box-shadow px-5">
@@ -22,15 +61,21 @@ const Login = () => {
                        <Divider/>
 
 
-                    <form action="#"  >
+                    <form onSubmit={(e) => handleSubmit(e)} >
 
                         <div className="my-3 input-group flex-nowrap">
                           <span className="input-group-text"> <FontAwesomeIcon icon={faEnvelope}/></span>
-                         <input required type="email" className="form-control" id="floatingInput" placeholder="Nhập địa chỉ email" />
+                         <input required type="email" className="form-control" id="floatingInput" placeholder="Nhập địa chỉ email" 
+                         name="email"
+                         onInput={(e) => handleChange(e)}
+                         value={user.email}/>
                         </div>
                         <div className="my-3 input-group flex-nowrap" >
                             <span className="input-group-text"> <FontAwesomeIcon icon={faLock}/></span>
-                            <input required type="password" className="form-control" id="floatingPassword" placeholder="Nhập mật khẩu" />
+                            <input required type="password" className="form-control" id="floatingPassword" placeholder="Nhập mật khẩu" 
+                            name="password"
+                            onInput={(e) => handleChange(e)}
+                            value={user.password}/>
                         </div>
 
                         <div className="d-flex justify-content-between align-items-center">

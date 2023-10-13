@@ -11,8 +11,14 @@ class AuthService {
             confirm_password: user.confirmPassword,
             first_name: user.firstName,
             last_name: user.lastName
-            
         });
+    }
+
+    login(user){
+        return axios.post(AUTH_URL + '/login', {
+            email: user.email,
+            password: user.password
+        })
     }
 }
 

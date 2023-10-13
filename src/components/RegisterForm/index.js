@@ -78,7 +78,8 @@ const RegisterForm = () => {
                                             <span className="input-group-text"> <FontAwesomeIcon icon={faUser} /></span>
                                             <input required type="text" className="form-control" placeholder="Tên đăng nhập"
                                                 name="name"
-                                                onChange={(e) => handleChange(e)} />
+                                                onChange={(e) => handleChange(e)}
+                                                value={user.name} />
                                         </div>
                                     </div>
                                     <div className="row">
@@ -86,13 +87,15 @@ const RegisterForm = () => {
                                             <span className="input-group-text"> <FontAwesomeIcon icon={faUser} /></span>
                                             <input required type="text" className="form-control" placeholder="Tên"
                                                 name="firstName"
-                                                onChange={(e) => handleChange(e)} />
+                                                onChange={(e) => handleChange(e)} 
+                                                value={user.firstName}/>
                                         </div>
                                         <div className="col my-3 input-group flex-nowrap" >
                                             <span className="input-group-text"> <FontAwesomeIcon icon={faUser} /></span>
                                             <input required type="text" className="form-control" placeholder="Họ"
                                                 name="lastName"
-                                                onChange={(e) => handleChange(e)} />
+                                                onChange={(e) => handleChange(e)} 
+                                                value={user.lastName}/>
                                         </div>
                                     </div>
                                     <div className="row">
@@ -100,7 +103,8 @@ const RegisterForm = () => {
                                             <span className="input-group-text"> <FontAwesomeIcon icon={faEnvelope} /></span>
                                             <input required type="email" className="form-control" placeholder="Email"
                                                 name="email"
-                                                onChange={(e) => handleChange(e)} />
+                                                onChange={(e) => handleChange(e)} 
+                                                value={user.email}/>
                                         </div>
 
 
@@ -111,13 +115,15 @@ const RegisterForm = () => {
                                             <span className="input-group-text"> <FontAwesomeIcon icon={faLock} /></span>
                                             <input required type="password" className="form-control" placeholder="Mật khẩu"
                                                 name="password"
-                                                onChange={(e) => handleChange(e)} />
+                                                onChange={(e) => handleChange(e)} 
+                                                value={user.password}/>
                                         </div>
                                         <div className="col my-3 input-group flex-nowrap">
                                             <span className="input-group-text"> <FontAwesomeIcon icon={faLock} /></span>
                                             <input required type="password" className="form-control" placeholder="Nhập lại mật khẩu"
                                                 name="confirmPassword"
-                                                onChange={(e) => handleChange(e)} />
+                                                onChange={(e) => handleChange(e)} 
+                                                value={user.confirmPassword}/>
                                         </div>
                                     </div>
                                     <div className="my-4">
