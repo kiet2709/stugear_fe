@@ -31,8 +31,7 @@ function useRouteElements() {
                 {
                     path: "landing-page",
                     element: <LandingPage/>
-                }
-
+                },
             ],
 
         }

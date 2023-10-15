@@ -11,7 +11,9 @@ class AuthService {
             confirm_password: user.confirmPassword,
             first_name: user.firstName,
             last_name: user.lastName
-        });
+        })
+        .then(response => response)
+        .catch(error => error?.response);
     }
 
     login(user){
@@ -19,6 +21,25 @@ class AuthService {
             email: user.email,
             password: user.password
         })
+        .then(response => response?.data?.data)
+        .catch(error => error?.response);
+    }
+
+    findUserByEmail(userEmail){
+        return axios.get(AUTH_URL + '/send-reset-password-email?email=' + userEmail)
+        .then(response => response)
+        .catch(error => error?.response);
+    }
+
+    resetPassword(resetInfo){
+        console.log(resetInfo)
+        return axios.post(AUTH_URL + '/reset-password', {
+            email: "duckhailinux@gmail.com",
+            verify_code: resetInfo.pin,
+            password: resetInfo.password
+        })
+        .then(response => response)
+        .catch(error => error?.response);
     }
 }
 

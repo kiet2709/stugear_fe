@@ -2,23 +2,56 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebookF, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 import "./index.css"
+import { useState } from 'react';
+import AuthService from '../../../service/AuthService';
+import { useNavigate } from 'react-router-dom';
+import Loading from '../../../components/Loading';
 const FindAccount = () => {
+
+    const [email, setEmail] = useState("")
+    const [loading, setLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
+    const navigator = useNavigate()
+    const handleChange = (e) => {
+        setEmail(e.target.value)
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setErrorMessage("")
+        setLoading(true)
+        const response = await AuthService.findUserByEmail(email)
+        setLoading(false)
+        if(response.status === 200){
+            navigator("/reset-password")
+        }else if(response.status === 404){
+            setErrorMessage("Không tìm thấy tài khoản với email này")
+        }
+    }
+
     return (
         <div className="row my-3 justify-content-center w-100">
             <div className="col col-3 box-shadow px-5">
-
+                
                 <div className="social mt-5 align-items-center  justify-content-lg-start">
+                    {loading && (
+                        <Loading/>
+                    )}
                     <p className="lead fw-normal mb-0 me-3">Xin chào! </p>
                     <p className="mb-0 mt-2">Hãy nhập email để lấy lại mật khẩu </p>
                 </div>
 
-                <form action="#"  >
+                <form onSubmit={(e) => handleSubmit(e)}  >
 
                     <div className="my-3 input-group flex-nowrap">
                         <span className="input-group-text"> <FontAwesomeIcon icon={faEnvelope} /></span>
-                        <input required type="email" className="form-control" id="floatingInput" placeholder="Nhập địa chỉ email" />
+                        <input required type="email" className="form-control" id="floatingInput" placeholder="Nhập địa chỉ email" 
+                        onInput={(e) => handleChange(e)}
+                        value={email}/>
                     </div>
-
+                    {errorMessage && (
+                            <div className="mt-4 alert alert-danger">{errorMessage}</div>
+                        )}
 
 
                     <div className="my-4">

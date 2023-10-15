@@ -2,7 +2,6 @@
 import Category from "../Category"
 import "./index.css"
 const CategoryList = ({categories}) => {
-    console.log(categories)
     return (
         <section id="categories" className="values">
             <div className="container" data-aos="fade-up">
