@@ -5,6 +5,7 @@ import ResetPassword from "../pages/Main/ResetPassword/index.js"
 import FindAccount from "../pages/Main/FindAccount/index.js"
 import { useRoutes } from "react-router-dom";
 import LandingPage from "../pages/Main/LandingPage/index.js"
+import Profile from "../pages/Main/Profile/index.js"
 function useRouteElements() {
 
     const routeElements = useRoutes([
@@ -32,6 +33,10 @@ function useRouteElements() {
                     path: "landing-page",
                     element: <LandingPage/>
                 },
+                {
+                    path: "profile",
+                    element: <Profile/>
+                }
             ],
 
         }
