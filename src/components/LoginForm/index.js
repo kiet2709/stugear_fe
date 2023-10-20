@@ -50,9 +50,7 @@ const LoginForm = () => {
             // dispatch(getCart(userId));
             // dispatch(getAddresses(userId));
             // dispatch(getDeliveries());
-            // navigate(roles.includes('ADMIN') ? "/admin" : "/landing-page", {
-            //     replace: true,
-            // });
+            navigate("/landing-page");
         }
        
             

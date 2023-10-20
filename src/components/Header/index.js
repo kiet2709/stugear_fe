@@ -4,8 +4,16 @@ import { faHeart, faBell } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import useAuth from "../../hooks/useAuth"
 import "./index.css"
+import { useNavigate } from "react-router-dom"
 const Header = () => {
-    const { auth } = useAuth()
+    const { auth, setAuth } = useAuth()
+    const navigate = useNavigate()
+
+    const signOut = (e) => {
+        e.preventDefault()
+        setAuth({})
+        navigate("/login")
+    }
     return (
         <div className="container d-flex justify-content-between">
             <Link to="/landing-page" style={{ maxWidth: '7%', height: 'auto' }} >
@@ -63,7 +71,7 @@ const Header = () => {
                                 <li><Link className="dropdown-item" to="/profile">Trang cá nhân</Link></li>
                                 <li><Link className="dropdown-item" to="/settings">Cài đặt</Link></li>
                                 <li><hr className="dropdown-divider bg-white" /></li>
-                                <li><Link className="dropdown-item" to="/logout">Đăng xuất</Link></li>
+                                <li><button className="dropdown-item" onClick={(e) => signOut(e)}>Đăng xuất</button></li>
                             </ul>
                         </div>
 
