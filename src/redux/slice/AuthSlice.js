@@ -1,0 +1,18 @@
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+const authSlice = createSlice({
+    name: 'account',
+    initialState: {
+        status: 'idle',
+        account: {},
+    },
+    reducers: {
+        createAccount: (state, action) => {
+            console.log(state);
+        },
+        clearedAccount: (state, action) => {
+            state.account = action.payload;
+        },
+    },
+});
+export default authSlice;
