@@ -11,6 +11,7 @@ import Contact from "../pages/Main/Contact/index.js"
 import HomePage from "../pages/Main/HomePage/index.js"
 import ProductPage from "../pages/Main/ProductPage/ProductPage.js"
 import HomeLayout from "../layouts/HomeLayout/HomeLayout.js"
+import ProductLayout from "../layouts/ProductLayout/ProductLayout.js"
 function useRouteElements() {
 
     const routeElements = useRoutes([
@@ -19,12 +20,18 @@ function useRouteElements() {
             element: <HomeLayout/>,
             children: [
                 {
-                    path: "product-detail",
-                    element: <ProductPage/>
-                },
-                {
                     path: "home-page",
                     element: <HomePage/>
+                },
+            ]
+        },
+        {
+            path: "",
+            element: <ProductLayout/>,
+            children: [
+                {
+                    path: "product-detail",
+                    element: <ProductPage/>
                 },
             ]
         },

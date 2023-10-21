@@ -10,18 +10,22 @@ import { Button, Container, InputGroup, Nav, Navbar } from "react-bootstrap";
 import useAuth from "../../hooks/useAuth";
 import UserHeader from "../UserHeader";
 
-const Header = () => {
+const Header = ({ sticky }) => {
   const { auth } = useAuth();
+
   const [isSticky, setSticky] = useState(false);
-  console.log(auth)
+  console.log(auth);
+
   useEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 50) {
-        setSticky(true);
-      } else {
-        setSticky(false);
-      }
-    });
+    if (sticky === true) {
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          setSticky(true);
+        } else {
+          setSticky(false);
+        }
+      });
+    }
   }, []);
 
   return (
@@ -79,7 +83,6 @@ const Header = () => {
                   <Link to="/login">
                     <button className="authBtn">Đăng nhập</button>
                   </Link>
-
                 </div>
               )}
             </Nav.Item>

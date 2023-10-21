@@ -5,8 +5,8 @@ const SideBar = ({categories}) => {
 
   return (
     <>
-      <nav className="sidebar card  bounceInDown">
-        <ul>
+      <nav className="sidebar card sticky-top   ">
+        <ul >
           <SubMenu category={{
             name: "Tất cả"
           }} />

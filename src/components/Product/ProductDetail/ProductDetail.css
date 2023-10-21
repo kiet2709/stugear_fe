@@ -1,0 +1,24 @@
+#product-title {
+    font-family: 'Segoe UI';
+    color: #8E44AD;
+    font-weight: 900;
+}
+
+.middle-image {
+    max-width: 100px;
+}
+
+
+.info-row {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  
+  .info-key {
+    flex: 1;
+    font-weight: bold;
+  }
+  
+  .info-value {
+    flex: 3;
+  }

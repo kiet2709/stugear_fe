@@ -1,13 +1,12 @@
 import { Outlet } from "react-router";
 
-import "./HomeLayout.css";
+import "./ProductLayout.css";
 import { Container } from "react-bootstrap";
-import ForumTitle from "../../components/Home/ForumTitle/ForumTitle";
 import SideBar from "../../components/SideBar/SideBar";
 
 import Footer from "../../components/Footer/Footer"
 import Header from "../../components/Header"
-const HomeLayout = () => {
+const ProductLayout = () => {
   const categories = [
     {
       id: 1,
@@ -27,7 +26,7 @@ const HomeLayout = () => {
     <>
       <Header sticky={false}/>
       <Container>
-        <ForumTitle />
+      
         
         <div className="row">
           <div className="col-2 ">
@@ -42,4 +41,4 @@ const HomeLayout = () => {
     </>
   );
 };
-export default HomeLayout;
+export default ProductLayout;

@@ -12,23 +12,16 @@ const Categories = () => {
     },
   ];
 
-  const statistic = [
+
+
+  const statistic = 
     {
       id: 1,
-      quantity: 2643,
-      name: "Tổng cộng",
-    },
-    {
-      id: 2,
-      quantity: 1200,
-      name: "Đã trao đổi",
-    },
-    {
-      id: 3,
-      quantity: 128,
-      name: "Thể loại",
-    },
-  ];
+      total: 2643,
+      sold: 1200,
+      tag_total: 128
+    };
+
   return (
     <>
       {/* <CategoryFilter categories={categories}/> */}
@@ -37,14 +30,10 @@ const Categories = () => {
 
         <hr className="bg-dark my-3"></hr>
         <CategoryHero />
-        {statistic.map((item) => (
-          <>
-            <div className="category-statistic mt-3 ">
-              <CategoryStatistic item={item} />
-            </div>
-            <span className="vertical-line"></span >
-          </>
-        ))}
+        <CategoryStatistic item={statistic} />
+         
+          
+  
         <div className="my-4 category-filter">
           <CategoryFilter/>
         </div>
