@@ -8,7 +8,7 @@ const MainLayout =() => {
         <>
             
             <Header/>
-            <div className="body py-5">
+            <div className="body">
                 <Outlet/>
             </div>
             <Footer/>

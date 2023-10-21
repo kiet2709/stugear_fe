@@ -1,11 +1,11 @@
 import SubMenu from "./SubMenu";
-
+import "./SideBar.css"
 const SideBar = ({categories}) => {
 
 
   return (
     <>
-      <nav className="animated card bounceInDown">
+      <nav className="sidebar card  bounceInDown">
         <ul>
           <SubMenu category={{
             name: "Tất cả"

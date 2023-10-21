@@ -24,7 +24,7 @@ const HomePage = () => {
     <Container>
         <ForumTitle />
       <div className="row">
-        <div className="col-3">
+        <div className="col-2">
           <SideBar categories={categories}/>
         </div>
         <div className="col">
