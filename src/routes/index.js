@@ -9,10 +9,26 @@ import Profile from "../pages/Main/Profile/index.js"
 import Info from "../pages/Main/Info/index.js"
 import Contact from "../pages/Main/Contact/index.js"
 import HomePage from "../pages/Main/HomePage/index.js"
+import ProductPage from "../pages/Main/ProductPage/ProductPage.js"
+import HomeLayout from "../layouts/HomeLayout/HomeLayout.js"
 function useRouteElements() {
 
     const routeElements = useRoutes([
         {
+            path: "",
+            element: <HomeLayout/>,
+            children: [
+                {
+                    path: "product-detail",
+                    element: <ProductPage/>
+                },
+                {
+                    path: "home-page",
+                    element: <HomePage/>
+                },
+            ]
+        },
+        {  
             path: "",
             element: <MainLayout />,
             children: [
@@ -36,10 +52,7 @@ function useRouteElements() {
                     path: "landing-page",
                     element: <LandingPage/>
                 },
-                {
-                    path: "home-page",
-                    element: <HomePage/>
-                },
+
                 {
                     path: "profile",
                     element: <Profile/>
@@ -52,6 +65,7 @@ function useRouteElements() {
                     path: "contact",
                     element: <Contact/>
                 },
+      
 
             ],
 

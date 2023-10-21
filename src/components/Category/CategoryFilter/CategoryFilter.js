@@ -1,48 +1,89 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button } from "react-bootstrap";
-import { faBookmark } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 import "./CategoryFilter.css";
-const CategoryFilter = ({categories}) => {
-  const getRandomColor = () => {
-    const letters = "0123456789ABCDEF";
-    let color = "#";
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSort } from "@fortawesome/free-solid-svg-icons";
+const CategoryFilter = () => {
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleRadioChange = (event) => {
+    setSelectedOption(event.target.value);
   };
 
-  
   return (
     <>
-      <div className="dropdown col">
-        <Button
-          className="btn dropdown-toggle"
-          id="profileDropdown"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          Tất cả danh mục
-        </Button>
+      <div className="row">
+        <div className="col-10">
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="exampleRadios"
+              id="inlineRadio1"
+              value="option1"
+              checked={selectedOption === "option1"}
+              onChange={handleRadioChange}
+            />
+            <label className="form-check-label" htmlFor="inlineRadio1">
+              Tự do
+            </label>
+          </div>
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="exampleRadios"
+              id="inlineRadio2"
+              value="option2"
+              checked={selectedOption === "option2"}
+              onChange={handleRadioChange}
+            />
+            <label className="form-check-label" htmlFor="inlineRadio2">
+              Qua website
+            </label>
+          </div>
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="exampleRadios"
+              id="inlineRadio3"
+              value="option3"
+              checked={selectedOption === "option3"}
+              onChange={handleRadioChange}
+            />
+            <label className="form-check-label" htmlFor="inlineRadio3">
+              Tùy chọn
+            </label>
+          </div>
+        </div>
+        <div className="col ms-auto">
+          <div className="dropdown col">
+            <button
+              className="btn dropdown-toggle text-white"
+              id="dropdown"
+              data-bs-toggle="dropdown"
+            >
+              Sắp xếp
+            </button>
 
-        <ul
-          className="dropdown-menu  mt-2 text-center"
-          aria-labelledby="profileDropdown"
-        >
-          <li className="dropdown-item">Tất cả danh mục</li>
-          <li>
-            <hr className="dropdown-divider bg-white" />
-          </li>
-          {categories.map((item) => (
-            <li className="dropdown-item">
-              <FontAwesomeIcon
-                icon={faBookmark}
-                style={{ color: getRandomColor(), marginRight: "8px" }}
-              />
-              {item.name}
-            </li>
-          ))}
-        </ul>
+            <ul
+              className="dropdown-menu dropdown-menu-dark mt-2"
+              aria-labelledby="dropdown"
+            >
+              <li>
+                <button className="dropdown-item">
+                  <FontAwesomeIcon icon={faSort} /> Ngày đăng
+                </button>
+              </li>
+              <li>
+                <button className="dropdown-item">
+                  <FontAwesomeIcon icon={faSort} /> Giá bán
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </>
   );

@@ -4,7 +4,7 @@ import './ForumTitle.css';
 const ForumTitle = () => {
   return (
     <>
-      <h1 className="colorful-title">
+      <h1 className="colorful-title my-4">
         <span className="char-s">S</span>
         <span className="char-t">t</span>
         <span className="char-u">u</span>
@@ -19,7 +19,6 @@ const ForumTitle = () => {
         <span className="char-m">m</span>
         <span className="char-s">s</span>
       </h1>
-      <hr className="bg-dark my-4"></hr>
     </>
   )
 }

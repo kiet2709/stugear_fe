@@ -17,23 +17,9 @@ const HomePage = () => {
     {
       id: 3,
       name: "Khác",
-    }
-
+    },
   ];
-  return (
-    <Container>
-        <ForumTitle />
-      <div className="row">
-        <div className="col-2">
-          <SideBar categories={categories}/>
-        </div>
-        <div className="col">
-          
-          <Categories />
-        </div>
-      </div>
-    </Container>
-  );
+  return <Categories />;
 };
 
 export default HomePage;

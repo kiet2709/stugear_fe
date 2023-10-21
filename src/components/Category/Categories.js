@@ -1,8 +1,9 @@
-import CategoryCard from "./CategoryCard/CategoryCard";
+
 import CategoryFilter from "./CategoryFilter/CategoryFilter";
 import "./Categories.css";
 import CategoryHero from "./CategoryHero/CategoryHero";
 import CategoryStatistic from "./CategoryStatistic/CategoryStatistic";
+import Products from "../Product/Products";
 const Categories = () => {
   const categories = [
     {
@@ -38,18 +39,17 @@ const Categories = () => {
         <CategoryHero />
         {statistic.map((item) => (
           <>
-            <div className="category-statistic  my-3 ">
+            <div className="category-statistic mt-3 ">
               <CategoryStatistic item={item} />
-              
             </div>
             <span className="vertical-line"></span >
-            
-            
-            
           </>
         ))}
+        <div className="my-4 category-filter">
+          <CategoryFilter/>
+        </div>
         {categories.map((item) => (
-          <CategoryCard key={item.id} category={item} />
+          <Products key={item.id} category={item} />
         ))}
       </div>
     </>

@@ -30,3 +30,7 @@
     border-right: 2px solid #7355F7;
     height: 100%;
 }
+
+.category-filter {
+    margin-left: 20px;
+}

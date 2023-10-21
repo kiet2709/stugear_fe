@@ -10,10 +10,10 @@ import { Button, Container, InputGroup, Nav, Navbar } from "react-bootstrap";
 import useAuth from "../../hooks/useAuth";
 import UserHeader from "../UserHeader";
 
-const TempHeader = () => {
+const Header = () => {
   const { auth } = useAuth();
   const [isSticky, setSticky] = useState(false);
-
+  console.log(auth)
   useEffect(() => {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 50) {
@@ -70,7 +70,7 @@ const TempHeader = () => {
               </Link>
             </Nav.Item>
             <Nav.Item>
-              {auth.acces_token ? (
+              {auth.access_token ? (
                 <div>
                   <UserHeader />
                 </div>
@@ -90,4 +90,4 @@ const TempHeader = () => {
   );
 };
 
-export default TempHeader;
+export default Header;
