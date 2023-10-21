@@ -5,12 +5,14 @@
   font-family: sans-serif;
 }
 
-.body {
+#root {
   background-color: #F7F7F8;
 }
 
-:root {
-  --primary-bg: rgb(248, 242, 209);
-  --primary-text: #707070;
-  --secondary-text: #1b2647;
+.btn {
+  background-color: #7355F7;
+}
+
+.btn:hover {
+  background-color: #4F29F5;
 }

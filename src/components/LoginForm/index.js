@@ -1,16 +1,12 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
 import "./index.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebookF, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 import OauthSection from "../../components/OauthSection";
 import Divider from "../../components/Divider";
 import AuthService from "../../service/AuthService";
 import useAuth from "../../hooks/useAuth"
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import Loading from "../Loading";
 
 
@@ -39,7 +35,7 @@ const LoginForm = () => {
         }else{
             const accessToken = response.access_token;
             const refreshToken = response.refresh_token;
-            const roles = response.role;
+            //const roles = response.role;
     
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('refreshToken', refreshToken);
@@ -103,7 +99,7 @@ const LoginForm = () => {
 
                         <div className="my-4">
                         <button className="btn btn-dark text-white w-100 ">Đăng nhập</button>
-                            <p class="small fw-bold mt-2 pt-1 mb-0">Chưa có tài khoản?
+                            <p className="small fw-bold mt-2 pt-1 mb-0">Chưa có tài khoản?
                             <a href="/register" className="link-danger"> Đăng ký</a></p>
                         </div>
 
@@ -115,8 +111,8 @@ const LoginForm = () => {
                 </div>
                 <div className="col col-3 text-center">
                     <h1>Hãy đăng nhập</h1>
-                    <p class="font-italic text-muted mb-0">Đăng nhập tài khoản của bạn tại đây</p>
-                    <img src="assets/images/login.gif" alt="Image" className="img-fluid" />
+                    <p className="font-italic text-muted mb-0">Đăng nhập tài khoản của bạn tại đây</p>
+                    <img src="assets/images/login.gif" className="img-fluid" alt="" />
                     
                 </div>
             </div>

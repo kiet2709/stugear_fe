@@ -6,6 +6,9 @@ import FindAccount from "../pages/Main/FindAccount/index.js"
 import { useRoutes } from "react-router-dom";
 import LandingPage from "../pages/Main/LandingPage/index.js"
 import Profile from "../pages/Main/Profile/index.js"
+import Info from "../pages/Main/Info/index.js"
+import Contact from "../pages/Main/Contact/index.js"
+import HomePage from "../pages/Main/HomePage/index.js"
 function useRouteElements() {
 
     const routeElements = useRoutes([
@@ -34,9 +37,22 @@ function useRouteElements() {
                     element: <LandingPage/>
                 },
                 {
+                    path: "home-page",
+                    element: <HomePage/>
+                },
+                {
                     path: "profile",
                     element: <Profile/>
-                }
+                },
+                {
+                    path: "info",
+                    element: <Info/>
+                },
+                {
+                    path: "contact",
+                    element: <Contact/>
+                },
+
             ],
 
         }
