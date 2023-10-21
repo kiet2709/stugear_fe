@@ -1,10 +1,17 @@
-import "./Feedback.css"
+import Comments from "./CommentSection/CommentList";
+import "./Feedback.css";
+import LeaveComment from "./LeaveComment/LeaveComment";
+import RatingSection from "./RatingSection/RatingSection";
 const Feedback = () => {
-    return (
-        <>
-        <p>Feed back here</p>
-        </>
-    )
-}
+  return (
+    <>
+      <hr className="my-5"></hr>
 
-export default Feedback
+      <RatingSection />
+      <LeaveComment/>
+      <Comments />
+    </>
+  );
+};
+
+export default Feedback;

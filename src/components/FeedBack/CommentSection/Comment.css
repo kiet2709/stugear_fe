@@ -1,0 +1,47 @@
+
+.img-sm {
+    width: 46px;
+    height: 46px;
+}
+
+
+.panel-body {
+    padding: 10px 20px;
+}
+
+
+.media-block .media-left {
+    display: block;
+    float: left
+}
+
+
+
+.media-block .media-body {
+    display: block;
+    overflow: hidden;
+    width: auto;
+    margin-left: 20px;
+}
+
+
+
+
+.btn-reply {
+    background-color: #2ECC71 !important;
+    margin-left: 5px;
+}
+
+.btn-like {
+    background-color: white !important;
+    margin-right: 5px;
+}
+
+.btn-unlike {
+    background-color: white !important;
+}
+
+.btn-submit {
+    margin-left: 90%;
+}
+

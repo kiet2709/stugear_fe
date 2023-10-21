@@ -26,12 +26,14 @@ const HomeLayout = () => {
   return (
     <>
       <Header sticky={false}/>
+
       <Container>
         <ForumTitle />
         
         <div className="row">
           <div className="col-2 ">
             <SideBar categories={categories} />
+            
           </div>
           <div className="col content">
             <Outlet />

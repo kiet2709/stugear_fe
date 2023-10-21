@@ -16,6 +16,9 @@ const SideBar = ({categories}) => {
           ))}
         </ul>
       </nav>
+
+   
+      
     </>
   );
 };

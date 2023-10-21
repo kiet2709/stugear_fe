@@ -2,6 +2,7 @@ import ChatSection from "../../../components/ChatSection/ChatSection";
 import Feedback from "../../../components/FeedBack/Feedback";
 import ProductDetail from "../../../components/Product/ProductDetail/ProductDetail";
 import RelateProduct from "../../../components/RelateProduct/RelateProduct";
+import "./ProductPage.css"
 
 const ProductPage = () => {
   const product = {
@@ -60,6 +61,33 @@ const ProductPage = () => {
       tags: [
         { name: "Self-help", color: "bg-primary" },
         { name: "Motivation", color: "bg-info" },
+      ],
+    },
+    {
+      id: 6,
+      title: "Voluptate velit esse cillum dolore eu fugiat nulla pariatur",
+      price: "40,000 VNĐ",
+      tags: [
+        { name: "Fantasy", color: "bg-success" },
+        { name: "Magic", color: "bg-warning" },
+      ],
+    },
+    {
+      id: 7,
+      title: "Duis aute irure dolor in reprehenderit",
+      price: "22,000 VNĐ",
+      tags: [
+        { name: "Romance", color: "bg-danger" },
+        { name: "Love", color: "bg-light" },
+      ],
+    },
+    {
+      id: 8,
+      title: "Ut enim ad minim veniam, quis nostrud exercitation ullamco",
+      price: "33,000 VNĐ",
+      tags: [
+        { name: "Philosophy", color: "bg-primary" },
+        { name: "Wisdom", color: "bg-secondary" },
       ],
     },
   ];
