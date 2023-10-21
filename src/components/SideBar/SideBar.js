@@ -1,22 +1,22 @@
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, InputGroup } from "react-bootstrap";
+import SubMenu from "./SubMenu";
 
-const SideBar = () => {
+const SideBar = ({categories}) => {
+
+
   return (
     <>
-      <div class="card">
-        <div class="card-header">Featured</div>
-        <div class="card-body">
-          <table class="table">
-            <tbody>
-              <p>ạhdsfdjiwahb</p>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <nav className="animated card bounceInDown">
+        <ul>
+          <SubMenu category={{
+            name: "Tất cả"
+          }} />
+          {categories.map(item => (
+            
+          <SubMenu key={item.id} category={item} />
+          ))}
+        </ul>
+      </nav>
     </>
   );
 };
-
 export default SideBar;

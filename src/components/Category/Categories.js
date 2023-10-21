@@ -1,5 +1,5 @@
 import CategoryCard from "./CategoryCard/CategoryCard";
-import CategoryFilter from "./CategoryFiler/CategoryFilter";
+import CategoryFilter from "./CategoryFilter/CategoryFilter";
 
 const Categories = () => {
     const categories = [

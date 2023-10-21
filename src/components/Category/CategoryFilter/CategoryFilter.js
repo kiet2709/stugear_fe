@@ -38,7 +38,7 @@ const CategoryFilter = ({categories}) => {
               <FontAwesomeIcon
                 icon={faBookmark}
                 style={{ color: getRandomColor(), marginRight: "8px" }}
-              />{" "}
+              />
               {item.name}
             </li>
           ))}
