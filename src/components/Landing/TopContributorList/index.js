@@ -48,7 +48,7 @@ const TopContributorList = () => {
                 <div className="row mt-5 gy-4">
                     {
                         contributors.map(user => (
-                            <TopContributor contributor={user}/>
+                            <TopContributor key={user.id} contributor={user}/>
                         ))
                     }
                     

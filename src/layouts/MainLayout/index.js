@@ -1,12 +1,14 @@
-import Navbar from "../../components/Navbar"
-import Footer from "../../components/Footer"
-import { Outlet } from "react-router"
 
+import Footer from "../../components/Footer/Footer"
+import { Outlet } from "react-router"
+import Header from "../../components/Header"
+import "./index.css"
 const MainLayout =() => {
     return (
         <>
-            <Navbar/>
-            <div className="body py-5">
+            
+            <Header sticky={true    }/>
+            <div className="body">
                 <Outlet/>
             </div>
             <Footer/>

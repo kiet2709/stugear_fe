@@ -1,14 +1,12 @@
 import "./index.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faEnvelope, faLock, faAv } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 import OauthSection from "../OauthSection";
 import Divider from "../../components/Divider";
 import { useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
 import AuthService from "../../service/AuthService";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading/index";
-import { CSpinner } from "@coreui/react";
 
 const RegisterForm = () => {
 
@@ -70,8 +68,8 @@ const RegisterForm = () => {
                 <div className="col col-4 text-center">
 
                     <h1>Hãy tạo tài khoản {loading}</h1>
-                    <p class="font-italic text-muted mb-0">Nhập thông tin để tạo tài khoản của bạn</p>
-                    <img src="assets/images/register.gif" alt="Image" className="img-fluid" />
+                    <p className="font-italic text-muted mb-0">Nhập thông tin để tạo tài khoản của bạn</p>
+                    <img src="assets/images/register.gif" alt="" className="img-fluid" />
 
 
                 </div>
@@ -86,7 +84,7 @@ const RegisterForm = () => {
                     <OauthSection text="Đăng ký với: " />
                     <Divider />
 
-                    <form action="#" onSubmit={(e) => handleSubmit(e)}>
+                    <form  onSubmit={(e) => handleSubmit(e)}>
                         <div className="row">
                             <div className="col my-3 input-group flex-nowrap">
                                 <span className="input-group-text"> <FontAwesomeIcon icon={faUser} /></span>
@@ -158,7 +156,7 @@ const RegisterForm = () => {
                         )}
                         <div className="my-4">
                             <button className="btn btn-dark text-white w-100 ">Đăng ký</button>
-                            <p class="small fw-bold mt-2 pt-1 mb-0">Đã có tài khoản?
+                            <p className="small fw-bold mt-2 pt-1 mb-0">Đã có tài khoản?
                                 <a href="/login" className="link-danger"> Đăng nhập</a></p>
                         </div>
                     </form>
