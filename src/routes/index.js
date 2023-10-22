@@ -12,6 +12,7 @@ import HomePage from "../pages/Main/HomePage/index.js"
 import ProductPage from "../pages/Main/ProductPage/ProductPage.js"
 import HomeLayout from "../layouts/HomeLayout/HomeLayout.js"
 import ProductLayout from "../layouts/ProductLayout/ProductLayout.js"
+import SearchPage from "../pages/Main/SearchPage/SearchPage.js"
 function useRouteElements() {
 
     const routeElements = useRoutes([
@@ -72,7 +73,10 @@ function useRouteElements() {
                     path: "contact",
                     element: <Contact/>
                 },
-      
+                {
+                    path: "search",
+                    element: <SearchPage/>
+                }
 
             ],
 

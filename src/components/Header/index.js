@@ -9,11 +9,12 @@ import { useEffect } from "react";
 import { Button, Container, InputGroup, Nav, Navbar } from "react-bootstrap";
 import useAuth from "../../hooks/useAuth";
 import UserHeader from "../UserHeader";
-
+import { useNavigate } from "react-router-dom";
 const Header = ({ sticky }) => {
   const { auth } = useAuth();
-
   const [isSticky, setSticky] = useState(false);
+  const [searchValue, setSearchValue] = useState("")
+  const naviage = useNavigate()
   console.log(auth);
 
   useEffect(() => {
@@ -28,6 +29,13 @@ const Header = ({ sticky }) => {
     }
   }, []);
 
+  const handleSearch =() => {
+    naviage("/search?name="+searchValue)
+  }
+
+  const hanldeChange =(e) => {
+    setSearchValue(e.target.value)
+  }
   return (
     <Navbar
       className={`navbar navbar-expand-lg navbar-light ${
@@ -51,9 +59,11 @@ const Header = ({ sticky }) => {
                 placeholder="Tìm kiếm..."
                 type="search"
                 className="form-control"
+                value={searchValue}
+                onChange={(e) => hanldeChange(e)}
               />
               <Button id="search-button">
-                <FontAwesomeIcon icon={faSearch} id="search-icon" />
+                <FontAwesomeIcon icon={faSearch} id="search-icon" onClick={() => handleSearch()} />
               </Button>
             </InputGroup>
           </Nav.Item>
