@@ -5,6 +5,7 @@ const Info = () => {
   return (
     <Container>
       <p>Info</p>
+      
     </Container>
   );
 };

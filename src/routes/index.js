@@ -21,7 +21,7 @@ function useRouteElements() {
             element: <HomeLayout/>,
             children: [
                 {
-                    path: "home-page",
+                    path: "/home-page/category/:slug",
                     element: <HomePage/>
                 },
             ]

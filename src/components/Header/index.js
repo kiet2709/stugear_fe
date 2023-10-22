@@ -69,7 +69,7 @@ const Header = ({ sticky }) => {
           </Nav.Item>
           <Nav className="ms-auto mainNav">
             <Nav.Item>
-              <Link to="/home-page" className="nav-link">
+              <Link to="/home-page/category/all" className="nav-link">
                 Trang chủ
               </Link>
             </Nav.Item>

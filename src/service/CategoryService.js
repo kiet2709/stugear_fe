@@ -5,6 +5,20 @@ class CategoryService {
 
     getAllCategories(user){
         return axios.get(CATEGORY_URL)
+        .then(response => response?.data?.data)
+        .catch(error => error?.response);
+    }
+
+    getCategoriesById(id){
+        return axios.get(CATEGORY_URL+ `/${id}`)
+        .then(response => response?.data?.data)
+        .catch(error => error?.response);
+    }
+
+    getStatisticByCategoryId(id){
+        return axios.get(CATEGORY_URL + `/${id}/statistic-by-category`)
+        .then(response => response?.data?.data)
+        .catch(error => error?.response);
     }
 }
 
