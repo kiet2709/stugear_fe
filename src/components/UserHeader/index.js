@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faAddressCard } from "@fortawesome/free-regular-svg-icons";
 const UserHeader = () => {
   const { auth } = useAuth();
-  console.log(auth);
   const [show, setShow] = useState(false);
   const [target, setTarget] = useState(null);
   const ref = useRef(null);

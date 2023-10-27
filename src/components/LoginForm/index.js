@@ -16,10 +16,7 @@ const LoginForm = () => {
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState("")
-    // const location = useLocation();
-    // const dispatch = useDispatch();
     const navigate = useNavigate();
-    //console.log(location)
     const handleSubmit = async (e) => {
         e.preventDefault(); 
         setError(false)
@@ -35,18 +32,27 @@ const LoginForm = () => {
         }else{
             const accessToken = response.access_token;
             const refreshToken = response.refresh_token;
-            //const roles = response.role;
+            const userId = response.user_id;
+            const username = response.username
+            const roles = response.roles;
     
-            localStorage.setItem('accessToken', accessToken);
-            localStorage.setItem('refreshToken', refreshToken);
-    
+            localStorage.setItem('access_token', accessToken);
+            localStorage.setItem('refresh_token', refreshToken);
+            localStorage.setItem('user_id', userId);
+            localStorage.setItem('username', username);
+            localStorage.setItem('roles', roles);
             setAuth(response);
             //  thunk function
             // dispatch(createAccount(userId));
             // dispatch(getCart(userId));
             // dispatch(getAddresses(userId));
             // dispatch(getDeliveries());
-            navigate("/landing-page");
+            if(roles.includes("ADMIN")){
+                navigate("/admin")
+            }else{
+                navigate("/landing-page");
+            }
+
         }
        
             

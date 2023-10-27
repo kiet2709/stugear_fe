@@ -11,11 +11,11 @@ import useAuth from "../../hooks/useAuth";
 import UserHeader from "../UserHeader";
 import { useNavigate } from "react-router-dom";
 const Header = ({ sticky }) => {
-  const { auth } = useAuth();
+  const user_id = localStorage.getItem('user_id');
   const [isSticky, setSticky] = useState(false);
   const [searchValue, setSearchValue] = useState("")
   const naviage = useNavigate()
-  console.log(auth);
+ 
 
   useEffect(() => {
     if (sticky === true) {
@@ -84,7 +84,7 @@ const Header = ({ sticky }) => {
               </Link>
             </Nav.Item>
             <Nav.Item>
-              {auth.access_token ? (
+              {user_id ? (
                 <div>
                   <UserHeader />
                 </div>
