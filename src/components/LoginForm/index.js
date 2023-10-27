@@ -10,31 +10,54 @@ import { useNavigate } from 'react-router-dom'
 import Loading from '../Loading'
 
 const LoginForm = () => {
-  const [user, setUser] = useState({})
-  const { setAuth } = useAuth()
-  const [error, setError] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState('')
-  // const location = useLocation();
-  // const dispatch = useDispatch();
-  const navigate = useNavigate()
-  // console.log(location)
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError(false)
-    setLoading(true)
-    const response = await AuthService.login(user)
-    setLoading(false)
-    if (response.status === 401) {
-      setMessage('Mật khẩu không đúng ')
-      setError(true)
-    } else if (response.status === 500) {
-      setMessage('Email chưa được đăng ký')
-      setError(true)
-    } else {
-      const accessToken = response.access_token
-      const refreshToken = response.refresh_token
-      // const roles = response.role;
+
+    const [user, setUser] = useState({})
+    const { setAuth } = useAuth();
+    const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [message, setMessage] = useState("")
+    const navigate = useNavigate();
+    const handleSubmit = async (e) => {
+        e.preventDefault(); 
+        setError(false)
+        setLoading(true)
+        const response = await AuthService.login(user)
+        setLoading(false)
+        if(response.status === 401){
+            setMessage("Mật khẩu không đúng ")
+            setError(true)
+        }else if(response.status === 500){
+            setMessage("Email chưa được đăng ký")
+            setError(true)
+        }else{
+            const accessToken = response.access_token;
+            const refreshToken = response.refresh_token;
+            const userId = response.user_id;
+            const username = response.username
+            const roles = response.roles;
+    
+            localStorage.setItem('access_token', accessToken);
+            localStorage.setItem('refresh_token', refreshToken);
+            localStorage.setItem('user_id', userId);
+            localStorage.setItem('username', username);
+            localStorage.setItem('roles', roles);
+            setAuth(response);
+            //  thunk function
+            // dispatch(createAccount(userId));
+            // dispatch(getCart(userId));
+            // dispatch(getAddresses(userId));
+            // dispatch(getDeliveries());
+            if(roles.includes("ADMIN")){
+                navigate("/admin")
+            }else{
+                navigate("/landing-page");
+            }
+
+        }
+       
+            
+    }
+
 
       localStorage.setItem('accessToken', accessToken)
       localStorage.setItem('refreshToken', refreshToken)

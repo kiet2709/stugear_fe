@@ -1,6 +1,8 @@
 import axios from 'axios'
 
-const AUTH_URL = 'http://127.0.0.1:8000/api/auth'
+
+const AUTH_URL = 'http://127.0.0.1:8000/api/auth';
+
 class AuthService {
   register (user) {
     return axios.post(AUTH_URL + '/register', {

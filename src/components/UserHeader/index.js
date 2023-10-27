@@ -7,11 +7,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faAddressCard } from '@fortawesome/free-regular-svg-icons'
 import { Overlay } from 'react-bootstrap'
 const UserHeader = () => {
-  const { auth } = useAuth()
-  console.log(auth)
-  const [show, setShow] = useState(false)
-  const [target, setTarget] = useState(null)
-  const ref = useRef(null)
+
+  const { auth } = useAuth();
+  const [show, setShow] = useState(false);
+  const [target, setTarget] = useState(null);
+  const ref = useRef(null);
+
   const handleClick = (event) => {
     setShow(!show)
     setTarget(event.target)

@@ -10,11 +10,13 @@ import useAuth from '../../hooks/useAuth'
 import UserHeader from '../UserHeader'
 
 const Header = ({ sticky }) => {
-  const { auth } = useAuth()
-  const [isSticky, setSticky] = useState(false)
-  const [searchValue, setSearchValue] = useState('')
+
+  const user_id = localStorage.getItem('user_id');
+  const [isSticky, setSticky] = useState(false);
+  const [searchValue, setSearchValue] = useState("")
   const naviage = useNavigate()
-  console.log(auth)
+  const { auth } = useAuth()
+
 
   useEffect(() => {
     if (sticky === true) {
@@ -83,8 +85,9 @@ const Header = ({ sticky }) => {
               </Link>
             </Nav.Item>
             <Nav.Item>
-              {auth.access_token
-                ? (
+
+              {user_id ? (
+
                 <div>
                   <UserHeader />
                 </div>
