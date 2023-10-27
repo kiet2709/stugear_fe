@@ -29,7 +29,8 @@ const Categories = ({ category }) => {
 
   return (
     <>
-      {/* <CategoryFilter categories={categories}/> */}
+
+
       <div className="category">
         <h1 id="category-title">{category.name}</h1>
         <hr className="bg-dark my-3"></hr>

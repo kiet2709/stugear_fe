@@ -18,6 +18,8 @@ const Header = ({ sticky }) => {
   console.log(auth);
 
   useEffect(() => {
+
+  
     if (sticky === true) {
       window.addEventListener("scroll", () => {
         if (window.scrollY > 50) {

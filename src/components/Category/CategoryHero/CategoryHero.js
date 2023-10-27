@@ -4,7 +4,7 @@ import "./CategoryHero.css"
 const CategoryHero = ({category}) => {
     return (
         <div className="category-hero">
-            <img  src="assets/images/book-hero.jpg" alt="Category Hero" className="category-hero-image" />
+            <img  src="/assets/images/book-hero.jpg" alt="Category Hero" className="category-hero-image" />
             <div className="category-hero-search">
                 <CategorySearch />
             </div>

@@ -3,7 +3,7 @@ import axios from 'axios';
 const CATEGORY_URL = 'http://127.0.0.1:8000/api/categories';
 class CategoryService {
 
-    getAllCategories(user){
+    getAllCategories(){
         return axios.get(CATEGORY_URL)
         .then(response => response?.data?.data)
         .catch(error => error?.response);
@@ -16,7 +16,7 @@ class CategoryService {
     }
 
     getStatisticByCategoryId(id){
-        return axios.get(CATEGORY_URL + `/${id}/statistic-by-category`)
+        return axios.get(CATEGORY_URL + `/${id}/statistic`)
         .then(response => response?.data?.data)
         .catch(error => error?.response);
     }

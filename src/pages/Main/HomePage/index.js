@@ -40,6 +40,7 @@ const HomePage = () => {
   
       <>
 
+    
         {categories.map(category => (
             <Categories key={category.id} category={category}/>
         ))}
