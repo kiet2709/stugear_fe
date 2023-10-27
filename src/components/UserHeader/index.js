@@ -1,24 +1,22 @@
-import React from "react";
-import { useState } from "react";
-import { useRef } from "react";
-import { Button, Overlay } from "react-bootstrap";
-import Popover from "react-bootstrap/Popover";
-import "./index.css";
-import useAuth from "../../hooks/useAuth";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faAddressCard } from "@fortawesome/free-regular-svg-icons";
+import React, { useState, useRef } from 'react'
+import Popover from 'react-bootstrap/Popover'
+import './index.css'
+import useAuth from '../../hooks/useAuth'
+import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart, faAddressCard } from '@fortawesome/free-regular-svg-icons'
+import { Overlay } from 'react-bootstrap'
 const UserHeader = () => {
-  const { auth } = useAuth();
-  console.log(auth);
-  const [show, setShow] = useState(false);
-  const [target, setTarget] = useState(null);
-  const ref = useRef(null);
+  const { auth } = useAuth()
+  console.log(auth)
+  const [show, setShow] = useState(false)
+  const [target, setTarget] = useState(null)
+  const ref = useRef(null)
   const handleClick = (event) => {
-    setShow(!show);
-    setTarget(event.target);
-  };
-  const signOut = () => {};
+    setShow(!show)
+    setTarget(event.target)
+  }
+  const signOut = () => {}
   return (
     <>
       <img
@@ -45,17 +43,16 @@ const UserHeader = () => {
               <Link className="link" to="/wishlist">
                <FontAwesomeIcon icon={faHeart}/> Yêu thích</Link>
             </li>
-         
+
               <hr className="bg-dark" />
-        
-         
+
               <button className="btn text-white" onClick={(e) => signOut(e)}>Đăng xuất</button>
-        
+
           </ul>
         </Popover>
       </Overlay>
     </>
-  );
-};
+  )
+}
 
-export default UserHeader;
+export default UserHeader

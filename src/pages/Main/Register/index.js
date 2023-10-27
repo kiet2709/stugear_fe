@@ -1,10 +1,10 @@
-import "./index.css"
-import RegisterForm from "../../../components/RegisterForm";
+import './index.css'
+import RegisterForm from '../../../components/RegisterForm'
 
 const Register = () => {
-    return (
+  return (
        <RegisterForm/>
-    )
+  )
 }
 
 export default Register

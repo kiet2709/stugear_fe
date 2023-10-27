@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
-import "./Products.css";
-import Product from "./Product";
-import ProductService from "../../service/ProductService";
+import { useEffect, useState } from 'react'
+import './Products.css'
+import Product from './Product'
+import ProductService from '../../service/ProductService'
 
 const Products = ({ category }) => {
-  const [products, setProducts] = useState([{}]);
+  const [products, setProducts] = useState([{}])
 
   useEffect(() => {
     const getProducts = async () => {
-      const response = await ProductService.getProductsByCategoryId(category.id);
+      const response = await ProductService.getProductsByCategoryId(category.id)
       if (response?.status === 500) {
-        console.log("Products: Something went wrong");
+        console.log('Products: Something went wrong')
       } else {
-        setProducts(response);
+        setProducts(response)
       }
-    };
-  
-    getProducts();
-  }, []);
+    }
+
+    getProducts()
+  }, [])
 
   return (
     <div>
@@ -28,8 +28,8 @@ const Products = ({ category }) => {
           ))}
         </tbody>
       </table>
- 
+
     </div>
-  );
-};
-export default Products;
+  )
+}
+export default Products

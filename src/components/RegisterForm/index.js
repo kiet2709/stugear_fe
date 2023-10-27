@@ -1,67 +1,64 @@
-import "./index.css"
+import './index.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
-import OauthSection from "../OauthSection";
-import Divider from "../../components/Divider";
-import { useState } from "react";
-import AuthService from "../../service/AuthService";
-import { useNavigate } from "react-router-dom";
-import Loading from "../../components/Loading/index";
+import { faUser, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons'
+import OauthSection from '../OauthSection'
+import Divider from '../../components/Divider'
+import { useState } from 'react'
+import AuthService from '../../service/AuthService'
+import { useNavigate } from 'react-router-dom'
+import Loading from '../../components/Loading/index'
 
 const RegisterForm = () => {
+  const [error, setError] = useState({})
+  const [loading, setLoading] = useState(false)
 
-    const [error, setError] = useState({})
-    const [loading, setLoading] = useState(false);
+  const navigate = useNavigate()
+  const handleChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value })
+  }
 
-    const navigate = useNavigate()
-    const handleChange = (e) => {
-        setUser({ ...user, [e.target.name]: e.target.value })
-    }
+  const [user, setUser] = useState({
+    name: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  })
 
-    const [user, setUser] = useState({
-        name: "",
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
+  const handleCheckPassword = () => {
+    return user.password === user.confirmPassword
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError({
     })
+    if (handleCheckPassword()) {
+      setLoading(true)
+      const response = await AuthService.register(user)
+      setLoading(false)
 
-    const handleCheckPassword = () => {
-        return user.password === user.confirmPassword ? true : false;
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+      if (response.status === 400) {
+        console.log(response)
         setError({
+          field: Object.keys(response?.data?.error)[0],
+          message: Object.values(response?.data?.error)[0]
         })
-        if (handleCheckPassword()) {
+      } else if (response.status === 200) {
+        navigate('/login')
+      } else {
+        console.log(response)
+      }
+    } else {
+      setError({
+        field: 'confirmPassword',
+        message: 'Mật khẩu xác nhận không khớp'
+      })
+    }
+  }
 
-            setLoading(true);
-            const response = await AuthService.register(user);
-            setLoading(false);
-            
-            if (response.status === 400) {
-                console.log(response)
-                setError({
-                    field: Object.keys(response?.data?.error)[0],
-                    message: Object.values(response?.data?.error)[0]
-                })
-            } else if (response.status === 200) {
-                navigate('/login');
-            }else{
-                console.log(response)
-            }
-        } else {
-            setError({
-                field: "confirmPassword",
-                message: "Mật khẩu xác nhận không khớp"
-            })
-        }
-
-    };
-
-    return (
+  return (
         <>
 
             <div className="row my-3 justify-content-center w-100">
@@ -70,7 +67,6 @@ const RegisterForm = () => {
                     <h1>Hãy tạo tài khoản {loading}</h1>
                     <p className="font-italic text-muted mb-0">Nhập thông tin để tạo tài khoản của bạn</p>
                     <img src="assets/images/register.gif" alt="" className="img-fluid" />
-
 
                 </div>
                 <div className="col col-1">
@@ -84,7 +80,7 @@ const RegisterForm = () => {
                     <OauthSection text="Đăng ký với: " />
                     <Divider />
 
-                    <form  onSubmit={(e) => handleSubmit(e)}>
+                    <form onSubmit={(e) => handleSubmit(e)}>
                         <div className="row">
                             <div className="col my-3 input-group flex-nowrap">
                                 <span className="input-group-text"> <FontAwesomeIcon icon={faUser} /></span>
@@ -94,7 +90,7 @@ const RegisterForm = () => {
                                     value={user.name} />
                             </div>
                         </div>
-                        {error.field === "name" && (
+                        {error.field === 'name' && (
                             <div className="alert alert-danger">{error.message}</div>
                         )}
                         <div className="row">
@@ -113,10 +109,10 @@ const RegisterForm = () => {
                                     value={user.lastName} />
                             </div>
                         </div>
-                        {error.field === "firstName" && (
+                        {error.field === 'firstName' && (
                             <div className="alert alert-danger">{error.message}</div>
                         )}
-                        {error.field === "lastName" && (
+                        {error.field === 'lastName' && (
                             <div className="alert alert-danger">{error.message}</div>
                         )}
                         <div className="row">
@@ -128,7 +124,7 @@ const RegisterForm = () => {
                                     value={user.email} />
                             </div>
                         </div>
-                        {error.field === "email" && (
+                        {error.field === 'email' && (
                             <div className="alert alert-danger">{error.message}</div>
                         )}
 
@@ -148,10 +144,10 @@ const RegisterForm = () => {
                                     value={user.confirmPassword} />
                             </div>
                         </div>
-                        {error.field === "confirmPassword" && (
+                        {error.field === 'confirmPassword' && (
                             <div className="alert alert-danger">{error.message}</div>
                         )}
-                        {error.field === "password" && (
+                        {error.field === 'password' && (
                             <div className="alert alert-danger">{error.message}</div>
                         )}
                         <div className="my-4">
@@ -161,15 +157,12 @@ const RegisterForm = () => {
                         </div>
                     </form>
 
-
-
                 </div>
             </div>
 
         </>
 
-
-    )
+  )
 }
 
 export default RegisterForm

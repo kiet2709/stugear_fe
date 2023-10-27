@@ -1,12 +1,10 @@
-import SubMenu from "./SubMenu";
-import "./SideBar.css";
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import SubMenu from './SubMenu'
+import './SideBar.css'
+import { useParams } from 'react-router-dom'
 const SideBar = ({ categories }) => {
-  let { slug } = useParams();
+  const { slug } = useParams()
 
-  const [isSell, setSell] = useState(false);
-  const [isBuy, setBuy] = useState(false);
+
 
   console.log(slug)
 
@@ -14,13 +12,15 @@ const SideBar = ({ categories }) => {
     <>
       <nav className="sidebar card sticky-top   ">
         <ul>
-          {slug === "all" ? (
+          {slug === 'all'
+            ? (
             <>
               <SubMenu
                 buyActive={true}
                 sellActive={false}
+                isAll={true}
                 category={{
-                  name: "Tất cả",
+                  name: 'Tất cả'
                 }}
               />
 
@@ -33,14 +33,16 @@ const SideBar = ({ categories }) => {
                 />
               ))}
             </>
-          ) : (
+              )
+            : (
 
             <>
             <SubMenu
                 buyActive={false}
                 sellActive={false}
+                isAll={true}
                 category={{
-                  name: "Tất cả",
+                  name: 'Tất cả'
                 }}
               />
 
@@ -53,11 +55,11 @@ const SideBar = ({ categories }) => {
               />
             ))}
             </>
-           
-          )}
+
+              )}
         </ul>
       </nav>
     </>
-  );
-};
-export default SideBar;
+  )
+}
+export default SideBar

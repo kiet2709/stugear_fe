@@ -1,9 +1,9 @@
-import "./CategorySearch.css"
-import { faSearch } from "@fortawesome/free-solid-svg-icons"
-import { InputGroup,Button } from "react-bootstrap"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import './CategorySearch.css'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { InputGroup, Button } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const CategorySearch = () => {
-    return (
+  return (
         <>
         <InputGroup className="form-outline" id="search-group">
               <input
@@ -18,7 +18,7 @@ const CategorySearch = () => {
             </InputGroup>
 
         </>
-    )
+  )
 }
 
 export default CategorySearch

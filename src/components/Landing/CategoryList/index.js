@@ -1,8 +1,7 @@
-
-import Category from "../Category"
-import "./index.css"
-const CategoryList = ({categories}) => {
-    return (
+import Category from '../Category'
+import './index.css'
+const CategoryList = ({ categories }) => {
+  return (
         <section id="categories" className="values">
             <div className="container" data-aos="fade-up">
                 <header className="section-header text-center">
@@ -15,13 +14,12 @@ const CategoryList = ({categories}) => {
                             <Category key={item.id} category={item}/>
                         ))
                     }
-                    
-                </div>
 
+                </div>
 
             </div>
         </section>
-    )
+  )
 }
 
 export default CategoryList

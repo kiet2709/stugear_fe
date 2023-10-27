@@ -1,11 +1,10 @@
-import { NavLink, Link } from "react-router-dom"
+import { NavLink, Link } from 'react-router-dom'
 
-import Header from "../Header/index.js"
-import "./index.css"
-import SocialContact from "../SocialContact/index.js"
+import Header from '../Header/index.js'
+import './index.css'
+import SocialContact from '../SocialContact/index.js'
 const Navbar = () => {
-
-    return (
+  return (
         <div >
             <div style={{ backgroundColor: '#F1F3F7' }} className="py-3 border-bottom">
                 <Header />
@@ -19,9 +18,9 @@ const Navbar = () => {
                             <div className="collapse navbar-collapse" id="navbarNavDarkDropdown">
                                 <ul className="navbar-nav">
                                     <li className="nav-item dropdown">
-                                        
-                                        <span className="dropdown-toggle btn btn-outline-dark m-2 border-0"  id="navbarDarkDropdownMenuLink"  data-bs-toggle="dropdown" aria-expanded="false">
-                                           Danh mục 
+
+                                        <span className="dropdown-toggle btn btn-outline-dark m-2 border-0" id="navbarDarkDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                           Danh mục
                                         </span>
                                         <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                                             <Link className="dropdown-item btn btn-outline-dark border-0">Sách</Link>
@@ -32,7 +31,6 @@ const Navbar = () => {
                                 </ul>
                             </div>
 
-
                             <Link className="nav-item btn btn-outline-dark m-2 border-0">Tìm kiếm</Link>
                         </ul>
                     </div>
@@ -40,12 +38,10 @@ const Navbar = () => {
                     <SocialContact/>
                 </div>
 
-
             </nav>
         </div>
 
-
-    )
+  )
 }
 
 export default Navbar

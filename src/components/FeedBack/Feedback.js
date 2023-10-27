@@ -1,7 +1,7 @@
-import Comments from "./CommentSection/CommentList";
-import "./Feedback.css";
-import LeaveComment from "./LeaveComment/LeaveComment";
-import RatingSection from "./RatingSection/RatingSection";
+import Comments from './CommentSection/CommentList'
+import './Feedback.css'
+import LeaveComment from './LeaveComment/LeaveComment'
+import RatingSection from './RatingSection/RatingSection'
 const Feedback = () => {
   return (
     <>
@@ -11,7 +11,7 @@ const Feedback = () => {
       <LeaveComment/>
       <Comments />
     </>
-  );
-};
+  )
+}
 
-export default Feedback;
+export default Feedback

@@ -1,17 +1,15 @@
-import "./Comment.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons";
-import { faGlobe, faMobile, faPencil } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import './Comment.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faThumbsDown, faThumbsUp } from '@fortawesome/free-regular-svg-icons'
+import { faGlobe, faMobile, faPencil } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'react-router-dom'
+import { useState } from 'react'
 const Comment = ({ children, comment, isSubComment }) => {
-
-  
-  const [showReplyInput, setShowReplyInput] = useState(false);
+  const [showReplyInput, setShowReplyInput] = useState(false)
 
   const handleReplyClick = () => {
-    setShowReplyInput(!showReplyInput);
-  };
+    setShowReplyInput(!showReplyInput)
+  }
 
   return (
     <>
@@ -41,7 +39,7 @@ const Comment = ({ children, comment, isSubComment }) => {
                      Trả lời
                    </button>
             )}
-           
+
           </div>
           <hr />
           {showReplyInput && (
@@ -64,7 +62,7 @@ const Comment = ({ children, comment, isSubComment }) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Comment;
+export default Comment

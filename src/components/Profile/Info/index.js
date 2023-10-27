@@ -1,16 +1,16 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { faBirthdayCake, faGlobe, faAddressCard, faSchool } from "@fortawesome/free-solid-svg-icons";
-import { faFacebookF, faGoogle, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import { faBirthdayCake, faGlobe, faAddressCard, faSchool } from '@fortawesome/free-solid-svg-icons'
+import { faFacebookF, faGoogle, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 const Info = () => {
-    return (
+  return (
         <div id="account-info">
             <div id="account-social-links">
                 <div className="card-body pb-2">
                     <form>
 
                       <h4 className="font-weight-bold pl-4">Địa chỉ</h4>
-                       
+
                       <div className="row">
                             <div className="col my-3 input-group flex-nowrap">
                                 <span className="input-group-text"> <FontAwesomeIcon icon={faAddressCard} /></span>
@@ -46,12 +46,11 @@ const Info = () => {
                                     name="facebook"
                                 />
                             </div>
-                            
+
                         </div>
 
-
                         <hr className="border-dark m-3" />
-                      
+
                             <h4 className="font-weight-bold pl-4">Mạng xã hội</h4>
 
                         <div className="row">
@@ -86,7 +85,7 @@ const Info = () => {
                 </div>
             </div>
         </div>
-    )
+  )
 }
 
 export default Info

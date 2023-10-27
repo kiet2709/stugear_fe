@@ -1,52 +1,55 @@
-import { Container } from "react-bootstrap";
-import "./index.css";
-import ForumTitle from "../../../components/Home/ForumTitle/ForumTitle";
-import Categories from "../../../components/Category/Categories";
-import SideBar from "../../../components/SideBar/SideBar";
-import { useParams } from "react-router";
-import { useState } from "react";
-import { useEffect } from "react";
-import CategoryService from "../../../service/CategoryService";
+import './index.css'
+import Categories from '../../../components/Category/Categories'
+import { useParams } from 'react-router'
+import { useState, useEffect } from 'react'
 
+import CategoryService from '../../../service/CategoryService'
+import Loading from '../../../components/Loading'
 
 const HomePage = () => {
-
-  const [categories, setCategories] = useState([]);
-  let { slug } = useParams();
+  const [categories, setCategories] = useState([])
+  const [isLoading, setLoading] = useState(true)
+  const { slug } = useParams()
 
   useEffect(() => {
     const loadData = async () => {
-      if (slug !== "all") {
-        const response = await CategoryService.getCategoriesById(slug);
+      setLoading(true)
+      if (slug !== 'all') {
+        const response = await CategoryService.getCategoriesById(slug)
 
         if (response?.status === 500) {
-          console.log("Something wentwrong");
+          console.log('Something wentwrong')
         } else {
-          setCategories([response]);
+          setCategories([response])
         }
       } else {
-        const response = await CategoryService.getAllCategories();
+        const response = await CategoryService.getAllCategories()
         if (response?.status === 500) {
-          console.log("Something wentwrong");
+          console.log('Something wentwrong')
         } else {
-          setCategories(response);
+          setCategories(response)
         }
       }
-    };                   
-    loadData();
-  }, []);
+      setLoading(false)
+    }
+    loadData()
+  }, [slug])
 
   return (
-  
-      <>
-
-    
-        {categories.map(category => (
-            <Categories key={category.id} category={category}/>
-        ))}
-
-      </>
+    <>
+      {isLoading
+        ? (
+        <Loading />
+          )
+        : (
+        <>
+          {categories.map((category) => (
+            <Categories key={category.id} category={category} />
+          ))}
+        </>
+          )}
+    </>
   )
-};
+}
 
-export default HomePage;
+export default HomePage

@@ -1,10 +1,8 @@
-import "./ProductDetail.css";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import './ProductDetail.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
-const ProductDetail = ({product}) => {
- 
+const ProductDetail = ({ product }) => {
   return (
     <div>
       <div className="text-center mb-5">
@@ -48,7 +46,7 @@ const ProductDetail = ({product}) => {
           <div className="info-value">
             {product.transactionMethods.map((method, index) => (
               <div key={index} className=" mb-3">
-                <FontAwesomeIcon icon={faCheck} className="check-icon" />{" "}
+                <FontAwesomeIcon icon={faCheck} className="check-icon" />{' '}
                 {method}
               </div>
             ))}
@@ -56,7 +54,7 @@ const ProductDetail = ({product}) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProductDetail;
+export default ProductDetail

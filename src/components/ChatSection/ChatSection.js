@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import "./ChatSection.css";
+import './ChatSection.css'
 
 const ChatSection = ({ product }) => {
   return (
@@ -24,7 +23,7 @@ const ChatSection = ({ product }) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ChatSection;
+export default ChatSection

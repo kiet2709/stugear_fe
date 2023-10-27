@@ -1,14 +1,14 @@
-import { useState } from "react";
-import "./CategoryFilter.css";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSort } from "@fortawesome/free-solid-svg-icons";
+import { useState } from 'react'
+import './CategoryFilter.css'
+import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSort } from '@fortawesome/free-solid-svg-icons'
 const CategoryFilter = () => {
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState('')
 
   const handleRadioChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
+    setSelectedOption(event.target.value)
+  }
 
   return (
     <>
@@ -21,7 +21,7 @@ const CategoryFilter = () => {
               name="exampleRadios"
               id="inlineRadio1"
               value="option1"
-              checked={selectedOption === "option1"}
+              checked={selectedOption === 'option1'}
               onChange={handleRadioChange}
             />
             <label className="form-check-label" htmlFor="inlineRadio1">
@@ -35,7 +35,7 @@ const CategoryFilter = () => {
               name="exampleRadios"
               id="inlineRadio2"
               value="option2"
-              checked={selectedOption === "option2"}
+              checked={selectedOption === 'option2'}
               onChange={handleRadioChange}
             />
             <label className="form-check-label" htmlFor="inlineRadio2">
@@ -49,7 +49,7 @@ const CategoryFilter = () => {
               name="exampleRadios"
               id="inlineRadio3"
               value="option3"
-              checked={selectedOption === "option3"}
+              checked={selectedOption === 'option3'}
               onChange={handleRadioChange}
             />
             <label className="form-check-label" htmlFor="inlineRadio3">
@@ -86,7 +86,7 @@ const CategoryFilter = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default CategoryFilter;
+export default CategoryFilter

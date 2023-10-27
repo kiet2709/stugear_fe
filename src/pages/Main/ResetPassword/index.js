@@ -1,48 +1,45 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebookF, faGoogle } from '@fortawesome/free-brands-svg-icons';
-import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
-import "./index.css"
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import AuthService from '../../../service/AuthService';
-import Loading from '../../../components/Loading';
+import { faFacebookF, faGoogle } from '@fortawesome/free-brands-svg-icons'
+import { faLock } from '@fortawesome/free-solid-svg-icons'
+import './index.css'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import AuthService from '../../../service/AuthService'
+import Loading from '../../../components/Loading'
 const ResetPassword = () => {
+  const [resetInfo, setResetInfo] = useState({})
+  const [loading, setLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const navigator = useNavigate()
+  const handleChange = (e) => {
+    setResetInfo({ ...resetInfo, [e.target.name]: e.target.value })
+  }
 
-    const [resetInfo, setResetInfo] = useState({})
-    const [loading, setLoading] = useState(false)
-    const [errorMessage, setErrorMessage] = useState("")
-    const navigator = useNavigate()
-    const handleChange = (e) => {
-        setResetInfo({...resetInfo, [e.target.name]: e.target.value})
+  const handleCheckPassword = () => {
+    return resetInfo.password === resetInfo.confirmPassword
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (handleCheckPassword()) {
+      setErrorMessage('')
+      setLoading(true)
+      const response = await AuthService.resetPassword(resetInfo)
+      console.log(response)
+      setLoading(false)
+      if (response.status === 200) {
+        navigator('/login')
+      } else if (response.status === 400) {
+        setErrorMessage(response?.data?.message)
+      }
+    } else {
+      setErrorMessage({
+        message: 'Mật khẩu xác nhận không khớp'
+      })
     }
+  }
 
-    const handleCheckPassword = () => {
-        return resetInfo.password === resetInfo.confirmPassword ? true : false;
-    };
-
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        if (handleCheckPassword()) {
-            setErrorMessage("")
-            setLoading(true)
-            const response = await AuthService.resetPassword(resetInfo)
-            console.log(response)
-            setLoading(false)
-            if(response.status === 200){
-                navigator("/login")
-            }else if(response.status === 400){
-                setErrorMessage(response?.data?.message)
-            }
-        }else {
-            setErrorMessage({
-                message: "Mật khẩu xác nhận không khớp"
-            })
-        }
-        
-    }
-
-    return (
+  return (
         <div className="row my-3 justify-content-center w-100">
             <div className="col col-3 box-shadow px-5">
 
@@ -55,37 +52,35 @@ const ResetPassword = () => {
                     <p className="mb-0 mt-2">Hãy đặt lại mật khẩu mới</p>
                 </div>
 
-                <form onSubmit={(e) => handleSubmit(e)}  >
-                    
+                <form onSubmit={(e) => handleSubmit(e)} >
+
                     <div className="my-3 input-group flex-nowrap">
                         <span className="input-group-text"> <FontAwesomeIcon icon={faLock} /></span>
-                        <input required type="text" className="form-control"  placeholder="Nhập mã PIN" name="pin"
+                        <input required type="text" className="form-control" placeholder="Nhập mã PIN" name="pin"
                         onInput={(e) => handleChange(e)}/>
                     </div>
                     <div className="my-3 input-group flex-nowrap">
                         <span className="input-group-text"> <FontAwesomeIcon icon={faLock} /></span>
-                        <input required type="password" className="form-control"  placeholder="Nhập mật khẩu mới" 
+                        <input required type="password" className="form-control" placeholder="Nhập mật khẩu mới"
                         name="password"
                         onInput={(e) => handleChange(e)}/>
                     </div>
 
                     <div className="my-3 input-group flex-nowrap">
                         <span className="input-group-text"> <FontAwesomeIcon icon={faLock} /></span>
-                        <input required type="password" className="form-control"  placeholder="Nhập lại mật khẩu mới"
+                        <input required type="password" className="form-control" placeholder="Nhập lại mật khẩu mới"
                         name="confirmPassword"
                         onInput={(e) => handleChange(e)} />
                     </div>
 
                     {errorMessage && (
                             <div className="mt-4 alert alert-danger">{errorMessage}</div>
-                        )}
-
-
+                    )}
 
                     <div className="my-4">
                         <button className="btn btn-dark text-white w-100 ">Đặt lại mật khẩu</button>
                         <div className="text-center mt-2">
-                            <p class="small fw-bold mt-2 pt-1 mb-0">Chưa có tài khoản?
+                            <p className="small fw-bold mt-2 pt-1 mb-0">Chưa có tài khoản?
                                 <a href="/register" className="link-danger"> Đăng ký</a>
                             </p>
 
@@ -113,12 +108,12 @@ const ResetPassword = () => {
             </div>
             <div className="col col-3 text-center">
                 <h1 >Cập nhật mật khẩu</h1>
-                <p class="font-italic text-muted mb-0">Hãy thay đổi mật khẩu của bạn</p>
+                <p className="font-italic text-muted mb-0">Hãy thay đổi mật khẩu của bạn</p>
                 <img src="assets/images/get-pass.gif" alt="Image" className="img-fluid" />
 
             </div>
         </div>
-    )
+  )
 }
 
 export default ResetPassword
