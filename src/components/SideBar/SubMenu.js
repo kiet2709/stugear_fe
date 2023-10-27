@@ -1,60 +1,59 @@
+
 import {
-  faSearch,
   faCaretUp,
   faCaretDown,
-  faBookmark,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, InputGroup } from "react-bootstrap";
-import "./SubMenu.css";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-const SubMenu = ({ category }) => {
-  const [submenuOpen, setSubmenuOpen] = useState(false);
+  faBookmark
+} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import './SubMenu.css'
+import { Link } from 'react-router-dom'
+import { useState } from 'react';
 
+
+
+const SubMenu = ({ category, buyActive, sellActive, isAll }) => {
+  const [submenuOpen, setSubmenuOpen] = useState(buyActive)
   const toggleSubmenu = () => {
-    setSubmenuOpen(!submenuOpen);
-  };
-  const getRandomColor = () => {
-    const letters = "0123456789ABCDEF";
-    let color = "#";
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  };
+    setSubmenuOpen(!submenuOpen)
+  }
 
   return (
     <>
-      <li className="sub-menu">
-        <Link onClick={toggleSubmenu}>
-          {category.name}
+      <li >
+        <div className={`sub-menu ${buyActive || sellActive ? 'menu-active' : ''}`}>
+
+        <Link onClick={toggleSubmenu} >
+          {category.name}{' '}
           <FontAwesomeIcon
-            className="right"
             icon={submenuOpen ? faCaretUp : faCaretDown}
           />
         </Link>
+        </div>
+
         {submenuOpen && (
           <ul>
-            <li>
-              <Link to="/buy">
+            <li className={`sub-menu ${buyActive ? 'sub-menu-active' : ''}`} >
+              <Link to={`/home-page/category/${isAll ? 'all' : category.id}`} >
               <FontAwesomeIcon
                 icon={faBookmark}
-                style={{ color: getRandomColor(), marginRight: "8px" }}
+                style={{ color: '#111414', marginRight: '8px' }}
               />Mua</Link>
             </li>
-            <li>
-              <Link to="/sell">
+            <li className={`sub-menu ${sellActive ? 'sub-menu-active' : ''}`}>
+              <Link to={`/home-page/category/${category.id}`} >
               <FontAwesomeIcon
                 icon={faBookmark}
-                style={{ color: getRandomColor(), marginRight: "8px" }}
+                style={{ color: '#F3787A', marginRight: '8px' }}
               />Bán</Link>
             </li>
           </ul>
         )}
       </li>
     </>
-  );
-};
+  )
+  
+}
 
-export default SubMenu;
+
+
+export default SubMenu

@@ -1,37 +1,51 @@
 import {
   faSearch,
   faBookmark,
-  faMessage,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, InputGroup } from "react-bootstrap";
-import { useState } from "react";
-import "./Products.css";
-import { Link } from "react-router-dom";
-const Product = ({product}) => {
+  faMessage
+} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Button, InputGroup } from 'react-bootstrap'
+import { useState } from 'react'
+import './Products.css'
+import { Link } from 'react-router-dom'
+const Product = ({ product }) => {
   return (
     <tr key={product.id}>
       <td className="align-middle">
-        <Link to="/product-detail" style={{ textDecoration: "none", color: "black" }}>
-    
+        <Link
+          to="/product-detail"
+          style={{ textDecoration: 'none', color: 'black' }}
+        >
           <img src={product.image} alt="" className="small-image  " />
           <span>{product.title}</span>
         </Link>
       </td>
       <td className="align-middle">
-        <div className="tag-container ">
-          {product.tags.map((tag, index) => (
+        <div className="tag-container">
+          {/* TODO: Reformat by api */}
+          {Array.isArray(product.tags) ? (
+            // If product.tags is an array
+            product.tags.map((tag, index) => (
+              <button
+                key={index}
+                className={`btn btn-outline tag badge ${tag.color}`}
+              >
+                {tag.name}
+              </button>
+            ))
+          ) : (
+            // If product.tags is a single object
             <button
-              key={index}
-              className={`btn btn-outline tag badge ${tag.color}`}
+              className={`btn btn-outline tag badge ${product?.tags?.color}`}
             >
-              {tag.name}
+              {product?.tags?.name}
             </button>
-          ))}
+          )}
         </div>
       </td>
+
       <td className="align-middle">
-        <Link style={{ textDecoration: "none" }} className="badge bg-primary ">
+        <Link style={{ textDecoration: 'none' }} className="badge bg-primary ">
           <FontAwesomeIcon icon={faMessage} /> {product.chatCount}
         </Link>
       </td>
@@ -40,7 +54,7 @@ const Product = ({product}) => {
       </td>
       <td className="align-middle">
         <Link>
-          {" "}
+          {' '}
           <img className="small-image rounded" src={product.avatar} alt="" />
         </Link>
       </td>
@@ -48,7 +62,7 @@ const Product = ({product}) => {
         <span>{product.lastUpdated}, 2023</span>
       </td>
     </tr>
-  );
-};
+  )
+}
 
-export default Product;
+export default Product

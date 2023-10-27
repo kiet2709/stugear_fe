@@ -1,6 +1,8 @@
+
 import { Container } from "react-bootstrap";
 import "./index.css";
 import ProductService from "../../../service/ProductService";
+
 
 const Info = () => {
   const handleClick = async (e, selectedFile) => {
@@ -22,11 +24,9 @@ const Info = () => {
 
   return (
     <Container>
-      <form>
-        <input type="file" onChange={handleFileChange} />
-      </form>
+      <p>Info</p>
     </Container>
-  );
-};
+  )
+}
 
-export default Info;
+export default Info

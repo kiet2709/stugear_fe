@@ -1,4 +1,4 @@
-import "./CategoryStatistic.css";
+import './CategoryStatistic.css'
 
 const CategoryStatistic = ({ item }) => {
   return (
@@ -19,7 +19,7 @@ const CategoryStatistic = ({ item }) => {
       </div>
       <span className="vertical-line"></span>
     </>
-  );
-};
+  )
+}
 
-export default CategoryStatistic;
+export default CategoryStatistic

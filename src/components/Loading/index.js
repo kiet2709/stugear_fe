@@ -1,4 +1,4 @@
-import { CSpinner } from "@coreui/react";
+import { CSpinner } from '@coreui/react'
 
 const Loading = () => {
   return (
@@ -8,6 +8,6 @@ const Loading = () => {
       </div>
     </div>
   )
-};
+}
 
 export default Loading

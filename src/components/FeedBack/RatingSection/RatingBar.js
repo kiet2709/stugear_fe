@@ -1,17 +1,16 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./RatingBar.css"
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import './RatingBar.css'
+import { faStar } from '@fortawesome/free-solid-svg-icons'
 
-const RatingBar =({rating, total}) => {
+const RatingBar = ({ rating, total }) => {
+  const percentage = (rating.quantity / total) * 100
+  const stars = []
 
-    const percentage = (rating.quantity / total) * 100;
-    const stars = [];
+  for (let i = 0; i < rating.rate; i++) {
+    stars.push(<FontAwesomeIcon key={i} icon={faStar} style={{ color: '#FFC107' }} />)
+  }
 
-    for (let i = 0; i < rating.rate; i++) {
-      stars.push(<FontAwesomeIcon key={i} icon={faStar} style={{color: '#FFC107'}} />);
-    }
-  
-    return (
+  return (
     <tr>
         <td>
           {stars}
@@ -25,7 +24,7 @@ const RatingBar =({rating, total}) => {
         </td>
         <td className="star-num">({rating.quantity})</td>
       </tr>
-    )
+  )
 }
 
 export default RatingBar

@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faEnvelope, faPhone, faSchool, faBirthdayCake } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faEnvelope, faPhone, faSchool, faBirthdayCake } from '@fortawesome/free-solid-svg-icons'
 const General = () => {
-    return (
+  return (
         <div className="tab-pane fade active show" id="account-general">
             <div className="card-body row d-flex media align-items-center">
                 <div className="col-2">
@@ -16,7 +16,6 @@ const General = () => {
                 </div>
 
             </div>
-
 
             <div className="card-body">
                 <form action="#" >
@@ -60,7 +59,6 @@ const General = () => {
 
                     <div className="row">
 
-
                         <div className="col my-3 input-group flex-nowrap">
                             <span className="input-group-text"> <FontAwesomeIcon icon={faBirthdayCake} /></span>
                             <input required type="text" className="form-control" placeholder="Ngày sinh"
@@ -80,10 +78,9 @@ const General = () => {
                     </div>
                 </form>
 
-
             </div>
         </div>
-    )
+  )
 }
 
 export default General

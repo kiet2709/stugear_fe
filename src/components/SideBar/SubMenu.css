@@ -17,8 +17,8 @@ nav ul li a {
 	transition: 0.2s linear;
 }
 nav ul li a:hover {
-	background: black;
-	color: #fff;
+	background: #F5F5F5;
+	color: black;
 }
 
 
@@ -27,7 +27,17 @@ nav ul li ul li a {
 	border-left: 4px solid transparent;
 	padding: 10px 40px;
 }
-nav ul li ul li a:hover {
 
-	border-left: 4px solid #4B24F5;
+.menu-active a {
+	background: #7355F7;
+	color: #fff;
+}
+
+.sub-menu-active {
+
+	font-weight: 900;
+	background: #F5F5F5;
+	color: black;
+	
+	border-left: 4px solid black;
 }

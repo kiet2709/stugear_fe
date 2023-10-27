@@ -1,5 +1,5 @@
-import React from 'react';
-import './ForumTitle.css';
+import React from 'react'
+import './ForumTitle.css'
 
 const ForumTitle = () => {
   return (
@@ -23,4 +23,4 @@ const ForumTitle = () => {
   )
 }
 
-export default ForumTitle;
+export default ForumTitle

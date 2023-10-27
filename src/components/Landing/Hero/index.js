@@ -1,7 +1,7 @@
-import "./index.css"
-import { Link } from "react-router-dom"
+import './index.css'
+import { Link } from 'react-router-dom'
 const Hero = () => {
-    return (
+  return (
         <section id="hero" className="hero d-flex align-items-center">
             <div className="container">
                 <div className="row">
@@ -11,10 +11,9 @@ const Hero = () => {
                         <div data-aos="fade-up" data-aos-delay={600}>
                             <div className="text-center text-lg-start mt-3">
                                 <button className="btn btn-primary">
-                                    
-                                    <Link style={{textDecoration: 'none'}} to="/register"><span className="text-white">Đăng ký</span></Link>
-                                </button>
 
+                                    <Link style={{ textDecoration: 'none' }} to="/register"><span className="text-white">Đăng ký</span></Link>
+                                </button>
 
                             </div>
                         </div>
@@ -26,7 +25,7 @@ const Hero = () => {
             </div>
         </section>
 
-    )
+  )
 }
 
 export default Hero

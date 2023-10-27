@@ -1,9 +1,8 @@
-import { faFacebookF, faGoogle, faGithub } from "@fortawesome/free-brands-svg-icons"
-import { faMessage } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faFacebookF, faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons'
+import { faMessage } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const TopContributor = ({ contributor }) => {
-    return (
-
+  return (
 
         <div className="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay={400}>
             <div className="member">
@@ -30,12 +29,11 @@ const TopContributor = ({ contributor }) => {
                     <span>SĐT: {contributor.phoneNumber}</span>
                     <p>{contributor.bio}</p>
                 </div>
-                
+
             </div>
         </div>
 
-
-    )
+  )
 }
 
 export default TopContributor

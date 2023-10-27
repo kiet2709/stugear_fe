@@ -1,9 +1,9 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Col } from 'react-bootstrap';
+import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Col } from 'react-bootstrap'
 
-const FooterInfo = ({data: {icon, info1, info2, id}}) => {
-    return (
+const FooterInfo = ({ data: { icon, info1, info2, id } }) => {
+  return (
         <Col md={4}>
             <div className={`d-flex fContactInfo fContactInfo${id} align-items-center`}>
                 <FontAwesomeIcon icon={icon} className="fContactIcon"/>
@@ -13,7 +13,7 @@ const FooterInfo = ({data: {icon, info1, info2, id}}) => {
                 </div>
             </div>
         </Col>
-    );
-};
+  )
+}
 
-export default FooterInfo;
+export default FooterInfo

@@ -1,25 +1,14 @@
-import { axiosPrivate } from "../api/axios"
-import axios from "axios";
+import axios from 'axios'
 
-const PRODUCT_URL = 'http://127.0.0.1:8000/api/users';
-
-
+const PRODUCT_URL = 'http://127.0.0.1:8000/api/products'
 class ProductService {
-    getProductById (id){
-        return axiosPrivate.get(PRODUCT_URL + `/${id}`);
-    }
-
-    uploadImageByProductId(id, file){
-        console.log(file)
-        return axiosPrivate.post(PRODUCT_URL + `/${id}/upload-image`, {
-            image: file
-        },
-        {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-    }
+  getProductsByCategoryId (id) {
+    return axios
+      .get(PRODUCT_URL + `/category/${id}`)
+      .then((response) => response?.data?.data)
+      .catch((error) => error?.response)
+  }
 }
 
-export default new ProductService();
+export default new ProductService()
+
