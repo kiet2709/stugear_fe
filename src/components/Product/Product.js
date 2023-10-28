@@ -13,10 +13,10 @@ const Product = ({ product }) => {
     <tr key={product.id}>
       <td className="align-middle">
         <Link
-          to={"/product-detail/"+product.id}
+          to={"/home-page/product-detail/"+product.id}
           style={{ textDecoration: 'none', color: 'black' }}
         >
-          <img src={product.image} alt="" className="small-image  " />
+          <img src="/assets/images/book-thumbnail.jpg" alt="" className="small-image  " />
           <span>{product.title}</span>
         </Link>
       </td>

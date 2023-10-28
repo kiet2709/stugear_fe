@@ -137,7 +137,7 @@ const LoginForm = () => {
         <p className="font-italic text-muted mb-0">
           Đăng nhập tài khoản của bạn tại đây
         </p>
-        <img src="assets/images/login.gif" className="img-fluid" alt="" />
+        <img src="/assets/images/login.gif" className="img-fluid" alt="" />
       </div>
     </div>
   );

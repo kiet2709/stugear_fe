@@ -11,28 +11,45 @@ import Contact from '../pages/Main/Contact/index.js'
 import HomePage from '../pages/Main/HomePage/index.js'
 import ProductPage from '../pages/Main/ProductPage/ProductPage.js'
 import HomeLayout from '../layouts/HomeLayout/HomeLayout.js'
-import ProductLayout from '../layouts/ProductLayout/ProductLayout.js'
 import SearchPage from '../pages/Main/SearchPage/SearchPage.js'
+import PersonalLayout from '../layouts/PersonalLayout/PersonalLayout.js'
+import PersonalInfo from '../pages/Main/PersonalPage/PersinalInfo/index.js'
+import General from '../components/Profile/General/index.js'
+import Wishlist from '../components/Profile/Wishlist/Wishlist.js'
 function useRouteElements () {
   const routeElements = useRoutes([
     {
       path: '',
-      element: <HomeLayout/>,
+      element: <HomeLayout title={"Trang chủ"}/>,
       children: [
         {
           path: '/home-page/category/:slug',
           element: <HomePage/>
-        }
+        },
       ]
     },
     {
       path: '',
-      element: <ProductLayout/>,
+      element: <HomeLayout title={"Trang chủ"} sub_title={"Sản phẩm"}/>,
       children: [
         {
-          path: 'product-detail/:slug',
+          path: '/home-page/product-detail/:slug',
           element: <ProductPage/>
-        }
+        },
+      ]
+    },
+    {
+      path: '',
+      element: <PersonalLayout/>,
+      children: [
+        {
+          path: '/member/wishlist',
+          element: <Wishlist/>
+        },
+        {
+          path: '/member/general',
+          element: <General/>
+        },
       ]
     },
     {
@@ -56,13 +73,8 @@ function useRouteElements () {
           element: <ResetPassword />
         },
         {
-          path: 'landing-page',
+          path: '/landing-page',
           element: <LandingPage/>
-        },
-
-        {
-          path: 'profile',
-          element: <Profile/>
         },
         {
           path: 'info',

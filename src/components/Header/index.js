@@ -50,25 +50,10 @@ const Header = ({ sticky }) => {
           <span className="navHighlight">StuGear</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav" />
+
 
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav.Item>
-            <InputGroup className="form-outline" id="search-group">
-              <input
-                id="search-input"
-                placeholder="Tìm kiếm..."
-                type="search"
-                className="form-control"
-                value={searchValue}
-                onChange={(e) => hanldeChange(e)}
-              />
-              <Button id="search-button">
-                <FontAwesomeIcon icon={faSearch} id="search-icon" onClick={() => handleSearch()} />
-              </Button>
-            </InputGroup>
-          </Nav.Item>
-          <Nav className="ms-auto mainNav">
+        <Nav className="mainNav">
             <Nav.Item>
               <Link to="/home-page/category/all" className="nav-link">
                 Trang chủ
@@ -86,6 +71,28 @@ const Header = ({ sticky }) => {
             </Nav.Item>
             <Nav.Item>
 
+           
+            </Nav.Item>
+          </Nav>
+          <Nav.Item>
+            <InputGroup className="form-outline" id="search-group">
+              <input
+                id="search-input"
+                placeholder="Tìm kiếm..."
+                type="search"
+                className="form-control"
+                value={searchValue}
+                onChange={(e) => hanldeChange(e)}
+              />
+              <Button id="search-button">
+                <FontAwesomeIcon icon={faSearch} id="search-icon" onClick={() => handleSearch()} />
+              </Button>
+            </InputGroup>
+          </Nav.Item>
+          <Nav className="ms-auto mainNav">
+
+            <Nav.Item>
+
               {user_id ? (
 
                 <div>
@@ -96,6 +103,10 @@ const Header = ({ sticky }) => {
                 <div>
                   <Link to="/login">
                     <button className="authBtn">Đăng nhập</button>
+                  </Link>
+                  
+                  <Link to="/register">
+                    <button className="authBtn">Đăng ký</button>
                   </Link>
                 </div>
                   )}

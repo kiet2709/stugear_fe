@@ -1,7 +1,7 @@
 import "./ProductDetail.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
-
+import { faHeart } from "@fortawesome/free-regular-svg-icons";
 const ProductDetail = ({ product }) => {
   return (
     <div>
@@ -66,6 +66,10 @@ const ProductDetail = ({ product }) => {
             ))}
           </div>
         </div>
+      </div>
+      <div className="wishtlist-btn">
+        
+        <button className="btn"><FontAwesomeIcon icon={faHeart}/> Yêu thích</button>
       </div>
     </div>
   );

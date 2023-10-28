@@ -9,7 +9,7 @@ const CommentList = () => {
   const comments = [
     {
       id: 1,
-      owner_image: 'assets/images/contributor.jpg',
+      owner_image: '/assets/images/contributor.jpg',
       owner_name: 'Khải',
       last_update: '1 phút trước',
       content:
@@ -19,7 +19,7 @@ const CommentList = () => {
       sub_comment: [
         {
           id: 2,
-          owner_image: 'assets/images/contributor.jpg',
+          owner_image: '/assets/images/contributor.jpg',
           owner_name: 'Kiệt',
           last_update: '5 phút trước',
           content:
@@ -29,7 +29,7 @@ const CommentList = () => {
         },
         {
           id: 3,
-          owner_image: 'assets/images/contributor.jpg',
+          owner_image: '/assets/images/contributor.jpg',
           owner_name: 'Khang',
           last_update: '3 phút trước',
           content: 'Lobortis nisl ut aliquip ex ea commodo consequat.',
@@ -40,7 +40,7 @@ const CommentList = () => {
     },
     {
       id: 4,
-      owner_image: 'assets/images/contributor.jpg',
+      owner_image: '/assets/images/contributor.jpg',
       owner_name: 'Thịnh',
       last_update: '1 phút trước',
       content:
@@ -50,7 +50,7 @@ const CommentList = () => {
       sub_comment: [
         {
           id: 5,
-          owner_image: 'assets/images/contributor.jpg',
+          owner_image: '/assets/images/contributor.jpg',
           owner_name: 'Khang',
           last_update: '5 phút trước',
           content:
@@ -60,7 +60,7 @@ const CommentList = () => {
         },
         {
           id: 6,
-          owner_image: 'assets/images/contributor.jpg',
+          owner_image: '/assets/images/contributor.jpg',
           owner_name: 'Khải',
           last_update: '3 phút trước',
           content: 'Lobortis nisl ut aliquip ex ea commodo consequat.',
