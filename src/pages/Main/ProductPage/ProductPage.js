@@ -3,19 +3,53 @@ import Feedback from '../../../components/FeedBack/Feedback'
 import ProductDetail from '../../../components/Product/ProductDetail/ProductDetail'
 import RelateProduct from '../../../components/RelateProduct/RelateProduct'
 import './ProductPage.css'
-
+import { useParams } from 'react-router'
+import ProductService from '../../../service/ProductService'
+import { useState } from 'react'
+import { useEffect } from 'react'
 const ProductPage = () => {
+
+  // const [product, setProduct] = useState({})
+  // let {slug} = useParams()
+
+  // const getProductById = async (id) => {
+  //   const response = await ProductService.getProductById(id)
+  //   if (response?.status === 500) {
+  //     console.log('ProductDetail: Something went wrong')
+  //   } else {
+  //     setProduct(response)
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   getProductById(slug)
+  // }, [slug])
   const product = {
-    name: 'Tên tài liệu',
-    owner: 'Kiệt',
+    title: 'Tên tài liệu',
+    owner_name: 'Kiệt',
     description:
       'Highlighting throughout. Postage will be quoted on purchase and is not included in the price.',
     price: '12,000 VNĐ',
     quantity: '3',
     condition: 'Tốt',
-    lastUpdated: '20th October, 2023',
-    transactionMethods: ['Tự do', 'Trên trang web', 'Tùy chọn']
+    last_updated: '20th October, 2023',
+    transaction_methods: ['Tự do', 'Trên trang web', 'Tùy chọn'],
+    tags: [
+      {
+          "name": "Prof. Izaiah Koelpin",
+          "color": "bg-danger"
+      },
+      {
+          "name": "Dr. Jeremie Wiza",
+          "color": "bg-warning"
+      },
+      {
+          "name": "Megane Greenholt",
+          "color": "bg-warning"
+      },
+    ]
   }
+
 
   const products = [
     {
@@ -93,7 +127,7 @@ const ProductPage = () => {
   ]
   return (
     <div>
-      <h1 id="product-title">Tiêu đề sản phẩm</h1>
+      <h1 id="product-title">{product.title}</h1>
 
       <hr className="bg-dark my-4"></hr>
       <div className="row">

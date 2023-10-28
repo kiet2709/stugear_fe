@@ -1,25 +1,25 @@
-import './ProductDetail.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import "./ProductDetail.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 const ProductDetail = ({ product }) => {
   return (
     <div>
       <div className="text-center mb-5">
         <img
-          src="assets/images/book-thumbnail.jpg"
-          className="middle-image"
+          src="/assets/images/book-thumbnail.jpg"
+          className="middle-image img-fluid"
           alt=""
         />
       </div>
       <div id="product-info">
         <div className="info-row mb-3">
           <div className="info-key">Tên tài liệu:</div>
-          <div className="info-value">{product.name}</div>
+          <div className="info-value">{product.title}</div>
         </div>
         <div className="info-row mb-3">
           <div className="info-key">Người bán:</div>
-          <div className="info-value">{product.owner}</div>
+          <div className="info-value">{product.owner_name}</div>
         </div>
         <div className="info-row  mb-3">
           <div className="info-key">Mô tả:</div>
@@ -33,20 +33,34 @@ const ProductDetail = ({ product }) => {
           <div className="info-key">Còn lại:</div>
           <div className="info-value">{product.quantity}</div>
         </div>
+        <div className="info-row mb-3">
+          <div className="info-key">Phân loại:</div>
+          <div className="info-value">
+            {product.tags.map((tag, index) => (
+              <button
+                key={index}
+                className={`btn btn-outline tag badge ${tag.color}`}
+              >
+                {tag.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div className="info-row  mb-3">
           <div className="info-key">Tình trạng:</div>
           <div className="info-value">{product.condition}</div>
         </div>
         <div className="info-row  mb-3">
           <div className="info-key">Ngày cập nhật:</div>
-          <div className="info-value">{product.lastUpdated}</div>
+          <div className="info-value">{product.last_updated}</div>
         </div>
         <div className="info-row  mb-3">
           <div className="info-key">Phương thức giao dịch:</div>
           <div className="info-value">
-            {product.transactionMethods.map((method, index) => (
+            {product.transaction_methods.map((method, index) => (
               <div key={index} className=" mb-3">
-                <FontAwesomeIcon icon={faCheck} className="check-icon" />{' '}
+                <FontAwesomeIcon icon={faCheck} className="check-icon" />{" "}
                 {method}
               </div>
             ))}
@@ -54,7 +68,7 @@ const ProductDetail = ({ product }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductDetail
+export default ProductDetail;

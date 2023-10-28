@@ -10,9 +10,14 @@
 }
 .navDefault {
     transition: 0.5s!important;
-    padding: 25px 0 40px 0!important;
-    margin-bottom: 2rem;
-    background: #F7F7F8;
+    padding: 25px 0 20px 0!important;
+    box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+    background: white;
+    top: 0;
+    width: 100%;
+    z-index: 99!important;
+    transition: 0.5s!important;
+    font-family: 'Poppins', sans-serif;
 }
 
 .mainNav .nav-link {
@@ -95,3 +100,4 @@
 #search-icon {
     color: white     ;
 }
+

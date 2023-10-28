@@ -30,7 +30,7 @@ function useRouteElements () {
       element: <ProductLayout/>,
       children: [
         {
-          path: 'product-detail',
+          path: 'product-detail/:slug',
           element: <ProductPage/>
         }
       ]

@@ -1,14 +1,13 @@
 import React, { useState, useRef } from 'react'
 import Popover from 'react-bootstrap/Popover'
 import './index.css'
-import useAuth from '../../hooks/useAuth'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faAddressCard } from '@fortawesome/free-regular-svg-icons'
 import { Overlay } from 'react-bootstrap'
 const UserHeader = () => {
 
-  const { auth } = useAuth();
+
   const [show, setShow] = useState(false);
   const [target, setTarget] = useState(null);
   const ref = useRef(null);
@@ -21,7 +20,7 @@ const UserHeader = () => {
   return (
     <>
       <img
-        src="assets/images/contributor.jpg"
+        src="/assets/images/contributor.jpg"
         alt=""
         onClick={handleClick}
         className="popImg"

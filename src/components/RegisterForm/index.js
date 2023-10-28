@@ -66,7 +66,7 @@ const RegisterForm = () => {
 
                     <h1>Hãy tạo tài khoản {loading}</h1>
                     <p className="font-italic text-muted mb-0">Nhập thông tin để tạo tài khoản của bạn</p>
-                    <img src="assets/images/register.gif" alt="" className="img-fluid" />
+                    <img src="/assets/images/register.gif" alt="" className="img-fluid" />
 
                 </div>
                 <div className="col col-1">

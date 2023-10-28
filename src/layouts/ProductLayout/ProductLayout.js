@@ -9,6 +9,7 @@ import Header from '../../components/Header'
 import CategoryService from '../../service/CategoryService'
 import { useState, useEffect } from 'react'
 import Loading from '../../components/Loading'
+import TitleBox from '../../components/TitleBox/TitleBox'
 const ProductLayout = () => {
   const [categories, setCategories] = useState([])
   const [isLoading, setLoading] = useState(true)
@@ -18,7 +19,7 @@ const ProductLayout = () => {
       console.log('Something wentwrong')
     } else {
       setCategories(response)
-      setLoading(true)
+      setLoading(false)
     }
   }
   useEffect(() => {
@@ -28,7 +29,7 @@ const ProductLayout = () => {
   return (
     <>
       <Header sticky={false}/>
-
+      <TitleBox title={"Trang chủ"} sub_title={"Chi tiết sản phẩm"}/>
       <Container>
 
         <div className="row">

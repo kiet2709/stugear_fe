@@ -8,6 +8,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { Button, Container, InputGroup, Nav, Navbar } from 'react-bootstrap'
 import useAuth from '../../hooks/useAuth'
 import UserHeader from '../UserHeader'
+import TitleBox from '../TitleBox/TitleBox'
 
 const Header = ({ sticky }) => {
 
@@ -15,8 +16,6 @@ const Header = ({ sticky }) => {
   const [isSticky, setSticky] = useState(false);
   const [searchValue, setSearchValue] = useState("")
   const naviage = useNavigate()
-  const { auth } = useAuth()
-
 
   useEffect(() => {
     if (sticky === true) {
@@ -38,6 +37,7 @@ const Header = ({ sticky }) => {
     setSearchValue(e.target.value)
   }
   return (
+    <>
     <Navbar
       className={`navbar navbar-expand-lg navbar-light ${
         isSticky ? 'navStyle' : 'navDefault'
@@ -102,8 +102,12 @@ const Header = ({ sticky }) => {
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>
+
       </Container>
+      
     </Navbar>
+
+    </>
   )
 }
 

@@ -13,7 +13,7 @@ const Product = ({ product }) => {
     <tr key={product.id}>
       <td className="align-middle">
         <Link
-          to="/product-detail"
+          to={"/product-detail/"+product.id}
           style={{ textDecoration: 'none', color: 'black' }}
         >
           <img src={product.image} alt="" className="small-image  " />
@@ -22,31 +22,20 @@ const Product = ({ product }) => {
       </td>
       <td className="align-middle">
         <div className="tag-container">
-          {/* TODO: Reformat by api */}
-          {Array.isArray(product.tags) ? (
-            // If product.tags is an array
-            product.tags.map((tag, index) => (
+        {            product.tags.map((tag, index) => (
               <button
                 key={index}
                 className={`btn btn-outline tag badge ${tag.color}`}
               >
                 {tag.name}
               </button>
-            ))
-          ) : (
-            // If product.tags is a single object
-            <button
-              className={`btn btn-outline tag badge ${product?.tags?.color}`}
-            >
-              {product?.tags?.name}
-            </button>
-          )}
+            ))}
         </div>
       </td>
 
       <td className="align-middle">
         <Link style={{ textDecoration: 'none' }} className="badge bg-primary ">
-          <FontAwesomeIcon icon={faMessage} /> {product.chatCount}
+          <FontAwesomeIcon icon={faMessage} /> {product.comment_count}
         </Link>
       </td>
       <td className="align-middle">
@@ -59,7 +48,7 @@ const Product = ({ product }) => {
         </Link>
       </td>
       <td className="align-middle">
-        <span>{product.lastUpdated}, 2023</span>
+        <span>{product.last_updated}, 2023</span>
       </td>
     </tr>
   )

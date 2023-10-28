@@ -12,7 +12,7 @@ const RelateProduct = ({ products }) => {
             <Link key={index} style={{ textDecoration: 'none', color: '#7355F7' }}>
               <div className="relate-product-item ">
                 <img
-                  src="assets/images/book-thumbnail.jpg"
+                  src="/assets/images/book-thumbnail.jpg"
                   className="small-image"
                   alt=""
                 />

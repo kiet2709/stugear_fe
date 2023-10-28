@@ -5,9 +5,6 @@ const SideBar = ({ categories }) => {
   const { slug } = useParams()
 
 
-
-  console.log(slug)
-
   return (
     <>
       <nav className="sidebar card sticky-top   ">

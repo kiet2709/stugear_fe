@@ -9,28 +9,33 @@ import Footer from '../../components/Footer/Footer'
 import Header from '../../components/Header'
 import { useEffect, useState } from 'react'
 import Loading from '../../components/Loading'
+import TitleBox from '../../components/TitleBox/TitleBox'
 const HomeLayout = () => {
+  
   const [categories, setCategories] = useState([])
   const [isLoading, setLoading] = useState(true)
   const getCategories = async () => {
     const response = await CategoryService.getAllCategories()
     if (response?.status === 500) {
-      console.log('Something wentwrong')
+      console.log('Something went wrong')
     } else {
       setCategories(response)
-      setLoading(false)
+      
     }
   }
   useEffect(() => {
+    setLoading(true)
     getCategories()
+    setLoading(false)
   }, [])
 
   return (
     <>
-      <Header sticky={false}/>
-
+      
+      <Header sticky={false}/>  
+      <TitleBox title={"Trang chủ"}/>
       <Container>
-        <ForumTitle />
+
 
         <div className="row">
           <div className="col-2 ">
