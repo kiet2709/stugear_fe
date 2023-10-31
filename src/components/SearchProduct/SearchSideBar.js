@@ -1,31 +1,59 @@
-import "./SearchSideBar.css"
+import "./SearchSideBar.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { useEffect } from "react";
+import SelectSearch from "react-select-search";
+import "react-select-search/style.css";
+import { useSelect } from "react-select-search";
+const SearchSideBar = () => {
+  const options = [
+    { name: "Swedish", value: "sv" },
+    { name: "English", value: "en" },
+    {
+      type: "group",
+      name: "Group name",
+      items: [{ name: "Spanish", value: "es" }],
+    },
+  ];
 
-const SearchSideBar =() => {
-    return (
-        <>
-        
+  // const [snapshot, valueProps, optionProps] = useSelect({
+  //   options,
+  //   value,
+  //   multiple,
+  //   disabled,
+  // });
 
-          {/* Filter Section */}
-          <div className="card">
-            <div className="card-body">
-              <h5 className="card-title">Filters</h5>
-              {/* Add your filter options here */}
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="filterOption1" />
-                <label className="form-check-label" htmlFor="filterOption1">
-                  Filter Option 1
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="filterOption2" />
-                <label className="form-check-label" htmlFor="filterOption2">
-                  Filter Option 2
-                </label>
-              </div>
-              {/* Add more filter options as needed */}
-            </div>
+  return (
+    <>
+      {/* Filter Section */}
+      <div className="card">
+        <div className="card-body">
+          <h5 className="card-title">Tìm kiếm</h5>
+
+          <div className="form-outline search-group input-group my-4">
+            <input
+              id="search-input"
+              placeholder="Tìm kiếm..."
+              type="search"
+              className="form-control"
+            />
+            <button className="btn search-button">
+              <FontAwesomeIcon icon={faSearch} id="search-icon" />
+            </button>
           </div>
-        </>
-    )
-}
-export default SearchSideBar
+
+          <h5 className="my-3">Danh mục</h5>
+          <div>
+            <SelectSearch
+              options={options}
+              value="sv"
+              name="language"
+              placeholder="Choose your language"
+            />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+export default SearchSideBar;

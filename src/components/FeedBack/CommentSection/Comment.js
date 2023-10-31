@@ -1,15 +1,15 @@
-import './Comment.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faThumbsDown, faThumbsUp } from '@fortawesome/free-regular-svg-icons'
-import { faGlobe, faMobile, faPencil } from '@fortawesome/free-solid-svg-icons'
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import "./Comment.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons";
+import { faGlobe, faMobile, faPencil } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 const Comment = ({ children, comment, isSubComment }) => {
-  const [showReplyInput, setShowReplyInput] = useState(false)
+  const [showReplyInput, setShowReplyInput] = useState(false);
 
   const handleReplyClick = () => {
-    setShowReplyInput(!showReplyInput)
-  }
+    setShowReplyInput(!showReplyInput);
+  };
 
   return (
     <>
@@ -19,9 +19,14 @@ const Comment = ({ children, comment, isSubComment }) => {
         </Link>
         <div className="media-body  ">
           <Link className="  ">{comment.owner_name}</Link>
-          <span> - {comment.last_update}</span>
+          <span> - {comment.last_updated}</span>
 
-          <p>{comment.content}</p>
+          <p>
+            <Link style={{ textDecoration: "None" }}>
+              {comment?.reply_on ? `@${comment.reply_on}` : ""}
+            </Link>{" "}
+            {comment.content}
+          </p>
           <div>
             <div className="btn-group">
               <button className="btn btn-sm btn-like text-dark ">
@@ -32,37 +37,39 @@ const Comment = ({ children, comment, isSubComment }) => {
               </button>
             </div>
             {!isSubComment && (
-                     <button
-                     className="btn  btn-sm btn-reply  "
-                     onClick={handleReplyClick}
-                   >
-                     Trả lời
-                   </button>
-            )}
-
-          </div>
-          <hr />
-          {showReplyInput && (
-            <div className="panel-body">
-              <textarea
-                className="form-control "
-                rows={2}
-                placeholder="What are you thinking?"
-              />
               <button
-                className="btn btn-sm mt-3 btn-submit"
+                className="btn  btn-sm btn-reply  "
                 onClick={handleReplyClick}
               >
-                Gửi
+                Trả lời
               </button>
-            </div>
-          )}
+            )}
+          </div>
+          <div className="reply-section">
+            <hr />
+            {showReplyInput && (
+              <div className="panel-body">
+                <textarea
+                  className="form-control "
+                  rows={2}
+                  placeholder="What are you thinking?"
+                />
+                <button
+                  className="btn btn-sm mt-3 btn-submit"
+                  onClick={handleReplyClick}
+                >
+                  Gửi
+                </button>
+              </div>
+            )}
+          </div>
+
           {/* insert sub comment here */}
           {children}
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Comment
+export default Comment;

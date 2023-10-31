@@ -1,15 +1,15 @@
-import Comments from './CommentSection/CommentList'
+import CommentList from './CommentSection/CommentList'
 import './Feedback.css'
 import LeaveComment from './LeaveComment/LeaveComment'
 import RatingSection from './RatingSection/RatingSection'
-const Feedback = () => {
+const Feedback = ({productId}) => {
   return (
     <>
       <hr className="my-5"></hr>
 
       <RatingSection />
       <LeaveComment/>
-      <Comments />
+      <CommentList productId={productId}/>
     </>
   )
 }

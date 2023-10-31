@@ -46,6 +46,7 @@ const HomeLayout = ({title, sub_title}) => {
                 )
               : (
               <SideBar categories={categories} />
+  
                 )}
 
           </div>

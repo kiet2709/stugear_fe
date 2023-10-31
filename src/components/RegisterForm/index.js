@@ -40,7 +40,6 @@ const RegisterForm = () => {
       setLoading(false)
 
       if (response.status === 400) {
-        console.log(response)
         setError({
           field: Object.keys(response?.data?.error)[0],
           message: Object.values(response?.data?.error)[0]

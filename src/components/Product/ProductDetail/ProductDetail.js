@@ -7,7 +7,7 @@ const ProductDetail = ({ product }) => {
     <div>
       <div className="text-center mb-5">
         <img
-          src="/assets/images/book-thumbnail.jpg"
+          src={product.product_image}
           className="middle-image img-fluid"
           alt=""
         />
@@ -36,16 +36,17 @@ const ProductDetail = ({ product }) => {
         <div className="info-row mb-3">
           <div className="info-key">Phân loại:</div>
           <div className="info-value">
-            {product.tags.map((tag, index) => (
-              <button
-                key={index}
-                className={`btn btn-outline tag badge ${tag.color}`}
-              >
-                {tag.name}
-              </button>
-            ))}
+          {product.tags.map((tag, index) => (
+                <button
+                  key={index}
+                  className={`btn btn-outline tag badge ${tag.color}`}
+                >
+                  {tag.name}
+                </button>
+              ))}
           </div>
         </div>
+
 
         <div className="info-row  mb-3">
           <div className="info-key">Tình trạng:</div>
@@ -58,12 +59,12 @@ const ProductDetail = ({ product }) => {
         <div className="info-row  mb-3">
           <div className="info-key">Phương thức giao dịch:</div>
           <div className="info-value">
-            {product.transaction_methods.map((method, index) => (
-              <div key={index} className=" mb-3">
+           
+              <div className=" mb-3">
                 <FontAwesomeIcon icon={faCheck} className="check-icon" />{" "}
-                {method}
+                {product.transaction_method}
               </div>
-            ))}
+   
           </div>
         </div>
       </div>

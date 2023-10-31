@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./AccountSideBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -24,15 +24,15 @@ const AccountSideBar = () => {
       <div className="user-avatar">
         <a className="edit-avatar" href="#" /><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User" /></div>
       <div className="user-data">
-        <h4>Daniel Adams</h4><span>Joined February 06, 2017</span>
+        <h4>Daniel Adams</h4><span>Tham gia vào tháng 6, 2017</span>
       </div>
     </div>
   </aside>
   <nav className="list-group">
-    <Link className="list-group-item with-badge" to={"/member/general"}><FontAwesomeIcon icon={faTh}/> <i className=" fa fa-th" />Thông tin cá nhân</Link>
-    <Link className="list-group-item" to={"/"}><FontAwesomeIcon icon={faProductHunt}/> Sản phẩm của tôi</Link>
-    <Link className="list-group-item with-badge " to={"/member/wishlist"}><FontAwesomeIcon icon={faHeart}/> Yêu thích<span className="badge badge-primary badge-pill">3</span></Link>
-    <Link className="list-group-item with-badge" to={"/reset-password"}><FontAwesomeIcon icon={faLock}/> Đặt lại mật khẩu</Link>
+    <NavLink className="list-group-item with-badge" to={"/member/general"}><FontAwesomeIcon icon={faTh}/> <i className=" fa fa-th" />Thông tin cá nhân</NavLink>
+    <NavLink className="list-group-item" to={"/"}><FontAwesomeIcon icon={faProductHunt}/> Sản phẩm của tôi</NavLink>
+    <NavLink className="list-group-item with-badge " to={"/member/wishlist"}><FontAwesomeIcon icon={faHeart}/> Yêu thích<span className="badge badge-primary badge-pill">3</span></NavLink>
+    <NavLink className="list-group-item with-badge" to={"/reset-password"}><FontAwesomeIcon icon={faLock}/> Đặt lại mật khẩu</NavLink>
   </nav>
 </div>
 

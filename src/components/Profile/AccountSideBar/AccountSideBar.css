@@ -162,3 +162,16 @@ a.list-group-item, .list-group-item-action {
     background-color: #fff;
     border: 1px solid rgba(0,0,0,0.125);
 }
+
+.list-group .list-group-item.active {
+    background-color: #7355F7;
+}
+
+.list-group .list-group-item:hover {
+    background-color: #e1e7ec;
+}
+
+
+.list-group .list-group-item .badge {
+    color: red;
+}

@@ -16,7 +16,7 @@ const Product = ({ product }) => {
           to={"/home-page/product-detail/"+product.id}
           style={{ textDecoration: 'none', color: 'black' }}
         >
-          <img src="/assets/images/book-thumbnail.jpg" alt="" className="small-image  " />
+          <img src={product.product_image} alt="" className="small-image  " />
           <span>{product.title}</span>
         </Link>
       </td>
@@ -48,7 +48,7 @@ const Product = ({ product }) => {
         </Link>
       </td>
       <td className="align-middle">
-        <span>{product.last_updated}, 2023</span>
+        <span>{product.last_updated}</span>
       </td>
     </tr>
   )

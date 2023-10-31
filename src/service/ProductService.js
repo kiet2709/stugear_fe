@@ -15,6 +15,13 @@ class ProductService {
         .then((response) => response?.data?.data)
         .catch((error) => error?.response)
   }
+
+  getCommentsByProductId(id) {
+    return axios
+          .get(PRODUCT_URL + `/${id}/comments`)
+          .then((response) => response?.data?.data)
+          .catch((error) => error?.response)
+  }
 }
 
 export default new ProductService()
