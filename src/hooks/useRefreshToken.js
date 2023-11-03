@@ -14,7 +14,6 @@ const useRefreshToken = () => {
         )
         .then(response => {
             
-            console.log(response)
             return response?.data?.data
         })
         .catch(error => error?.response)

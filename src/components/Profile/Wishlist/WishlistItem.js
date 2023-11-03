@@ -16,7 +16,7 @@ const WishlistItem =({item}) =>{
             </Link>
             <div className="product-info my-auto ms-4">
               <h4 className="product-title py-2">
-                <Link to={`/home-page/product-detail/${item.id}`}>{item.title}</Link>
+                <Link to={`/home-page/product-detail/${item.id}`}>{item.name}</Link>
               </h4>
               <div className="text-lg text-medium text-muted py-2">
                 {item.price}

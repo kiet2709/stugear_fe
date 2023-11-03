@@ -10,12 +10,11 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../Loading";
 
 const LoginForm = () => {
-  const [user, setUser] = useState({});
-  const { setAuth } = useAuth();
+  const {user, setUser} = useAuth();
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(false);
@@ -40,7 +39,7 @@ const LoginForm = () => {
       localStorage.setItem("user_id", userId);
       localStorage.setItem("username", username);
       localStorage.setItem("roles", roles);
-      setAuth(response);
+      setUser(response);
       //  thunk function
       // dispatch(createAccount(userId));
       // dispatch(getCart(userId));
@@ -48,7 +47,7 @@ const LoginForm = () => {
       // dispatch(getDeliveries());
       if (roles.includes("ADMIN")) {
         navigate("/admin");
-      } else {
+      } else {  
         navigate("/landing-page");
       }
     }

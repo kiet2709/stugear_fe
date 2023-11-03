@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Popover from "react-bootstrap/Popover";
 import "./index.css";
 import { Link } from "react-router-dom";
@@ -6,7 +6,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAddressCard } from "@fortawesome/free-regular-svg-icons";
 import { Overlay } from "react-bootstrap";
 import { faHeart, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import UserService from "../../service/UserService";
+import useAuth from "../../hooks/useAuth";
 const UserHeader = () => {
+
+  const {user} = useAuth()
+  // useEffect(() => {
+  //   setUserId(localStorage.getItem("user_id"))
+  // }, [])
   const [show, setShow] = useState(false);
   const [target, setTarget] = useState(null);
   const ref = useRef(null);
@@ -34,7 +41,7 @@ const UserHeader = () => {
 
 
         <img
-          src="/assets/images/contributor.jpg"
+          src={`http://127.0.0.1:8000/api/users/${user?.user_id}/images`}
           alt=""
           onClick={handleClick}
           className="popImg"
@@ -48,7 +55,7 @@ const UserHeader = () => {
         >
           <Popover id="popover-contained">
             <ul className="menu text-center">
-              <li>Khải</li>
+              <li>{user?.username}</li>
               <li>
                 <Link className="link" to="/member/general">
                   <FontAwesomeIcon icon={faAddressCard} /> Trang cá nhân

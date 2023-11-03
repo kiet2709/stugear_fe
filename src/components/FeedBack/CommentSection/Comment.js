@@ -1,7 +1,13 @@
 import "./Comment.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons";
-import { faGlobe, faMobile, faPencil } from "@fortawesome/free-solid-svg-icons";
+import {
+  faClock,
+  faGlobe,
+  faMobile,
+  faPencil,
+  faStar,
+} from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 const Comment = ({ children, comment, isSubComment }) => {
@@ -15,12 +21,41 @@ const Comment = ({ children, comment, isSubComment }) => {
     <>
       <div className="panel-body media-block d-flex">
         <Link>
-          <img className=" img-sm" alt="" src={comment.owner_image} />
+          <img
+            className="img-sm rounded-circle"
+            alt=""
+            src={comment.owner_image}
+          />
         </Link>
         <div className="media-body  ">
-          <Link className="  ">{comment.owner_name}</Link>
-          <span> - {comment.last_updated}</span>
+          <Link className="me-3">{comment.owner_name} </Link>
+          {comment.rating ? (
+            <>
+              {" "}
+              {[...Array(5)].map((_, index) => {
+                let starColor = "";
+                if (index < comment.rating) {
+                  starColor = "#FFC107";
+                }
+                return (
+                  <FontAwesomeIcon
+                    key={index}
+                    icon={faStar}
+                    style={{ color: starColor }}
+                  />
+                );
+              })}
+            </>
+          ) : (
+            <></>
+          )}
 
+          <div className="mt-1 mb-3">
+            <span className="text-muted">
+              {" "}
+              <FontAwesomeIcon icon={faClock} /> {comment.last_updated}
+            </span>
+          </div>
           <p>
             <Link style={{ textDecoration: "None" }}>
               {comment?.reply_on ? `@${comment.reply_on}` : ""}

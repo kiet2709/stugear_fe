@@ -1,7 +1,6 @@
 import axios from "axios";
 import useRefreshToken from "../hooks/useRefreshToken";
 import { useNavigate } from "react-router-dom";
-
 const BASE_URL = "http://localhost:3000/api";
 
 const axiosPrivate = axios.create({
@@ -12,13 +11,12 @@ let isRefreshing = false;
 
 axiosPrivate.interceptors.request.use(
   (request) => {
-    console.log("Request here");
-    if (!request.headers["Authorization"]) {
-      request.headers["Authorization"] = `Bearer ${localStorage.getItem(
-        "access_token"
-      )}`;
-    }
-    console.log(request);
+
+
+    request.headers["Authorization"] = `Bearer ${localStorage.getItem(
+      "access_token"
+    )}`;
+
     return request;
   },
   (error) => Promise.reject(error)
@@ -29,24 +27,40 @@ axiosPrivate.interceptors.response.use(
     return response;
   },
   async (error) => {
+    
+   
     const prevRequest = error?.config;
     if (
       (error.response.status === 498 || error.response.status === 403) &&
       !prevRequest?.sent
     ) {
       prevRequest.sent = true;
-
+      
+      console.log("Refresh access Token")
       const refresh = await useRefreshToken();
 
       if (refresh) {
+        
         localStorage.setItem("access_token", refresh?.access_token);
         localStorage.setItem("refresh_token", refresh?.refresh_token);
+        localStorage.setItem("user_id", refresh?.user_id);
+        localStorage.setItem("roles", refresh?.roles);
+        localStorage.setItem("username", refresh?.username);
         return axiosPrivate(prevRequest);
       } else {
         console.log("Hết cứu")
+        localStorage.removeItem("user_id")
+        localStorage.removeItem("refresh_token")
+        localStorage.removeItem("username")
+        localStorage.removeItem("roles")
+        localStorage.removeItem("access_token")
+        window.location.href = '/login';  
       }
-    } else {
-      console.log("Hết cứu thật")
+    } else if (error.response.status == 500){
+      window.location.href = '/internal-error';  
+    } else if (error.response.status == 401){
+      console.log("Need login")
+      window.location.href = '/login';
     }
     return Promise.reject(error);
   }

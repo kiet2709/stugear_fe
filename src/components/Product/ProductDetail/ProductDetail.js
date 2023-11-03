@@ -2,7 +2,21 @@ import "./ProductDetail.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import UserService from "../../../service/UserService";
+import { useState } from "react";
 const ProductDetail = ({ product }) => {
+
+  const [isAdded, setAdded] = useState(false)
+  const addToWishlist = async () => {
+    const response = await UserService.addCurrentWishtlistByProductId(product.id)
+    if (response == 500) {
+      console.log("Something went wrong");
+    } else {
+      
+      setAdded(true);
+    }
+  }
+
   return (
     <div>
       <div className="text-center mb-5">
@@ -70,8 +84,13 @@ const ProductDetail = ({ product }) => {
       </div>
       <div className="wishtlist-btn">
         
-        <button className="btn"><FontAwesomeIcon icon={faHeart}/> Yêu thích</button>
+        <button className="btn" onClick={() => addToWishlist()}><FontAwesomeIcon icon={faHeart}/> Yêu thích</button>
       </div>
+      {isAdded ? (
+        <div className="bg-secondary">Thêm vào yêu thích thành công</div>
+      ): (
+        <></>
+      )}
     </div>
   );
 };

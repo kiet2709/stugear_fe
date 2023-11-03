@@ -4,9 +4,15 @@ import PropTypes from 'prop-types';
 const AuthContext = createContext({})
 
 const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState({})
+  const [user, setUser] = useState({
+    user_id: localStorage.getItem("user_id"),
+    access_token: localStorage.getItem("access_token"),
+    refresh_token: localStorage.getItem("refresh_token"),
+    roles: localStorage.getItem("roles"),
+    username: localStorage.getItem("username")
+  })
 
-  return <AuthContext.Provider value={{ auth, setAuth }}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={{ user, setUser }}>{children}</AuthContext.Provider>
 }
 
 // Add PropTypes validation

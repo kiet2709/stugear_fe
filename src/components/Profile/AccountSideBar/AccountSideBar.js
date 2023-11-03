@@ -22,7 +22,7 @@ const AccountSideBar = () => {
     </div>
     <div className="user-info">
       <div className="user-avatar">
-        <a className="edit-avatar" href="#" /><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="User" /></div>
+        <a className="edit-avatar" href="#" /><img src={`http://127.0.0.1:8000/api/users/${localStorage.getItem("user_id")}/images`} alt="User" /></div>
       <div className="user-data">
         <h4>Daniel Adams</h4><span>Tham gia vào tháng 6, 2017</span>
       </div>
