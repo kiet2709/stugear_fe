@@ -14,7 +14,6 @@ const Wishlist = () => {
   const getWishlitCurrentUser = async () => {
     setLoading(true);
     const response = await UserService.getCurrentUserWishlist();
-    console.log(response)
     if (response == 500) {
       console.log("Something went wrong");
       

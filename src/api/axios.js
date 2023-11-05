@@ -3,6 +3,7 @@ import useRefreshToken from "../hooks/useRefreshToken";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = "http://localhost:3000/api";
 
+const LOGIN_PAGE_URL = '/login';
 const axiosPrivate = axios.create({
   baseURL: BASE_URL,
 });
@@ -28,6 +29,7 @@ axiosPrivate.interceptors.response.use(
   },
   async (error) => {
     
+    const navigate = useNavigate();
    
     const prevRequest = error?.config;
     if (
@@ -38,7 +40,6 @@ axiosPrivate.interceptors.response.use(
       
       console.log("Refresh access Token")
       const refresh = await useRefreshToken();
-
       if (refresh) {
         
         localStorage.setItem("access_token", refresh?.access_token);
@@ -46,6 +47,9 @@ axiosPrivate.interceptors.response.use(
         localStorage.setItem("user_id", refresh?.user_id);
         localStorage.setItem("roles", refresh?.roles);
         localStorage.setItem("username", refresh?.username);
+        if (prevRequest.url === LOGIN_PAGE_URL) {
+          navigate('/'); 
+        }
         return axiosPrivate(prevRequest);
       } else {
         console.log("Hết cứu")
@@ -54,13 +58,14 @@ axiosPrivate.interceptors.response.use(
         localStorage.removeItem("username")
         localStorage.removeItem("roles")
         localStorage.removeItem("access_token")
-        window.location.href = '/login';  
+        navigate('/login'); 
       }
     } else if (error.response.status == 500){
-      window.location.href = '/internal-error';  
+      
+      navigate('/internal-error'); 
     } else if (error.response.status == 401){
       console.log("Need login")
-      window.location.href = '/login';
+      navigate('/login'); 
     }
     return Promise.reject(error);
   }

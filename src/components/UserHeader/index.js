@@ -11,9 +11,7 @@ import useAuth from "../../hooks/useAuth";
 const UserHeader = () => {
 
   const {user} = useAuth()
-  // useEffect(() => {
-  //   setUserId(localStorage.getItem("user_id"))
-  // }, [])
+
   const [show, setShow] = useState(false);
   const [target, setTarget] = useState(null);
   const ref = useRef(null);

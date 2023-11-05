@@ -4,19 +4,31 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import UserService from "../../../service/UserService";
 import { useState } from "react";
-const ProductDetail = ({ product }) => {
+import { ToastContainer, toast } from "react-toastify";
 
-  const [isAdded, setAdded] = useState(false)
+import "react-toastify/dist/ReactToastify.css";
+const ProductDetail = ({ product }) => {
+  const [isAdded, setAdded] = useState(false);
   const addToWishlist = async () => {
-    const response = await UserService.addCurrentWishtlistByProductId(product.id)
+    const response = await UserService.addCurrentWishtlistByProductId(
+      product.id
+    );
     if (response == 500) {
       console.log("Something went wrong");
     } else {
-      
       setAdded(true);
+      toast.success("Thêm vào yêu thích thành công!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
-  }
-
+  };
   return (
     <div>
       <div className="text-center mb-5">
@@ -50,17 +62,16 @@ const ProductDetail = ({ product }) => {
         <div className="info-row mb-3">
           <div className="info-key">Phân loại:</div>
           <div className="info-value">
-          {product.tags.map((tag, index) => (
-                <button
-                  key={index}
-                  className={`btn btn-outline tag badge ${tag.color}`}
-                >
-                  {tag.name}
-                </button>
-              ))}
+            {product.tags.map((tag, index) => (
+              <button
+                key={index}
+                className={`btn btn-outline tag badge ${tag.color}`}
+              >
+                {tag.name}
+              </button>
+            ))}
           </div>
         </div>
-
 
         <div className="info-row  mb-3">
           <div className="info-key">Tình trạng:</div>
@@ -73,22 +84,34 @@ const ProductDetail = ({ product }) => {
         <div className="info-row  mb-3">
           <div className="info-key">Phương thức giao dịch:</div>
           <div className="info-value">
-           
-              <div className=" mb-3">
-                <FontAwesomeIcon icon={faCheck} className="check-icon" />{" "}
-                {product.transaction_method}
-              </div>
-   
+            <div className=" mb-3">
+              <FontAwesomeIcon icon={faCheck} className="check-icon" />{" "}
+              {product.transaction_method}
+            </div>
           </div>
         </div>
       </div>
       <div className="wishtlist-btn">
-        
-        <button className="btn" onClick={() => addToWishlist()}><FontAwesomeIcon icon={faHeart}/> Yêu thích</button>
+        <button className="btn" onClick={() => addToWishlist()}>
+          <FontAwesomeIcon icon={faHeart} /> Yêu thích
+        </button>
       </div>
       {isAdded ? (
-        <div className="bg-secondary">Thêm vào yêu thích thành công</div>
-      ): (
+        <>
+          <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
+        </>
+      ) : (
         <></>
       )}
     </div>

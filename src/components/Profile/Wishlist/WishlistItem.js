@@ -2,7 +2,37 @@ import "./WishlistItem.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
+import UserService from "../../../service/UserService";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useState } from "react";
+
 const WishlistItem =({item}) =>{
+
+  const [isRemoved, setRemoved] = useState(false)
+
+  const handleRemoveItem = async () => {
+    const response = await UserService.removeCurrentUserWishListByProductId(item.id)
+    
+    console.log(response)
+    if(response?.status === 500){
+      console.log("Something went wrong")
+    }
+    else{
+      setRemoved(true)
+      toast.success('Xóa sản phẩm thành công!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+    }
+  }
+
     return (
         <tr>
         <td>
@@ -33,9 +63,23 @@ const WishlistItem =({item}) =>{
         </td>
         <td>
           <div className="mt-5">
-            <Link>
+            <Link style={{textDecoration: 'None'}} onClick={() => handleRemoveItem()}>
               <FontAwesomeIcon icon={faTrashCan} size="2x"/>
             </Link>
+            {isRemoved && (
+              <ToastContainer
+              position="top-center"
+              autoClose={1000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+              />
+            )}
           </div>
         </td>
       </tr>
