@@ -22,7 +22,7 @@ const FindAccount = () => {
     const response = await AuthService.findUserByEmail(email)
     setLoading(false)
     if (response.status === 200) {
-      navigator('/reset-password')
+      navigator('/member/reset-password')
     } else if (response.status === 404) {
       setErrorMessage('Không tìm thấy tài khoản với email này')
     }

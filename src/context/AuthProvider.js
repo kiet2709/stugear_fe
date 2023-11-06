@@ -1,6 +1,6 @@
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
-
+import UserService from "../service/UserService"
 const AuthContext = createContext({})
 
 const AuthProvider = ({ children }) => {
@@ -11,6 +11,7 @@ const AuthProvider = ({ children }) => {
     roles: localStorage.getItem("roles"),
     username: localStorage.getItem("username")
   })
+
 
   return <AuthContext.Provider value={{ user, setUser }}>{children}</AuthContext.Provider>
 }

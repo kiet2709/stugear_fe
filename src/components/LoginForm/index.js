@@ -59,7 +59,7 @@ const LoginForm = () => {
 
   return (
     <div className="row my-3 justify-content-center w-100">
-      <div className="col col-3 box-shadow px-5">
+      <div className="col col-4 box-shadow px-5">
         {loading && <Loading />}
         {error && <div className="mt-4 alert alert-danger">{message}</div>}
         <OauthSection text="Đăng nhập với: " />

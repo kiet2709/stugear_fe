@@ -10,7 +10,7 @@ import Loading from "../../Loading";
 const Wishlist = () => {
   const [wishlists, setWishlists] = useState([]);
   const [isLoading, setLoading] = useState(true);
-
+  const [key, setKey] = useState(0)
   const getWishlitCurrentUser = async () => {
     setLoading(true);
     const response = await UserService.getCurrentUserWishlist();
@@ -25,7 +25,7 @@ const Wishlist = () => {
 
   useEffect(() => {
     getWishlitCurrentUser();
-  }, []);
+  }, [key]);
 
   return (
     <>
@@ -33,12 +33,17 @@ const Wishlist = () => {
         <div className="table-responsive wishlist-table margin-bottom-none">
           <table className="table">
             <tbody>
+              
               {isLoading ? (
                 <Loading />
-              ) : (
+              ) : wishlists.length === 0 ? (
+                <tr className="text-center">
+                  <td >Không có sản phẩm nào trong mục yêu thích</td>
+                </tr>
+              ) :  (
                 <>
                   {wishlists?.map((item) => (
-                    <WishlistItem key={item.id} item={item} />
+                    <WishlistItem key={item.id} item={item} setKey={setKey}/>
                   ))}
                 </>
               )}

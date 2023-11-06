@@ -4,7 +4,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import ProductService from "../../../service/ProductService";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-const LeaveComment = ({ productId }) => {
+const LeaveComment = ({ productId, setKey }) => {
   const [comment, setComment] = useState({});
 
   const [isAdded, setAdded] = useState(false);
@@ -18,6 +18,7 @@ const LeaveComment = ({ productId }) => {
       console.log("Something went wrong")
     }else{
       setAdded(true);
+      setKey(prev => prev+1)
       toast.success("Bình luận thành công!", {
         position: "top-center",
         autoClose: 2000,

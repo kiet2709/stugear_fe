@@ -32,13 +32,7 @@ class ProductService {
   }
 
   createCommentByProductId(id, comment){
-    console.log({
-      "content" : comment.content,
-      "parent_id": comment?.parent_id ? comment.parent_id : 0,
-      "reply_on": comment?.reply_on ? comment.reply_on : 0,
-      "product_id": id,
-      "rating": comment?.rating ? comment.rating : 0,
-    })
+
     return axiosPrivate.post(PRODUCT_URL + `/${id}/comments`, {
       "content" : comment.content,
       "parent_id": comment?.parent_id ? comment.parent_id : 0,
@@ -50,6 +44,53 @@ class ProductService {
     .then((response) => response)
     .catch((error) => error?.response)
   }
+
+  attachTag(productId, tags){
+    return axiosPrivate.patch(PRODUCT_URL + `/${productId}/attach-tag`, {
+      "tags": tags
+    })
+  }
+
+  uploadImage(productId, formData){
+    console.log(formData)
+    return axiosPrivate.post(PRODUCT_URL + `/${productId}/upload-image`, formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+  }
+
+  createProduct(product){
+    console.log({
+      "name" : product.name,
+      "price" : product.price,
+      "condition" : product.condition,
+      "edition" : product.edition,
+      "origin_price": product.origin_price,
+      "quantity" : product.quantity,
+      "brand" : product.brand,
+      "status": product.status,
+      "category_id" : product.category_id,
+      "transaction_id" : product.transaction_id,
+      "description" : product.description
+  })
+    return axiosPrivate.post(PRODUCT_URL, {
+      "name" : product.name,
+      "price" : product.price,
+      "condition" : product.condition,
+      "edition" : product.edition,
+      "origin_price": product.origin_price,
+      "quantity" : product.quantity,
+      "brand" : product.brand,
+      "status": product.status,
+      "category_id" : product.category_id,
+      "transaction_id" : product.transaction_id,
+      "description" : product.description
+  })
+  .then((response) => response?.data?.data)
+  .catch((error) => error?.response)
+}
 }
 
 export default new ProductService()

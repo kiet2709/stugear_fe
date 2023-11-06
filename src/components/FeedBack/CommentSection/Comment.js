@@ -9,14 +9,54 @@ import {
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-const Comment = ({ children, comment, isSubComment }) => {
-  const [showReplyInput, setShowReplyInput] = useState(false);
+import { useEffect, useState } from "react";
+import ProductService from "../../../service/ProductService";
 
+import { ToastContainer, toast } from "react-toastify";
+const Comment = ({ children, comment, productId, currentPage, setCurrentPage, setKey, parentComment }) => {
+  const [showReplyInput, setShowReplyInput] = useState(false);
+  const [replyComment, setReplyComment] = useState({
+    reply_on: comment?.owner_id,
+    content: "",
+    parent_id: parentComment?.id ? parentComment.id : comment.id
+  })
+  const [isAdded, setAdded] = useState(false);
   const handleReplyClick = () => {
     setShowReplyInput(!showReplyInput);
   };
+  const handleReplySubmit = async (e) => {
+    e.preventDefault()
+    const response = await ProductService.createCommentByProductId(productId, replyComment)
+    if(response?.status === 500){
+      console.log("Something went wrong")
+    }else{
+      setAdded(true);
+      toast.success("Trả lời bình luận thành công!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setKey(prev => prev+1)
+      setCurrentPage(currentPage)
 
+
+    }
+   
+}
+  useEffect(() => {
+    console.log(replyComment)
+  },[replyComment])
+
+  
+
+  const handleChange =(e) => {
+    setReplyComment({ ...replyComment, [e.target.name]: e.target.value });
+  }
   return (
     <>
       <div className="panel-body media-block d-flex">
@@ -71,14 +111,14 @@ const Comment = ({ children, comment, isSubComment }) => {
                 <FontAwesomeIcon icon={faThumbsDown} /> {comment.unlike}
               </button>
             </div>
-            {!isSubComment && (
+           
               <button
                 className="btn  btn-sm btn-reply  "
-                onClick={handleReplyClick}
+                onClick={(e) => handleReplyClick(e)}
               >
                 Trả lời
               </button>
-            )}
+       
           </div>
           <div className="reply-section">
             <hr />
@@ -86,12 +126,15 @@ const Comment = ({ children, comment, isSubComment }) => {
               <div className="panel-body">
                 <textarea
                   className="form-control "
-                  rows={2}
-                  placeholder="What are you thinking?"
+                  rows={4}
+                  name="content"
+                  placeholder="Bạn đang nghĩ gì?"
+                  onChange={(e) => handleChange(e)}
+                  value={replyComment?.content}
                 />
                 <button
                   className="btn btn-sm mt-3 btn-submit"
-                  onClick={handleReplyClick}
+                  onClick={handleReplySubmit}
                 >
                   Gửi
                 </button>
@@ -102,6 +145,24 @@ const Comment = ({ children, comment, isSubComment }) => {
           {/* insert sub comment here */}
           {children}
         </div>
+        {isAdded ? (
+        <>
+          <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
+        </>
+      ) : (
+        <></>
+      )}
       </div>
     </>
   );

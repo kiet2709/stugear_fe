@@ -17,6 +17,7 @@ const General = () => {
 
   const getCurrentUser = async (id) => {
     const response = await UserService.getCurrentUser();
+    console.log(response)
     if (response == 500) {
       console.log("Something went wrong");
     } else {

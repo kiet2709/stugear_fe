@@ -12,7 +12,7 @@ class UserService {
 
   removeCurrentUserWishListByProductId(id){
     console.log(id)
-    return axiosPrivate.delete("http://127.0.0.1:8000/api/wishlists/remove", {
+    return axiosPrivate.post("http://127.0.0.1:8000/api/wishlists/remove", {
       "product_id": id
     })
     .then(response => response?.data?.data)

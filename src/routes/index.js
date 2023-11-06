@@ -18,6 +18,8 @@ import Wishlist from '../components/Profile/Wishlist/Wishlist.js'
 import PageNotFound from '../pages/Main/ErrorPage/ErrorPage.js'
 import ErrorPage from '../pages/Main/ErrorPage/ErrorPage.js'
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute.js'
+import UploadProduct from '../pages/Main/UploadProduct/UploadProduct.js'
+import MyProduct from '../components/Profile/MyProduct/MyProduct.js'
 function useRouteElements () {
   const routeElements = useRoutes([
     {
@@ -52,7 +54,25 @@ function useRouteElements () {
           path: '/member/general',
           element: <General/>
         },
+        {
+          path: '/member/my-product',
+          element: <MyProduct/>
+        },
       ]
+    },
+    {
+      path: '',
+      element: <ProtectedRoute><MainLayout/></ProtectedRoute>,
+      children: [
+        {
+          path: '/member/upload',
+          element: <UploadProduct/>
+        },
+      ]
+    },
+    {
+      path: '/member/reset-password',
+      element: <ResetPassword />
     },
     {
       path: '',
@@ -69,10 +89,6 @@ function useRouteElements () {
         {
           path: 'find-account',
           element: <FindAccount />
-        },
-        {
-          path: 'reset-password',
-          element: <ResetPassword />
         },
         {
           path: '/landing-page',

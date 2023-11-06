@@ -28,9 +28,7 @@ axiosPrivate.interceptors.response.use(
     return response;
   },
   async (error) => {
-    
-    const navigate = useNavigate();
-   
+
     const prevRequest = error?.config;
     if (
       (error.response.status === 498 || error.response.status === 403) &&
@@ -40,16 +38,14 @@ axiosPrivate.interceptors.response.use(
       
       console.log("Refresh access Token")
       const refresh = await useRefreshToken();
-      if (refresh) {
+      if (refresh?.refresh_token) {
         
         localStorage.setItem("access_token", refresh?.access_token);
         localStorage.setItem("refresh_token", refresh?.refresh_token);
         localStorage.setItem("user_id", refresh?.user_id);
         localStorage.setItem("roles", refresh?.roles);
         localStorage.setItem("username", refresh?.username);
-        if (prevRequest.url === LOGIN_PAGE_URL) {
-          navigate('/'); 
-        }
+
         return axiosPrivate(prevRequest);
       } else {
         console.log("Hết cứu")
@@ -58,16 +54,17 @@ axiosPrivate.interceptors.response.use(
         localStorage.removeItem("username")
         localStorage.removeItem("roles")
         localStorage.removeItem("access_token")
-        navigate('/login'); 
+        window.location.href = "/login"
       }
-    } else if (error.response.status == 500){
-      
-      navigate('/internal-error'); 
-    } else if (error.response.status == 401){
+    } else if (error.response.status === 500){
+      console.log("500 rui")
+      console.log(error)
+      window.location.href = "/internal-error" 
+    } else if (error.response.status === 401){
       console.log("Need login")
-      navigate('/login'); 
+      window.location.href = "/login"
     }
-    return Promise.reject(error);
+
   }
 );
 

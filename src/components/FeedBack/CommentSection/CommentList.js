@@ -12,7 +12,8 @@ const CommentList = ({ productId }) => {
   const [comments, setComments] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPage, setTotalPage] = useState()
+  const [totalPage, setTotalPage] = useState();
+  const [key, setKey] = useState(0);
   const nextPage = () => {
     setCurrentPage(currentPage + 1);
   };
@@ -27,51 +28,67 @@ const CommentList = ({ productId }) => {
       id,
       currentPage
     );
-    console.log(response)
+    console.log(response);
     if (response?.status === 500) {
       console.log("Something wentwrong");
     } else {
       setComments(response?.data);
-      setTotalPage(response?.total_page)
+      setTotalPage(response?.total_page);
     }
     setLoading(false);
   };
 
   useEffect(() => {
     getCommentsByProductId(productId);
-  }, [productId, currentPage]);
+  }, [productId, currentPage, key]);
 
   return (
     <div>
       <div className="panel comment-list">
         {isLoading ? (
           <Loading />
-        ) : (
+        ) : comments.length===0 ? (
+          <p className="text-center">Không có bình luận nào</p>
+        ) :(
           <>
             {comments.map((comment) => (
-              <Comment key={comment.id} comment={comment}>
+              <Comment
+                setKey={setKey}
+                key={comment.id}
+                comment={comment}
+                productId={productId}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                parentComment={{}}
+              >
                 {comment.sub_comment.map((subComment) => (
                   <Comment
                     key={subComment.id}
+                    productId={productId}
                     comment={subComment}
-                    isSubComment={true}
+                    setKey={setKey}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    parentComment={comment}
                   />
                 ))}
               </Comment>
             ))}
-          </>
-        )}
-      </div>
-      <div  className="mt-3 comment-pagination">
-      <CustomPagination 
+             <div className="mt-3 comment-pagination">
+        <CustomPagination
           currentPage={currentPage}
           totalPage={totalPage}
           prevPage={prevPage}
           nextPage={nextPage}
           setCurrentPage={setCurrentPage}
         />
+      </div>  
+          </>
+          
+        )}
       </div>
-      </div>
+     
+    </div>
   );
 };
 

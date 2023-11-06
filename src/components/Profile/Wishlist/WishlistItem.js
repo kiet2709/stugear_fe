@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from "react";
 
-const WishlistItem =({item}) =>{
+const WishlistItem =({item, setKey}) =>{
 
   const [isRemoved, setRemoved] = useState(false)
 
@@ -20,6 +20,7 @@ const WishlistItem =({item}) =>{
     }
     else{
       setRemoved(true)
+      setKey(prev => prev+1)
       toast.success('Xóa sản phẩm thành công!', {
         position: "top-center",
         autoClose: 5000,
