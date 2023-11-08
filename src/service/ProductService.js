@@ -1,11 +1,11 @@
 import axios from 'axios'
 import { axiosPrivate } from '../api/axios'
 
-const PRODUCT_URL = 'http://127.0.0.1:8000/api/products'
+const PRODUCT_URL = 'http://localhost:8000/api/products'
 class ProductService {
   getProductsByCategoryId (id, page) {
     return axios
-      .get(PRODUCT_URL + `/category/${id}?page=${page}&limit=1`)
+      .get(PRODUCT_URL + `/category/${id}?page=${page}&limit=5`)
       .then((response) => response?.data)
       .catch((error) => error?.response)
   }
@@ -61,6 +61,27 @@ class ProductService {
     })
   }
 
+  getImageByProductId(productId){
+    return axiosPrivate.get(PRODUCT_URL + `/${productId}/images`)
+      .then((response) => response?.data)
+      .catch((error) => error?.response)
+  }
+  createDraft(product){
+    return axiosPrivate.post(PRODUCT_URL +"/draft", {
+      "name" : product.name,
+      "price" : product.price,
+      "condition" : product.condition,
+      "edition" : product.edition,
+      "origin_price": product.origin_price,
+      "quantity" : product.quantity,
+      "brand" : product.brand,
+      "category_id" : product.category_id,
+      "transaction_id" : product.transaction_id,
+      "description" : product.description
+  })
+  .then((response) => response?.data?.data)
+  .catch((error) => error?.response)
+  }
   createProduct(product){
     console.log({
       "name" : product.name,

@@ -65,7 +65,7 @@ function useRouteElements () {
       element: <ProtectedRoute><MainLayout/></ProtectedRoute>,
       children: [
         {
-          path: '/member/upload',
+          path: '/member/upload/:slug?',
           element: <UploadProduct/>
         },
       ]

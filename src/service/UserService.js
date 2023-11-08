@@ -38,6 +38,12 @@ class UserService {
       .then(response => response?.data?.data)
       .catch(error => error?.response)
   }
+
+  getCurrentUserProducts(currentPage){
+    return axiosPrivate.get(`http://127.0.0.1:8000/api/products/current?page=${currentPage}&limit=3`)
+      .then(response => response?.data)
+      .catch(error => error?.response)
+  }
 }
 
 export default new UserService()

@@ -10,6 +10,7 @@ import TagService from "../../../service/TagService";
 
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 // "chặn": "0",
 // "nháp": "1",
 // "chờ duyệt": "2",
@@ -19,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const UploadProduct = () => {
+  let { slug } = useParams();
   const navigate = useNavigate()
   const [isAdded, setAdded] = useState(false);
   const [product, setProduct] = useState({
@@ -74,12 +76,36 @@ const UploadProduct = () => {
     const options = tagResponse.map((tag) => ({
       label: tag.name,
       style: tag.color,
-      value: tag.id.toString(), // Convert id to string if necessary
+      value: tag.id, // Convert id to string if necessary
     }));
     setTags(options);
   };
 
+  const getProductById = async (id) => {
+    const response = await ProductService.getProductById(id)
+    if(response.status === 404){
+      navigate("/not-found")
+    }
+    setProduct({
+    name: response?.title,
+    price: response?.price,
+    condition: response?.condition === "Đã sử dụng" ? 1 : 2,
+    edition: response?.edition,
+    quantity: response?.quantity,
+    brand: response?.brand,
+    status: response?.status ==="Chờ duyệt" ? 2 : 1, // chờ duyệt
+    origin_price: response?.origin_price,
+    category_id: response?.category_id,
+    transaction_id: response?.transaction_method === "Trên trang web" ? 2 : 1,
+    description: response?.description,
+    })
+  }
+
   useEffect(() => {
+    console.log(slug)
+    if(slug !== undefined){
+      getProductById(slug)
+    }
     getAllCategories();
     getAllTags();
   }, []);
@@ -91,12 +117,39 @@ const UploadProduct = () => {
       console.log("image")
       console.log(selectedFile)
     };
-  const handleDraft = (e) => {
+  const handleDraft = async (e) => {
     e.preventDefault();
     setProduct({ ...product, status: 1 });
-    handleCreateProduct()
+    const response = await ProductService.createDraft(product)
+    console.log(response)
+    let productId = 0
+    if(response?.id){
+      productId = response.id
+    }else{
+      console.log("Some thing went wrong")
+      return
+    }
+    const formData = new FormData();
+    formData.append('image', selectedFile);
+   await ProductService.uploadImage(productId, formData)
+   await ProductService.attachTag(productId, selected.map(item => item.value))
+   setAdded(true);
+   toast.success("Lưu nháp thành công!", {
+     position: "top-center",
+     autoClose: 2000,
+     hideProgressBar: false,
+     closeOnClick: true,
+     pauseOnHover: true,
+     draggable: true,
+     progress: undefined,
+     theme: "light",
+   });
+  //  navigate("/member/my-product")
   };
-  const handleCreateProduct =async () => {
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setProduct({ ...product, status: 2 });
     const response = await ProductService.createProduct(product)
     console.log(response)
     let productId = 0
@@ -121,12 +174,7 @@ const UploadProduct = () => {
      progress: undefined,
      theme: "light",
    });
-   navigate("/member/my-product")
-  }
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setProduct({ ...product, status: 2 });
-    handleCreateProduct()
+  //  navigate("/member/my-product")
   };
 
   const [selected, setSelected] = useState([]);
@@ -314,8 +362,8 @@ const UploadProduct = () => {
                     value={product.condition}
                   >
                     <option selected>Chọn...</option>
-                    <option value={1}>Đã sử dụng</option>
-                    <option value={2}>Chưa sử dụng</option>
+                    <option value="1">Đã sử dụng</option>
+                    <option value="2">Chưa sử dụng</option>
                   </select>
                 </div>
               </div>
@@ -394,9 +442,12 @@ const UploadProduct = () => {
           </div>
         </form>
         <div className="ms-auto mt-5">
-          <button className="me-2 btn" onClick={(e) => handleDraft(e)}>
-            Lưu bản nháp
-          </button>
+
+          {slug === undefined && (
+         <> <button className="me-2 btn" onClick={(e) => handleDraft(e)}>
+         Lưu bản nháp
+       </button></>
+          )}
           <button className="btn" onClick={(e) => handleSubmit(e)}>
             Đăng
           </button>

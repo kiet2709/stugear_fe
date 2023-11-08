@@ -38,7 +38,7 @@ const Wishlist = () => {
                 <Loading />
               ) : wishlists.length === 0 ? (
                 <tr className="text-center">
-                  <td >Không có sản phẩm nào trong mục yêu thích</td>
+                  <td>Không có sản phẩm nào trong mục yêu thích</td>
                 </tr>
               ) :  (
                 <>

@@ -23,7 +23,7 @@
 .mainNav .nav-link {
     color: #070120!important;
     margin: 0.5rem 1.2rem!important;
-    font-weight: 500!important;
+    font-weight: 600!important;
     transition: 0.3s;
     font-size: 1.1rem;
     font-family: 'Poppins', sans-serif;
@@ -99,4 +99,3 @@
 #search-icon {
     color: white     ;
 }
-
