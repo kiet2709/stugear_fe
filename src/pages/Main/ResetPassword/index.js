@@ -109,7 +109,7 @@ const ResetPassword = () => {
             <div className="col col-3 text-center">
                 <h1 >Cập nhật mật khẩu</h1>
                 <p className="font-italic text-muted mb-0">Hãy thay đổi mật khẩu của bạn</p>
-                <img src="assets/images/get-pass.gif" alt="Image" className="img-fluid" />
+                <img src="/assets/images/get-pass.gif" alt="" className="img-fluid" />
 
             </div>
         </div>

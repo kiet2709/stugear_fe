@@ -5,7 +5,7 @@ const ChatSection = ({ product }) => {
     <>
       <div className="card">
         <div className="card-body chat-section-body">
-          <p>Nhắn với <b>{product.owner}</b> ngay bây giờ</p>
+          <p>Nhắn với <b>{product.owner_name}</b> ngay bây giờ</p>
           <form method="POST" action="#">
             <textarea
               className="form-control input-group"
@@ -14,7 +14,7 @@ const ChatSection = ({ product }) => {
               rows={8}
               required
               placeholder="Nhắn tin ở đây..."
-              defaultValue={`Xin chào ${product.owner},\n\nBạn còn món đồ này không? Tui muốn mua vài món từ bạn. Xin hãy nhắn lại cho tui biết\n\nCảm ơn,\nNguyen`}
+              defaultValue={`Xin chào ${product.owner_name},\n\nBạn còn món đồ này không? Tui muốn mua vài món từ bạn. Xin hãy nhắn lại cho tui biết\n\nCảm ơn,\nNguyen`}
             />
                    <button className="btn text-white input-group custom-btn  " type="submit">
                 Gửi tin nhắn

@@ -8,6 +8,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { Button, Container, InputGroup, Nav, Navbar } from 'react-bootstrap'
 import useAuth from '../../hooks/useAuth'
 import UserHeader from '../UserHeader'
+import TitleBox from '../TitleBox/TitleBox'
 
 const Header = ({ sticky }) => {
 
@@ -15,8 +16,6 @@ const Header = ({ sticky }) => {
   const [isSticky, setSticky] = useState(false);
   const [searchValue, setSearchValue] = useState("")
   const naviage = useNavigate()
-  const { auth } = useAuth()
-
 
   useEffect(() => {
     if (sticky === true) {
@@ -38,6 +37,7 @@ const Header = ({ sticky }) => {
     setSearchValue(e.target.value)
   }
   return (
+    <>
     <Navbar
       className={`navbar navbar-expand-lg navbar-light ${
         isSticky ? 'navStyle' : 'navDefault'
@@ -50,25 +50,10 @@ const Header = ({ sticky }) => {
           <span className="navHighlight">StuGear</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav" />
+
 
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav.Item>
-            <InputGroup className="form-outline" id="search-group">
-              <input
-                id="search-input"
-                placeholder="Tìm kiếm..."
-                type="search"
-                className="form-control"
-                value={searchValue}
-                onChange={(e) => hanldeChange(e)}
-              />
-              <Button id="search-button">
-                <FontAwesomeIcon icon={faSearch} id="search-icon" onClick={() => handleSearch()} />
-              </Button>
-            </InputGroup>
-          </Nav.Item>
-          <Nav className="ms-auto mainNav">
+        <Nav className="mainNav">
             <Nav.Item>
               <Link to="/home-page/category/all" className="nav-link">
                 Trang chủ
@@ -85,6 +70,19 @@ const Header = ({ sticky }) => {
               </Link>
             </Nav.Item>
             <Nav.Item>
+              <Link to="/search" className="nav-link">
+                Tìm kiếm
+              </Link>
+            </Nav.Item>
+            <Nav.Item>
+
+           
+            </Nav.Item>
+          </Nav>
+
+          <Nav className="ms-auto mainNav">
+
+            <Nav.Item>
 
               {user_id ? (
 
@@ -97,13 +95,21 @@ const Header = ({ sticky }) => {
                   <Link to="/login">
                     <button className="authBtn">Đăng nhập</button>
                   </Link>
+                  
+                  <Link to="/register">
+                    <button className="authBtn">Đăng ký</button>
+                  </Link>
                 </div>
                   )}
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>
+
       </Container>
+      
     </Navbar>
+
+    </>
   )
 }
 

@@ -10,15 +10,20 @@
 }
 .navDefault {
     transition: 0.5s!important;
-    padding: 25px 0 40px 0!important;
-    margin-bottom: 2rem;
-    background: #F7F7F8;
+    padding: 25px 0 20px 0!important;
+    box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+    background: white;
+    top: 0;
+    width: 100%;
+    z-index: 99!important;
+    transition: 0.5s!important;
+    font-family: 'Poppins', sans-serif;
 }
 
 .mainNav .nav-link {
     color: #070120!important;
     margin: 0.5rem 1.2rem!important;
-    font-weight: 500!important;
+    font-weight: 600!important;
     transition: 0.3s;
     font-size: 1.1rem;
     font-family: 'Poppins', sans-serif;
@@ -53,7 +58,6 @@
 .authBtn {
     outline: none;
     border: none;
-    border-radius: 50px;
     font-weight: 500;
     color:#fff;
     background: #7355F7;
@@ -94,4 +98,8 @@
 }
 #search-icon {
     color: white     ;
+}
+
+.mainNav .Link {
+    font-family:  'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }

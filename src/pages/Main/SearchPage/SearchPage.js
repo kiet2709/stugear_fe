@@ -1,10 +1,11 @@
 import { Container } from 'react-bootstrap'
 import './SearchPage.css'
+import SearchProduct from '../../../components/SearchProduct/SearchProduct'
 
 const SearchPage = () => {
   return (
     <Container>
-      <p>Search</p>
+      <SearchProduct/>
     </Container>
   )
 }

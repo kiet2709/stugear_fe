@@ -17,7 +17,6 @@ const LandingPage = () => {
   }
   const loadData = async () => {
     const categoriesResponse = await CategoryService.getAllCategories()
-    console.log(categoriesResponse)
     const top3Categories = categoriesResponse.slice(0, 3)
     setCategories(top3Categories)
   }
