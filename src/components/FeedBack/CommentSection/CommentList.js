@@ -70,24 +70,25 @@ const CommentList = ({ productId }) => {
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
                     parentComment={comment}
+                    isSubComment={true}
                   />
                 ))}
               </Comment>
             ))}
              <div className="mt-3 comment-pagination">
-        <CustomPagination
-          currentPage={currentPage}
-          totalPage={totalPage}
-          prevPage={prevPage}
-          nextPage={nextPage}
-          setCurrentPage={setCurrentPage}
-        />
+     
       </div>  
           </>
           
         )}
       </div>
-     
+      <div className="mt-5"><CustomPagination
+          currentPage={currentPage}
+          totalPage={totalPage}
+          prevPage={prevPage}
+          nextPage={nextPage}
+          setCurrentPage={setCurrentPage}
+        /></div>
     </div>
   );
 };

@@ -2,6 +2,9 @@ import "./Comment.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons";
 import {
+  faArrowAltCircleDown,
+  faCaretDown,
+  faCaretUp,
   faClock,
   faGlobe,
   faMobile,
@@ -13,23 +16,36 @@ import { useEffect, useState } from "react";
 import ProductService from "../../../service/ProductService";
 
 import { ToastContainer, toast } from "react-toastify";
-const Comment = ({ children, comment, productId, currentPage, setCurrentPage, setKey, parentComment }) => {
+import Vote from "../Vote/Vote";
+const Comment = ({
+  children,
+  comment,
+  productId,
+  currentPage,
+  setCurrentPage,
+  setKey,
+  parentComment,
+  isSubComment,
+}) => {
   const [showReplyInput, setShowReplyInput] = useState(false);
   const [replyComment, setReplyComment] = useState({
     reply_on: comment?.owner_id,
     content: "",
-    parent_id: parentComment?.id ? parentComment.id : comment.id
-  })
+    parent_id: parentComment?.id ? parentComment.id : comment.id,
+  });
   const [isAdded, setAdded] = useState(false);
   const handleReplyClick = () => {
     setShowReplyInput(!showReplyInput);
   };
   const handleReplySubmit = async (e) => {
-    e.preventDefault()
-    const response = await ProductService.createCommentByProductId(productId, replyComment)
-    if(response?.status === 500){
-      console.log("Something went wrong")
-    }else{
+    e.preventDefault();
+    const response = await ProductService.createCommentByProductId(
+      productId,
+      replyComment
+    );
+    if (response?.status === 500) {
+      console.log("Something went wrong");
+    } else {
       setAdded(true);
       toast.success("Trả lời bình luận thành công!", {
         position: "top-center",
@@ -41,33 +57,37 @@ const Comment = ({ children, comment, productId, currentPage, setCurrentPage, se
         progress: undefined,
         theme: "light",
       });
-      setKey(prev => prev+1)
-      setCurrentPage(currentPage)
-
-
+      setKey((prev) => prev + 1);
+      setCurrentPage(currentPage);
     }
-   
-}
+  };
   useEffect(() => {
-    console.log(replyComment)
-  },[replyComment])
+    console.log(replyComment);
+  }, [replyComment]);
 
-  
-
-  const handleChange =(e) => {
+  const handleChange = (e) => {
     setReplyComment({ ...replyComment, [e.target.name]: e.target.value });
-  }
+  };
+
+ 
+
   return (
     <>
       <div className="panel-body media-block d-flex">
+        
+        {isSubComment !== true && (
+          <Vote voteNum={comment.vote} commentId={comment?.id}/>
+        )}
+        
+
         <Link>
           <img
-            className="img-sm rounded-circle"
+            className="img-sm rounded-circle mt-4"
             alt=""
             src={comment.owner_image}
           />
         </Link>
-        <div className="media-body  ">
+        <div className="media-body mt-4 ">
           <Link className="me-3">{comment.owner_name} </Link>
           {comment.rating ? (
             <>
@@ -103,22 +123,14 @@ const Comment = ({ children, comment, productId, currentPage, setCurrentPage, se
             {comment.content}
           </p>
           <div>
-            <div className="btn-group">
-              <button className="btn btn-sm btn-like text-dark ">
-                <FontAwesomeIcon icon={faThumbsUp} /> {comment.like}
-              </button>
-              <button className="btn btn-sm btn-unlike text-dark ">
-                <FontAwesomeIcon icon={faThumbsDown} /> {comment.unlike}
-              </button>
-            </div>
-           
-              <button
-                className="btn  btn-sm btn-reply  "
-                onClick={(e) => handleReplyClick(e)}
-              >
-                Trả lời
-              </button>
-       
+  
+
+            <button
+              className="btn  btn-sm btn-reply  "
+              onClick={(e) => handleReplyClick(e)}
+            >
+              Trả lời
+            </button>
           </div>
           <div className="reply-section">
             <hr />
@@ -146,23 +158,23 @@ const Comment = ({ children, comment, productId, currentPage, setCurrentPage, se
           {children}
         </div>
         {isAdded ? (
-        <>
-          <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
-        </>
-      ) : (
-        <></>
-      )}
+          <>
+            <ToastContainer
+              position="top-center"
+              autoClose={1000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
+          </>
+        ) : (
+          <></>
+        )}
       </div>
     </>
   );

@@ -9,7 +9,7 @@ const Feedback = ({productId}) => {
     <>
       <hr className="my-5"></hr>
 
-      <RatingSection productId={productId}/>
+      <RatingSection productId={productId} key={key+1}/>
       <LeaveComment productId={productId} setKey={setKey}/>
       <CommentList productId={productId} key={key}/>
     </>

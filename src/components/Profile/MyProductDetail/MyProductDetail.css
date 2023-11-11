@@ -1,0 +1,30 @@
+.product-status {
+    color: white;
+    padding: 20px;
+    border-radius: 0.75rem
+}
+
+.product-status h4 {
+    font-weight: 900px;
+}
+
+.product-edit {
+    background-color: #E5E5E5;
+    padding: 10px;
+    border-radius: 1rem;
+}
+
+.product-edit:hover {
+    background-color: #D4D4D4;
+}
+
+.product-remove:hover {
+    background-color: #FDA4AF;
+}
+
+.product-remove {
+    background-color: #FFE4E6;
+    border-radius: 1rem;
+    padding: 10px;
+}
+

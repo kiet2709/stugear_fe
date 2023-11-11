@@ -8,27 +8,50 @@ import ProductService from "../../../service/ProductService";
 import { useState } from "react";
 import { useEffect } from "react";
 import Loading from "../../../components/Loading";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 const ProductPage = () => {
   const [product, setProduct] = useState({});
   const [isLoading, setLoading] = useState(true);
+  const [isOwner, setOwner] = useState(false);
   let { slug } = useParams();
-
+  const navigate = useNavigate()
   const getProductById = async (id) => {
     setLoading(true);
     const response = await ProductService.getProductById(id);
-    console.log(response);
+    console.log(response)
+    if(response?.status === 404){
+      navigate("/not-found")
+    }
     if (response?.status === 500) {
       console.log("ProductDetail: Something went wrong");
     } else {
+      const userId = localStorage.getItem("user_id");
+          if((response?.status === "Chờ duyệt") && response?.owner_id != userId) {
+      navigate("/not-found")
+  }
+      if (userId == response?.owner_id) {
+        setOwner(true);
+      }
       setProduct(response);
     }
     setLoading(false);
   };
 
   useEffect(() => {
+
     getProductById(slug);
+
   }, [slug]);
 
+  const handleDelete = async () => {
+    const response = await ProductService.deleteProduct(product?.id)
+    console.log(response)
+    navigate("/home-page/category/all")
+    
+  }
   const products = [
     {
       id: 1,
@@ -109,6 +132,29 @@ const ProductPage = () => {
         <Loading />
       ) : (
         <>
+        {isOwner === true && product?.status !== "Đã duyệt" ? (
+          <>
+                 <div
+            className="product-status mb-5 rounded-xl1"
+            style={{
+              backgroundColor: "#F59E0B",
+            }}
+          >
+            <div className="d-flex mb-3">
+              <span
+                className="ping my-2 me-2"
+                style={{ border: "4px solid #10B981" }}
+              ></span>
+              <span>{product.status}</span>
+            </div>
+            <h4>Sản phẩm của bạn đang chờ được duyệt.</h4>
+            <p>Chúng tôi sẽ cho bạn biết khi sản phẩm đã được duyệt</p>
+          </div>
+
+          </>
+        ) : (
+          <></>
+        )}
           <h1 id="product-title">{product.title}</h1>
 
           <hr className="bg-dark my-4"></hr>
@@ -116,11 +162,48 @@ const ProductPage = () => {
             <div className="col-8">
               <ProductDetail product={product} />
               <div>
-                <Feedback productId={product.id} />
+
+                  <Feedback productId={product.id} />
+            
               </div>
             </div>
             <div className="col-4">
-              <ChatSection product={product} />
+            {isOwner === true ? (
+                  <>
+                    <div className="mt-4 text-center product-modify">
+                      <div className=" product-edit mb-3">
+                        <Link
+                          style={{ textDecoration: "None", color: "black" }}
+                          
+                          to={`/member/upload/${slug}`}
+                        >
+                          <h5>
+                            {" "}
+                            <FontAwesomeIcon
+                              icon={faPencil}
+                              className="me-2"
+                            />{" "}
+                            Chỉnh sửa
+                          </h5>
+                        </Link>
+                      </div>
+                      <div className=" product-remove">
+                        <Link
+                          style={{ textDecoration: "None", color: "black" }}
+                          onClick={(e) => handleDelete(e)}
+                        >
+                          <h5>
+                            <FontAwesomeIcon icon={faTrash} className="me-2" />{" "}
+                            Xóa sản phẩm
+                          </h5>
+                        </Link>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+
+                  <ChatSection product={product} />
+                )}
               <div className="mt-4">
                 <RelateProduct products={products} />
               </div>

@@ -9,6 +9,14 @@ class TagService {
             .then((response) => response?.data?.data)
             .catch((error) => error?.response)
       }
+      
+  createTags(tags){
+    return axiosPrivate.post(TAG_URL, {
+        names: tags
+    })
+    .then((response) => response?.data?.data)
+    .catch((error) => error?.response);
+  }
 }
 
 export default new TagService()

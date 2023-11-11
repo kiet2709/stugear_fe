@@ -20,13 +20,14 @@ const ProductCard = ({ product }) => {
             style={{
               textDecoration: "none",
               backgroundColor:
-              product.status === "Nháp" ? "#FFFBEB" : "#ECFDF5",
-              color: product.status === "Nháp" ? "#F59E0B" : "#10B981",
+              product.status === "Chờ duyệt" ? "#FFFBEB" : product.status === "Nháp" ? "#dcf1f7" :"#ECFDF5",
+              color: product.status === "Chờ duyệt" ? "#F59E0B" : product.status === "Nháp" ? "#155CA2" :"#10B981",
             }}
             className="card-button"
           >
             <div className="d-flex">
-              <span className="ping mt-2 me-2" style={{border: product.status === "Nháp" ? "4px solid #F59E0B" : "4px solid #10B981"}}></span>
+              <span className="ping mt-2 me-2" style={{
+                border: product.status === "Chờ duyệt" ? "4px solid #F59E0B" : product.status === "Nháp"? "4px solid  #155CA2" : "4px solid #10B981"}}></span>
               <span>{product.status}</span>
             </div>
           </Link>

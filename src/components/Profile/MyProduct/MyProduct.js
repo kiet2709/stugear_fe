@@ -35,9 +35,11 @@ const MyProduct = () => {
     if (status==="Đã duyệt"){
       return `/home-page/product-detail/${id}` 
     }else if (status ==="Chờ duyệt"){
-      return `/member/upload/` 
+      return `/home-page/product-detail/${id}` 
     } else {
-      return `/member/upload/${id}` 
+      return `/member/upload/${id}`  
+
+      
     }
   }
 

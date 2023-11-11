@@ -6,7 +6,7 @@
 
 
 .panel-body {
-    padding: 10px 20px;
+    padding: 10px
 }
 
 
@@ -21,7 +21,7 @@
     display: block;
     overflow: hidden;
     width: auto;
-    margin-left: 20px;
+    margin-left: 15px;
 }
 
 
@@ -48,3 +48,24 @@
 .reply-section{
     width: 500px;
 }
+
+.vote-icon {
+    font-size: 20px; 
+    color:#606060; 
+    text-align: center;
+}
+
+.vote-icon  a{
+    color: #606060;
+    border: black 1px solid;
+    border-radius: 50%;
+  }
+
+  .vote-icon  a:hover{
+    background-color: #F9DEC8;
+    border: black 1px solid;
+    border-radius: 70%;
+  }
+  .vote-icon-up {
+    font-size: 19px; 
+  }

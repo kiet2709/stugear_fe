@@ -7,7 +7,7 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
-const ProductDetail = ({ product }) => {
+const ProductDetail = ({ product, isMember }) => {
   const [isAdded, setAdded] = useState(false);
   const addToWishlist = async () => {
     const response = await UserService.addCurrentWishtlistByProductId(
@@ -62,7 +62,7 @@ const ProductDetail = ({ product }) => {
         <div className="info-row mb-3">
           <div className="info-key">Phân loại:</div>
           <div className="info-value">
-            {product.tags.map((tag, index) => (
+            {product?.tags?.map((tag, index) => (
               <button
                 key={index}
                 className={`btn btn-outline tag badge ${tag.color}`}
@@ -91,11 +91,16 @@ const ProductDetail = ({ product }) => {
           </div>
         </div>
       </div>
-      <div className="wishtlist-btn">
+      {isMember ===true ? (
+<></>
+      ): (
+<> <div className="wishtlist-btn">
         <button className="btn" onClick={() => addToWishlist()}>
           <FontAwesomeIcon icon={faHeart} /> Yêu thích
         </button>
-      </div>
+      </div></>
+      )}
+     
       {isAdded ? (
         <>
           <ToastContainer
