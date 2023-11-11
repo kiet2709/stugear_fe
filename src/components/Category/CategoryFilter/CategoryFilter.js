@@ -60,7 +60,7 @@ const CategoryFilter = () => {
         <div className="col ms-auto">
           <div className="dropdown col">
             <button
-              className="btn dropdown-toggle text-white"
+              className="btn dropdown-toggle"
               id="dropdown"
               data-bs-toggle="dropdown"
             >

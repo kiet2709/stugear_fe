@@ -1,5 +1,5 @@
 import './index.css'
-import Categories from '../../../components/Category/Categories'
+import Category from '../../../components/Category/Category'
 import { useParams } from 'react-router'
 import { useState, useEffect } from 'react'
 
@@ -44,7 +44,7 @@ const HomePage = () => {
         : (
         <>
           {categories.map((category) => (
-            <Categories key={category.id} category={category} />
+            <Category key={category.id} category={category} />
           ))}
         </>
           )}

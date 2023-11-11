@@ -5,7 +5,7 @@
 }
 
 .middle-image {
-    max-width: 100px;
+    max-width: 200px !important;
 }
 
 
@@ -21,4 +21,17 @@
   
   .info-value {
     flex: 3;
+  }
+  
+  .wishtlist-btn {
+    margin-left: 37rem;
+  }
+
+  .wishtlist-btn .btn {
+    background-color: palevioletred;
+  }
+
+
+  .wishtlist-btn .btn:hover {
+    background-color: palevioletred;
   }

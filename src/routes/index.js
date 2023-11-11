@@ -5,35 +5,79 @@ import ResetPassword from '../pages/Main/ResetPassword/index.js'
 import FindAccount from '../pages/Main/FindAccount/index.js'
 import { useRoutes } from 'react-router-dom'
 import LandingPage from '../pages/Main/LandingPage/index.js'
-import Profile from '../pages/Main/Profile/index.js'
 import Info from '../pages/Main/Info/index.js'
 import Contact from '../pages/Main/Contact/index.js'
 import HomePage from '../pages/Main/HomePage/index.js'
 import ProductPage from '../pages/Main/ProductPage/ProductPage.js'
 import HomeLayout from '../layouts/HomeLayout/HomeLayout.js'
-import ProductLayout from '../layouts/ProductLayout/ProductLayout.js'
 import SearchPage from '../pages/Main/SearchPage/SearchPage.js'
+import PersonalLayout from '../layouts/PersonalLayout/PersonalLayout.js'
+import PersonalInfo from '../pages/Main/PersonalPage/PersinalInfo/index.js'
+import General from '../components/Profile/General/index.js'
+import Wishlist from '../components/Profile/Wishlist/Wishlist.js'
+import PageNotFound from '../pages/Main/ErrorPage/ErrorPage.js'
+import ErrorPage from '../pages/Main/ErrorPage/ErrorPage.js'
+import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute.js'
+import UploadProduct from '../pages/Main/UploadProduct/UploadProduct.js'
+import MyProduct from '../components/Profile/MyProduct/MyProduct.js'
+import MyProductDetail from '../components/Profile/MyProductDetail/MyProductDetail.js'
 function useRouteElements () {
   const routeElements = useRoutes([
     {
       path: '',
-      element: <HomeLayout/>,
+      element: <HomeLayout title={"Trang chủ"}/>,
       children: [
         {
           path: '/home-page/category/:slug',
           element: <HomePage/>
-        }
+        },
       ]
     },
     {
       path: '',
-      element: <ProductLayout/>,
+      element: <HomeLayout title={"Trang chủ"} sub_title={"Sản phẩm"}/>,
       children: [
         {
-          path: 'product-detail',
+          path: '/home-page/product-detail/:slug',
           element: <ProductPage/>
-        }
+        },
       ]
+    },
+    {
+      path: '',
+      element: <ProtectedRoute><PersonalLayout/></ProtectedRoute>,
+      children: [
+        {
+          path: '/member/wishlist',
+          element: <Wishlist/>
+        },
+        {
+          path: '/member/general',
+          element: <General/>
+        },
+        {
+          path: '/member/my-product',
+          element: <MyProduct/>
+        },
+      ]
+    },
+    {
+      path: '',
+      element: <ProtectedRoute><MainLayout/></ProtectedRoute>,
+      children: [
+        {
+          path: '/member/upload/:slug?',
+          element: <UploadProduct/>
+        },
+        {
+          path: '/member/my-product/detail/:slug',
+          element: <MyProductDetail/>
+        },
+      ]
+    },
+    {
+      path: '/member/reset-password',
+      element: <ResetPassword />
     },
     {
       path: '',
@@ -52,17 +96,8 @@ function useRouteElements () {
           element: <FindAccount />
         },
         {
-          path: 'reset-password',
-          element: <ResetPassword />
-        },
-        {
-          path: 'landing-page',
+          path: '/landing-page',
           element: <LandingPage/>
-        },
-
-        {
-          path: 'profile',
-          element: <Profile/>
         },
         {
           path: 'info',
@@ -75,10 +110,18 @@ function useRouteElements () {
         {
           path: 'search',
           element: <SearchPage/>
+        },
+        {
+          path: "internal-error",
+          element: <ErrorPage status="500" message={"Có lỗi xảy ra"}
+          title={"Lỗi hệ thống"} />
+        },
+        {
+          path: '*',
+          element: <ErrorPage status="404" message={"Không tìm thấy trang bạn yêu cầu"}
+          title={"Không tìm thấy trang"} />
         }
-
       ]
-
     }
   ])
   return routeElements

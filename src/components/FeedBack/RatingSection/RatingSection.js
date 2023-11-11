@@ -9,45 +9,38 @@ import {
   faPerson
 } from '@fortawesome/free-solid-svg-icons'
 
-import { faRaspberryPi } from '@fortawesome/free-brands-svg-icons'
+import Loading from "../../Loading/index"
+import { useEffect, useState } from 'react'
+import ProductService from '../../../service/ProductService'
 
-const RatingSection = () => {
-  const ratings = {
-    rate: [
-      {
-        id: 1,
-        rate: 5,
-        quantity: 12
-      },
-      {
-        id: 2,
-        rate: 4,
-        quantity: 2
-      },
-      {
-        id: 3,
-        rate: 3,
-        quantity: 1
-      },
-      {
-        id: 4,
-        rate: 2,
-        quantity: 0
-      },
-      {
-        id: 5,
-        rate: 1,
-        quantity: 0
-      }
-    ],
-    total: 15,
-    average: 4.1
+const RatingSection = ({productId}) => {
+
+  const [ratings, setRatings] = useState([])
+  const [isLoading, setLoading] = useState(true)
+
+  const getRatingByProductId = async(id) => {
+    setLoading(true)
+    const response = await ProductService.getRatingByProductId(id)
+    if (response?.status === 500) {
+      console.log('Something wentwrong')
+    } else {
+      setRatings(response)
+    }
+    setLoading(false)
   }
+
+  useEffect(() => {
+    getRatingByProductId(productId)
+  },[productId])
+
 
   return (
     <>
       <div id="reviews" className="review-section my-5">
-        <div className="row">
+        {isLoading ? (
+          <Loading/>
+        ): (
+          <div className="row">
           <div className="col-3 text-center">
 
             <h1 className="rating-num">{ratings.average}</h1>
@@ -71,7 +64,7 @@ const RatingSection = () => {
           <div className="col">
             <table className="stars-counters">
               <tbody>
-                {ratings.rate.map((rating) => (
+                {ratings?.rate?.map((rating) => (
                   <RatingBar
                     key={rating.id}
                     rating={rating}
@@ -82,6 +75,8 @@ const RatingSection = () => {
             </table>
           </div>
         </div>
+        )}
+
       </div>
     </>
   )

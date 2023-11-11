@@ -22,7 +22,7 @@ const FindAccount = () => {
     const response = await AuthService.findUserByEmail(email)
     setLoading(false)
     if (response.status === 200) {
-      navigator('/reset-password')
+      navigator('/member/reset-password')
     } else if (response.status === 404) {
       setErrorMessage('Không tìm thấy tài khoản với email này')
     }
@@ -84,7 +84,7 @@ const FindAccount = () => {
             <div className="col col-3 text-center">
                 <h1 >Tìm tài khoản</h1>
                 <p className="font-italic text-muted mb-0">Nhập email để đặt lại mật khẩu</p>
-                <img src="assets/images/get-pass.gif" alt="Image" className="img-fluid" />
+                <img src="/assets/images/get-pass.gif" alt="" className="img-fluid" />
 
             </div>
         </div>
