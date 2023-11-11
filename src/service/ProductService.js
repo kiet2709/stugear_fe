@@ -164,6 +164,20 @@ class ProductService {
     })
   }
 
+  updateStatus(id, statusId){
+    axiosPrivate
+    .patch(PRODUCT_URL + `/status/${id}`, {
+        status: statusId
+    })
+  }
+
+  getAllProducts(currentPage){
+    return axios
+    .get(PRODUCT_URL + `?page=${currentPage}&limit=6`)
+    .then((response) => response?.data)
+    .catch((error) => error?.response);
+  }
+
 }
 
 export default new ProductService();

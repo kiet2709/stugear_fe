@@ -11,6 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { faDraftingCompass, faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
+import CustomModal from "../../../components/Modal/Modal";
 // "chặn": "0",
 // "nháp": "1",
 // "chờ duyệt": "2",
@@ -96,6 +97,7 @@ const UploadProduct = () => {
       value: tag.id, // Convert id to string if necessary
     }));
     setSelected(selected);
+    console.log(selected)
     setProduct({
       id: response?.id,
       name: response?.title,
@@ -176,6 +178,7 @@ const UploadProduct = () => {
     e.preventDefault();
     setLoading(true);
     setProduct({ ...product, status: 2 });
+  
     const response = await ProductService.updateProduct(product);
     if (response?.status === "success") {
       const formData = new FormData();
@@ -193,6 +196,7 @@ const UploadProduct = () => {
       setLoading(false);
       navigate(`/home-page/product-detail/${product?.id}`);
     }
+    await ProductService.updateStatus(product?.id, 2)
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -239,6 +243,15 @@ const UploadProduct = () => {
     const response = await ProductService.deleteProduct(product?.id);
     navigate("/member/my-product");
   };
+
+  const [show, setShow] = useState(false);
+  const handleClose =() => {
+    setShow(false)
+  }
+  const handleSave = () => {
+    handleDelete()
+  }
+
   return (
     <>
       {isLoading ? (
@@ -526,7 +539,7 @@ const UploadProduct = () => {
             </div>
           </form>
           <div className="ms-auto mt-5 d-flex">
-            {slug === undefined && (
+            {slug == undefined && (
               <>
                 <div className="product-draft mb-3 me-2">
                   <Link
@@ -563,7 +576,7 @@ const UploadProduct = () => {
                 <div className=" product-remove mb-3">
                   <Link
                     style={{ textDecoration: "None", color: "black" }}
-                    onClick={(e) => handleDelete(e)}
+                    onClick={() => setShow(true)}
                   >
                     <h5>
                       <FontAwesomeIcon icon={faTrash} className="me-2" />
@@ -595,6 +608,7 @@ const UploadProduct = () => {
           ) : (
             <></>
           )}
+          <CustomModal handleSave={handleSave} handleClose={handleClose} show={show} heading={"Xóa sản phẩm"} body={"Bạn muốn xóa đi sản phẩm này?"}></CustomModal>
         </div>
       )}
     </>

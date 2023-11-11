@@ -20,7 +20,6 @@ import ErrorPage from '../pages/Main/ErrorPage/ErrorPage.js'
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute.js'
 import UploadProduct from '../pages/Main/UploadProduct/UploadProduct.js'
 import MyProduct from '../components/Profile/MyProduct/MyProduct.js'
-import MyProductDetail from '../components/Profile/MyProductDetail/MyProductDetail.js'
 function useRouteElements () {
   const routeElements = useRoutes([
     {
@@ -68,10 +67,6 @@ function useRouteElements () {
         {
           path: '/member/upload/:slug?',
           element: <UploadProduct/>
-        },
-        {
-          path: '/member/my-product/detail/:slug',
-          element: <MyProductDetail/>
         },
       ]
     },

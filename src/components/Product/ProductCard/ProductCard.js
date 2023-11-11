@@ -1,20 +1,12 @@
-import {
-  faFacebookF,
-  faGoogle,
-  faGithub,
-} from "@fortawesome/free-brands-svg-icons";
-import { faMessage } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+
 import "./ProductCard.css";
 import { Link } from "react-router-dom";
-import ProductService from "../../../service/ProductService";
 const ProductCard = ({ product }) => {
 
 
   return (
     <>
-      <div className="container text-start" style={{ marginTop: 50 }}>
+      <div className="container text-start product-card">
         <div class="card-sl">
           <Link
             style={{
@@ -39,7 +31,7 @@ const ProductCard = ({ product }) => {
             {product.title === "" ? "Tiêu đề" : product.title}
           </div>
           <div class="card-text">
-            {product.description === "" ? "miêu tả" : product.description}
+            {product.description === "" ? "miêu tả" : product?.description?.slice(0, 30)}
           </div>
           <div class="card-text">{product.price}</div>
         </div>

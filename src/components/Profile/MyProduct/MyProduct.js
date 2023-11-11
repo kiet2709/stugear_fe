@@ -2,8 +2,6 @@ import "./MyProduct.css";
 import ProductCard from "../../Product/ProductCard/ProductCard";
 import UserService from "../../../service/UserService";
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import CustomPagination from "../../../components/Pagination/Pagination";
 import Loading from "../../Loading";
@@ -55,7 +53,7 @@ const MyProduct = () => {
         ) : (
           <>
             {products.map((product) => (
-              <div className="col-4">
+              <div className="col-4 mt-5">
                 <Link
                   className="my-product-item"
                   style={{ textDecoration: "none", color: "black" }}

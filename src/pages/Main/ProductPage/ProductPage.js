@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import CustomModal from "../../../components/Modal/Modal";
 const ProductPage = () => {
   const [product, setProduct] = useState({});
   const [isLoading, setLoading] = useState(true);
@@ -126,6 +127,14 @@ const ProductPage = () => {
       ],
     },
   ];
+
+  const [show, setShow] = useState(false);
+  const handleClose =() => {
+    setShow(false)
+  }
+  const handleSave = () => {
+    handleDelete()
+  }
   return (
     <div>
       {isLoading ? (
@@ -190,7 +199,7 @@ const ProductPage = () => {
                       <div className=" product-remove">
                         <Link
                           style={{ textDecoration: "None", color: "black" }}
-                          onClick={(e) => handleDelete(e)}
+                          onClick={() => setShow(true)}
                         >
                           <h5>
                             <FontAwesomeIcon icon={faTrash} className="me-2" />{" "}
@@ -209,6 +218,8 @@ const ProductPage = () => {
               </div>
             </div>
           </div>
+          <CustomModal handleSave={handleSave} handleClose={handleClose} show={show} heading={"Xóa sản phẩm"} body={"Bạn muốn xóa đi sản phẩm này?"}></CustomModal>
+        
         </>
       )}
     </div>
