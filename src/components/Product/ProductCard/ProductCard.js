@@ -20,7 +20,7 @@ const ProductCard = ({ product }) => {
             <div className="d-flex">
               <span className="ping mt-2 me-2" style={{
                 border: product.status === "Chờ duyệt" ? "4px solid #F59E0B" : product.status === "Nháp"? "4px solid  #155CA2" : "4px solid #10B981"}}></span>
-              <span>{product.status}</span>
+              <span> {product.status === "Đã duyệt" ? "Đang bán" : product.status}</span>
             </div>
           </Link>
           <div class="card-image">

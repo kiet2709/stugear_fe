@@ -178,6 +178,15 @@ class ProductService {
     .catch((error) => error?.response);
   }
 
+  getProductsByCriteria(criteria, currentPage){
+    console.log(PRODUCT_URL + `/search-criteria?page=${currentPage}&limit=6`)
+    console.log(criteria)
+    return axios
+    .post(PRODUCT_URL + `/search-criteria?page=${currentPage}&limit=6`, criteria)
+    .then((response) => response?.data)
+    .catch((error) => error?.response);
+  }
+
 }
 
 export default new ProductService();

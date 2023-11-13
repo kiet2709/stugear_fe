@@ -1,19 +1,36 @@
 import "./SearchSideBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "react-select-search/style.css";
 import CategoryService from "../../service/CategoryService";
 import TagService from "../../service/TagService";
 import { MultiSelect } from "react-multi-select-component";
-import DatetimePicker from "react-datetime-picker";
-import "react-datetime-picker/dist/DateTimePicker.css";
+import DatePicker from "react-date-picker";
+import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
-import "react-clock/dist/Clock.css";
 import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
-const SearchSideBar = () => {
-  const [product, setProduct] = useState({});
-  const [isLoading, setLoading] = useState(true);
+import ProductService from "../../service/ProductService";
+import { debounce } from 'lodash';
+const SearchSideBar = ({
+  setProducts,
+  setTotalPage,
+  currentPage,
+  setCurrentPage,
+  setLoading,
+}) => {
+  const tenYearsAgo = new Date();
+  tenYearsAgo.setFullYear(tenYearsAgo.getFullYear() - 10);
+  const [startDate, setStartDate] = useState(tenYearsAgo);
+  const [endDate, setEndDate] = useState(new Date());
+  const [priceRange, setPriceRange] = useState({
+    min: 0,
+    max: 10000000,
+  });
+
+
+
+
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
 
@@ -28,19 +45,64 @@ const SearchSideBar = () => {
   };
   const getAllCategories = async () => {
     const cateResponse = await CategoryService.getAllCategories();
-    setCategories(cateResponse);
+    const options = cateResponse.map((category) => ({
+      label: category.name,
+      value: category.id, // Convert id to string if necessary
+    }));
+    setCategories(options);
   };
   const handleChange = (e) => {
-    setProduct({ ...product, [e.target.name]: e.target.value });
+    setQuery(e.target.value);
+    setCurrentPage(1)
   };
 
   useEffect(() => {
-    setLoading(true);
+
+
     getAllCategories();
     getAllTags();
-    setLoading(false);
+
   }, []);
+
+  const [query, setQuery] = useState("");
+  const [status, setStatus] = useState([
+    {
+      label: "Đang bán",
+      value: 3,
+    },
+    {
+      label: "Đang chờ thanh toán",
+      value: 4,
+    },
+  ]);
+
+  const [condition, setCondition] = useState([
+    {
+      label: "Đã sử dụng",
+      value: 1,
+    },
+    {
+      label: "Chưa sử dụng",
+      value: 2,
+    },
+  ]);
+  const [method, setMethod] = useState([
+    {
+      label: "Trên trang web",
+      value: 2,
+    },
+    {
+      label: "Tự do",
+      value: 1,
+    },
+  ]);
+  const [statusSelected, setStatusSelected] = useState([]);
   const [selected, setSelected] = useState([]);
+  const [cateSelected, setCateSelected] = useState([]);
+  const [methodSelected, setMethodSelected] = useState([]);
+  // const [statusSelected, setStatusSelected] = useState([]);
+  const [conditionSelected, setConditionSelected] = useState([]);
+
   const DefaultItemRenderer = ({ checked, option, onClick, disabled }) => (
     <div className={`item-renderer ${disabled ? "disabled" : ""}`}>
       <input
@@ -57,14 +119,13 @@ const SearchSideBar = () => {
       </span>
     </div>
   );
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
 
   const handleStartDateChange = (date) => {
     setStartDate(date);
     // Ensure end date is not before the selected start date
     if (date > endDate) {
       setEndDate(date);
+      setCurrentPage(1)
     }
   };
 
@@ -73,12 +134,67 @@ const SearchSideBar = () => {
     // Ensure start date is not after the selected end date
     if (date < startDate) {
       setStartDate(date);
+      setCurrentPage(1)
     }
   };
+
+  const handlePrice = debounce(({ min, max }) => {
+    setPriceRange({
+      min: min,
+      max: max,
+    });
+    setCurrentPage(1);
+  }, 300); // Adjust the debounce delay as needed
+
+  useEffect(() => {
+
+      console.log("lấy");
+      const criteria = {
+                tags: selected.map((item) => item.value),
+        category_id: cateSelected.map((item) => item.value),
+        condition: conditionSelected.map((item) => item.value),
+        status: statusSelected.map((item) => item.value),
+        transaction_method: methodSelected.map((item) => item.value),
+        q: query,
+        price_from: priceRange.min.toString(),
+        price_to: priceRange.max.toString(),
+        date_from: startDate?.toLocaleDateString("en-GB"),
+        date_to: endDate?.toLocaleDateString("en-GB"),
+      }
+
+
+      getProductsByCriteria(criteria, currentPage);
+
+  }, [
+    selected,
+    cateSelected,
+    conditionSelected,
+    methodSelected,
+    statusSelected,
+    query,
+    priceRange,
+    startDate,
+    endDate,
+    currentPage,
+  ]);
+
+  const getProductsByCriteria = async (criteria, currentPage) => {
+    setLoading(true);
+    const response = await ProductService.getProductsByCriteria(
+      criteria,
+      currentPage
+    );
+    setProducts(response?.data);
+    setTotalPage(response?.total_page);
+    setLoading(false);
+  };
+
+
+
   return (
     <>
       {/* Filter Section */}
-      <div className="card">
+      <div className="card ">
         <div className="card-body filter">
           <div className="filter-search">
             <h5 className="card-title">Tìm kiếm</h5>
@@ -89,6 +205,8 @@ const SearchSideBar = () => {
                 placeholder="Tìm kiếm..."
                 type="search"
                 className="form-control"
+                name="q"
+                onInput={(e) => handleChange(e)}
               />
               <button className="btn search-button">
                 <FontAwesomeIcon icon={faSearch} id="search-icon" />
@@ -96,57 +214,35 @@ const SearchSideBar = () => {
             </div>
           </div>
 
-
-          <div className="filter-updated my-4">
-            <h5>Ngày đăng</h5>
-
-            <div className="filter-updated start-day my-3">
-            <span className="me-3">Từ: </span>
-            <DatetimePicker
-              format="y-MM-dd"
-              onChange={handleStartDateChange}
-              value={startDate}
-            />
-            </div>
-          
-            <div className="filter-updated end-day my-3">
-
-            <span className="me-2">Đến: </span>
-            <DatetimePicker
-              format="y-MM-dd"
-              onChange={handleEndDateChange}
-              value={endDate}
-            />
-            </div>
-       
-          </div>
-
           <div className="filter-price my-4">
-          <h5 className="mb-3">Giá</h5>
-          <MultiRangeSlider
-      min={0}
-      max={1000000}
-      onChange={() => {}}
-    />
+            <h5 className="mb-3">Giá</h5>
+            <MultiRangeSlider
+              min={0}
+              max={10000000}
+              onChange={({ min, max }) => handlePrice({ min, max })}
+            />
           </div>
 
           <div className="filter-category my-4 mt-5">
             <h5 className="my-3">Danh mục</h5>
-
-            <select
-              class="form-select"
-              aria-label="Default select example"
-              name="category_id"
-              onChange={(e) => handleChange(e)}
-              value={product.category_id}
-            >
-              <option>Chọn...</option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
+            <MultiSelect
+              className="filter-tag"
+              options={categories}
+              value={cateSelected}
+              onChange={(cateSelected) => {
+                setCateSelected(cateSelected);
+                setCurrentPage(1) // Reset currentPage
+              }}
+              labelledBy="Select"
+              overrideStrings={{
+                allItemsAreSelected: "Đã chọn tất cả.",
+                noOptions: "Không có",
+                search: "Tìm kiếm",
+                selectAll: "Chọn tất cả",
+                selectSomeItems: "Chọn...",
+                create: "Tạo mới",
+              }}
+            />
           </div>
 
           <div className="filter-tag my-4">
@@ -156,7 +252,10 @@ const SearchSideBar = () => {
               className="filter-tag"
               options={tags}
               value={selected}
-              onChange={setSelected}
+              onChange={(selected) => {
+                setSelected(selected);
+                setCurrentPage(1) // Reset currentPage
+              }}
               labelledBy="Select"
               ItemRenderer={DefaultItemRenderer}
               overrideStrings={{
@@ -170,38 +269,93 @@ const SearchSideBar = () => {
             />
           </div>
 
+          <div className="filter-updated my-5">
+            <h5>Ngày đăng</h5>
+
+            <div className="filter-updated start-day my-3">
+              <span className="me-3">Từ: </span>
+              <DatePicker
+                format="dd-MM-y"
+                onChange={() => handleStartDateChange()}
+                value={startDate}
+                locale="vi-VN"
+              />
+            </div>
+
+            <div className="filter-updated end-day my-3">
+              <span className="me-2">Đến: </span>
+              <DatePicker
+                format="dd-MM-y"
+                onChange={() => handleEndDateChange()}
+                value={endDate}
+                locale="vi-VN"
+              />
+            </div>
+          </div>
+
           <div className="filter-condition my-4">
             <h5>Tình trạng</h5>
-
-            <select
-              class="form-select"
-              aria-label="Default select example"
-              onChange={(e) => handleChange(e)}
-              value={product.condition}
-            >
-              <option selected>Chọn...</option>
-              <option value="1">Đã sử dụng</option>
-              <option value="2">Chưa sử dụng</option>
-            </select>
+            <MultiSelect
+              className="filter-tag"
+              options={condition}
+              value={conditionSelected}
+              onChange={(conditionSelected) => {
+                setConditionSelected(conditionSelected);
+                setCurrentPage(1) // Reset currentPage
+              }}
+              labelledBy="Select"
+              overrideStrings={{
+                allItemsAreSelected: "Đã chọn tất cả.",
+                noOptions: "Không có",
+                search: "Tìm kiếm",
+                selectAll: "Chọn tất cả",
+                selectSomeItems: "Chọn...",
+                create: "Tạo mới",
+              }}
+            />
+   
           </div>
-          
+
           <div className="filter-method my-4">
-              <h5>Phương thức thanh toán</h5>
-       
-                  <select
-                    class="form-select"
-                    aria-label="Default select example"
-                    required
-                    name="transaction_id"
-                    onChange={(e) => handleChange(e)}
-                    value={product.transaction_id}
-                  >
-                    <option>Chọn...</option>
-                    <option value="1">Tự do</option>
-                    <option value="2">Trên web</option>
-                  </select>
+            <h5>Phương thức thanh toán</h5>
+            <MultiSelect
+              className="filter-tag"
+              options={method}
+              value={methodSelected}
+              onChange={(methodSelected) => {
+                setMethodSelected(methodSelected);
+                setCurrentPage(1) // Reset currentPage
+              }}
+              labelledBy="Select"
+              overrideStrings={{
+                allItemsAreSelected: "Đã chọn tất cả.",
+                noOptions: "Không có",
+                search: "Tìm kiếm",
+                selectAll: "Chọn tất cả",
+                selectSomeItems: "Chọn...",
+                create: "Tạo mới",
+              }}
+            />
           </div>
 
+          <div className="filter-status my-4">
+            <h5>Trạng thái giao dịch</h5>
+            <MultiSelect
+              className="filter-tag"
+              options={status}
+              value={statusSelected}
+              onChange={setStatusSelected}
+              labelledBy="Select"
+              overrideStrings={{
+                allItemsAreSelected: "Đã chọn tất cả.",
+                noOptions: "Không có",
+                search: "Tìm kiếm",
+                selectAll: "Chọn tất cả",
+                selectSomeItems: "Chọn...",
+                create: "Tạo mới",
+              }}
+            />
+          </div>
         </div>
       </div>
     </>

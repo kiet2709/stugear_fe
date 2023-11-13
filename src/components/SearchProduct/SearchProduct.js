@@ -20,19 +20,6 @@ const SearchProduct = () => {
   const prevPage = () => {
     setCurrentPage(currentPage - 1);
   };
-  const getProducts = async () => {
-    setLoading(true)
-    const response = await ProductService.getAllProducts(currentPage);
-    console.log(response)
-    setProducts(response?.data)
-    setTotalPage(response?.total_page)
-    setLoading(false)
-  }
-
-  useEffect(() => {
-    getProducts()
-  }, [currentPage])
-
 
 
   return (
@@ -40,15 +27,19 @@ const SearchProduct = () => {
       <div className="search-product my-5">
         <div className="row">
           <div className="col-3 filter">
-            <SearchSideBar />
+            <SearchSideBar setProducts={setProducts} setTotalPage={setTotalPage} currentPage={currentPage} 
+            setCurrentPage={setCurrentPage}
+            setLoading={setLoading}/>
           </div>
           <div className="col search-result">
            {isLoading === true ? (
             <Loading/>
            ) : (
             <div className="row">
-
-            {products.map((product, index) => (
+            {products?.length === 0 && (
+              <p className="text-center">Không có sản phẩm nào</p>
+            )}
+            {products?.map((product, index) => (
                <>
                 <div className="col-4 my-4 search-item">
  
