@@ -187,6 +187,13 @@ class ProductService {
     .catch((error) => error?.response);
   }
 
+  searchInCategory(criteria, currentPage){
+    return axios
+    .post(PRODUCT_URL + `/category-search?page=${currentPage}&limit=2`, criteria)
+    .then((response) => response?.data)
+    .catch((error) => error?.response);
+  }
+
 }
 
 export default new ProductService();
