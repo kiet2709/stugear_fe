@@ -6,7 +6,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, InputGroup } from 'react-bootstrap'
 import { useState } from 'react'
-import './Products.css'
+import './Product.css'
 import { Link } from 'react-router-dom'
 const Product = ({ product }) => {
   return (

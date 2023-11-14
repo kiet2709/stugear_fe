@@ -38,7 +38,7 @@ const SubMenu = ({ category, buyActive, sellActive, isAll }) => {
         {submenuOpen && (
           <ul>
             <li className={`sub-menu ${buyActive ? 'sub-menu-active' : ''}`} >
-              <Link to={`/home-page/category/${isAll ? 'all' : category.id}`} >
+              <Link to={`/home-page/category/${category.id}`} >
               <FontAwesomeIcon
                 icon={faBookmark}
                 style={{ color: '#111414', marginRight: '8px' }}

@@ -8,7 +8,13 @@ const CustomPagination = ({ currentPage, totalPage, prevPage, nextPage, setCurre
 
 
   return (
-    <Pagination>
+<>
+
+{totalPage == 1 ? (
+      <></>
+    ): (
+      <>
+      <Pagination>
       <Pagination.Prev onClick={prevPage} disabled={currentPage === 1} />
       {[...Array(totalPage).keys()].map((page) => (
         <Pagination.Item
@@ -21,6 +27,10 @@ const CustomPagination = ({ currentPage, totalPage, prevPage, nextPage, setCurre
       ))}
       <Pagination.Next onClick={nextPage} disabled={currentPage === totalPage} />
     </Pagination>
+      </>
+    )}
+</>
+
   );
 };
 
