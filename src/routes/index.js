@@ -20,6 +20,7 @@ import ErrorPage from '../pages/Main/ErrorPage/ErrorPage.js'
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute.js'
 import UploadProduct from '../pages/Main/UploadProduct/UploadProduct.js'
 import MyProduct from '../components/Profile/MyProduct/MyProduct.js'
+import Verify from '../pages/Main/Verify/Verify.js'
 function useRouteElements () {
   const routeElements = useRoutes([
     {
@@ -71,10 +72,6 @@ function useRouteElements () {
       ]
     },
     {
-      path: '/member/reset-password',
-      element: <ResetPassword />
-    },
-    {
       path: '',
       element: <MainLayout />,
       children: [
@@ -85,6 +82,10 @@ function useRouteElements () {
         {
           path: 'register',
           element: <Register />
+        },
+        {
+          path: '/member/reset-password/:slug',
+          element: <ResetPassword />
         },
         {
           path: 'find-account',
@@ -115,7 +116,11 @@ function useRouteElements () {
           path: '*',
           element: <ErrorPage status="404" message={"Không tìm thấy trang bạn yêu cầu"}
           title={"Không tìm thấy trang"} />
-        }
+        },
+        {
+          path: '/verify/:slug?',
+          element: <Verify />
+        },
       ]
     }
   ])

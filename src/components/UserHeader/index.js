@@ -8,19 +8,25 @@ import { Overlay } from "react-bootstrap";
 import { faHeart, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import UserService from "../../service/UserService";
 import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 const UserHeader = () => {
 
-  const {user} = useAuth()
+  const {user, setUser} = useAuth()
 
   const [show, setShow] = useState(false);
   const [target, setTarget] = useState(null);
+  const navigate = useNavigate()
   const ref = useRef(null);
 
   const handleClick = (event) => {
     setShow(!show);
     setTarget(event.target);
   };
-  const signOut = () => {};
+  const signOut = () => {
+    localStorage.clear()
+    setUser("")
+    navigate("/login")
+  };
   return (
     <>
       <div className="d-flex">

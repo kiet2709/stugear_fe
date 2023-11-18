@@ -44,6 +44,12 @@ class UserService {
       .then(response => response?.data)
       .catch(error => error?.response)
   }
+
+  sendVerifyEmail(email){
+    return axiosPrivate.get(`http://127.0.0.1:8000/api/products/send-verify-email?email=${email}`)
+    .then(response => response?.data)
+    .catch(error => error?.response)
+  }
 }
 
 export default new UserService()

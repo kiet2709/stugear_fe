@@ -12,9 +12,25 @@ import {
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faProductHunt } from "@fortawesome/free-brands-svg-icons";
 import useAuth from "../../../hooks/useAuth"
+import { useNavigate } from "react-router-dom";
+import UserService from "../../../service/UserService";
+import AuthService from "../../../service/AuthService"
+import { useState } from "react";
 const AccountSideBar = () => {
-
-  let {user} = useAuth()
+  const navigate = useNavigate()
+  let {user, setUser} = useAuth()
+  const handleLogout = (e) => {
+    e.preventDefault()
+    localStorage.clear()
+    setUser("")
+    navigate("/login")
+  };
+  const handleResetPassword = async (e) => {
+    e.preventDefault()
+    const response = await UserService.getCurrentUser()
+    AuthService.findUserByEmail(response?.email) 
+    navigate(`/member/reset-password/${response?.email}`)
+  }
   return (
     <>
 <div>
@@ -34,7 +50,7 @@ const AccountSideBar = () => {
     <NavLink className="list-group-item with-badge" to={"/member/general"}><FontAwesomeIcon icon={faTh}/> <i className=" fa fa-th" />Thông tin cá nhân</NavLink>
     <NavLink className="list-group-item" to={"/member/my-product"}><FontAwesomeIcon icon={faProductHunt}/> Sản phẩm của tôi</NavLink>
     <NavLink className="list-group-item with-badge " to={"/member/wishlist"}><FontAwesomeIcon icon={faHeart}/> Yêu thích<span className="badge badge-primary badge-pill">3</span></NavLink>
-    <NavLink className="list-group-item with-badge" to={"/reset-password"}><FontAwesomeIcon icon={faLock}/> Đặt lại mật khẩu</NavLink>
+    <NavLink className="list-group-item with-badge" to={""} onClick={(e) => handleResetPassword(e)}><FontAwesomeIcon icon={faLock}/> Đặt lại mật khẩu</NavLink>
   </nav>
 </div>
 
@@ -42,7 +58,7 @@ const AccountSideBar = () => {
 
       <div className="card mt-3">
         <div className="mx-auto my-3 personal-logout-btn">
-          <button className="btn">Đăng xuất</button>
+          <button className="btn" onClick={(e) => handleLogout(e)}>Đăng xuất</button>
         </div>
       </div>
 

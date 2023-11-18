@@ -7,6 +7,7 @@ import { useState } from 'react'
 import AuthService from '../../service/AuthService'
 import { useNavigate } from 'react-router-dom'
 import Loading from '../../components/Loading/index'
+import UserService from '../../service/UserService'
 
 const RegisterForm = () => {
   const [error, setError] = useState({})
@@ -45,7 +46,9 @@ const RegisterForm = () => {
           message: Object.values(response?.data?.error)[0]
         })
       } else if (response.status === 200) {
-        navigate('/login')
+        const result = UserService.sendVerifyEmail(user.email)
+        console.log(result)
+        navigate(`/verify/${user.email}`)
       } else {
         console.log(response)
       }
