@@ -50,6 +50,11 @@ class UserService {
     .then(response => response?.data)
     .catch(error => error?.response)
   }
+  getTopContributors(){
+    return axios.get(USER_URL)
+    .then(response => response?.data)
+    .catch(error => error?.response)
+  }
 }
 
 export default new UserService()

@@ -7,27 +7,26 @@ const TopContributor = ({ contributor }) => {
         <div className="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay={400}>
             <div className="member">
                 <div className="member-img">
-                    <img src={contributor.imgURL} className="img-fluid" alt />
-                    <div className="social">
-                    <button type="button" className="btn btn-secondary btn-floating my-1 d-block">
+                    <img src={`http://localhost:8000/api/users/${contributor.id}/images`} className="img-fluid" alt 
+                    style={{ width: '100%', height: '200px', objectFit: 'cover' }}/>
+                    <div className="social" style={{ backgroundColor: 'transparent' }}>
+                    <button type="button" className=" btn btn-secondary btn-floating my-1 d-block">
                             <FontAwesomeIcon style={{ width: 15 }} icon={faMessage} />
                         </button>
-                        <button type="button" className="btn btn-primary btn-floating my-1 d-block">
+                        <button type="button" className="facebook btn btn-primary btn-floating my-1 d-block">
                             <FontAwesomeIcon style={{ width: 15 }} icon={faFacebookF} />
                         </button>
-                        <button type="button" className="btn btn-danger btn-floating my-1 d-block">
+                        <button type="button" className="google btn btn-danger btn-floating my-1 d-block">
                             <FontAwesomeIcon style={{ width: 15 }} icon={faGoogle} />
                         </button>
-                        <button type="button" className="btn btn-dark btn-floating my-1 d-block">
-                            <FontAwesomeIcon style={{ width: 15 }} icon={faGithub} />
-                        </button>
+     
 
                     </div>
                 </div>
                 <div className="member-info">
-                    <h4>{contributor.username}</h4>
-                    <span>SĐT: {contributor.phoneNumber}</span>
-                    <p>{contributor.bio}</p>
+                    <h4>{contributor.name}</h4>
+                    <span>SĐT: {contributor.phone_number}</span>
+                    <p>{contributor.full_address}</p>
                 </div>
 
             </div>

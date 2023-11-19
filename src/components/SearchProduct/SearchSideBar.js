@@ -276,7 +276,8 @@ const SearchSideBar = ({
               <span className="me-3">Từ: </span>
               <DatePicker
                 format="dd-MM-y"
-                onChange={() => handleStartDateChange()}
+                onChange={(date) => handleStartDateChange(date)}
+                selected={startDate} 
                 value={startDate}
                 locale="vi-VN"
               />
@@ -286,7 +287,8 @@ const SearchSideBar = ({
               <span className="me-2">Đến: </span>
               <DatePicker
                 format="dd-MM-y"
-                onChange={() => handleEndDateChange()}
+                onChange={(date) => handleEndDateChange(date)}
+                selected={endDate} 
                 value={endDate}
                 locale="vi-VN"
               />

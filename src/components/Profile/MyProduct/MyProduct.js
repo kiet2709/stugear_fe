@@ -12,6 +12,7 @@ const MyProduct = () => {
     
     setLoading(true);
     const response = await UserService.getCurrentUserProducts(currentPage);
+    console.log(response)
     setTotalPage(response?.total_page);
     setProducts(response?.data);
     
@@ -30,14 +31,13 @@ const MyProduct = () => {
   };
 
   const handleProductLink = (status, id) =>{
+    
     if (status==="Đã duyệt"){
       return `/home-page/product-detail/${id}` 
     }else if (status ==="Chờ duyệt"){
       return `/home-page/product-detail/${id}` 
-    } else {
+    } else if (status==="Nháp"){
       return `/member/upload/${id}`  
-
-      
     }
   }
 

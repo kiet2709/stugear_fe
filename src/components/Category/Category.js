@@ -11,6 +11,7 @@ import CustomPagination from "../Pagination/Pagination";
 
 const Category = ({ category }) => {
   const [statistic, setStatistic] = useState({});
+  const [isStaticLoading, setStaticLoading] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
@@ -34,9 +35,9 @@ const Category = ({ category }) => {
 
 
   useEffect(() => {
-    setLoading(true);
+    setStaticLoading(true);
     loadStatistic();
-    setLoading(false);
+    setStaticLoading(false);
   }, []);
 
   return (
@@ -44,9 +45,9 @@ const Category = ({ category }) => {
       <div className="category">
         <h1 id="category-title">{category.name}</h1>
         <hr className="bg-dark my-3"></hr>
-        <CategoryHero category={category} />
+        <CategoryHero category={category}  key={category.id} setLoading={setLoading} setTotalPage={setTotalPage} category_id={category?.id} currentPage={currentPage} setCurrentPage={setCurrentPage} setProducts={setProducts} />
 
-        {isLoading ? <Loading /> : <CategoryStatistic item={statistic} />}
+        {isStaticLoading ? <Loading /> : <CategoryStatistic item={statistic} />}
 
         <div className="my-4 category-filter">
           <CategoryFilter key={category.id} setLoading={setLoading} setTotalPage={setTotalPage} category_id={category?.id} currentPage={currentPage} setCurrentPage={setCurrentPage} setProducts={setProducts}/>
@@ -55,17 +56,24 @@ const Category = ({ category }) => {
         <div>
       <table className="table table-borderless table-striped table-hover">
         <tbody>
-          <>
-            {isLoading ? (
-              <Loading />
-            ) : (
-              <>
-                {products?.data?.map((product, index) => (
-                  <Product key={index} product={product} />
-                ))}
-              </>
-            )}
-          </>
+        <>
+  {isLoading ? (
+    <Loading />
+  ) : (
+    <>
+      {products?.data?.length === 0 ? (
+        <p className="text-center my-4">Không tìm thấy sản phẩm</p>
+      ) : (
+        <>
+          {products?.data?.map((product, index) => (
+            <Product key={index} product={product} />
+          ))}
+        </>
+      )}
+    </>
+  )}
+</>
+
         </tbody>
       </table>
       <div  className="mt-4 ">

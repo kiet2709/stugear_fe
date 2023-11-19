@@ -6,6 +6,7 @@ import ProductService from "../../service/ProductService";
 import CategoryService from "../../service/CategoryService";
 import CustomPagination from "../Pagination/Pagination";
 import Loading from "../Loading";
+import { Link } from "react-router-dom";
 
 const SearchProduct = () => {
 
@@ -42,8 +43,9 @@ const SearchProduct = () => {
             {products?.map((product, index) => (
                <>
                 <div className="col-4 my-4 search-item">
- 
+                <Link  style={{textDecoration: 'None'}} to={`/home-page/product-detail/${product.id}`}>
                  <ProductCard key={index} product={product} />
+                 </Link>
                 </div>
                </>
                   

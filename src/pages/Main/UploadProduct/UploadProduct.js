@@ -541,21 +541,21 @@ const UploadProduct = () => {
           <div className="ms-auto mt-5 d-flex">
             {slug == undefined && (
               <>
-                <div className="product-draft mb-3 me-2">
+                <div className=" mb-3 me-2">
                   <Link
                     style={{ textDecoration: "None", color: "black" }}
                     onClick={(e) => handleDraft(e)}
                   >
-                    <h5>
+                    <button className="product-draft">
                       {" "}
                       <FontAwesomeIcon icon={faDraftingCompass} className="me-2" /> Lưu
                       bản nháp
-                    </h5>
+                    </button>
                   </Link>
                 </div>
               </>
             )}
-            <div className=" product-edit mb-3 me-2">
+            <div className=" mb-3 me-2">
               <Link
                 style={{ textDecoration: "None", color: "black" }}
                 onClick={(e) => {
@@ -564,25 +564,25 @@ const UploadProduct = () => {
                   } else handleSubmit(e);
                 }}
               >
-                <h5>
+                <button className="product-edit ">
                   {" "}
                   <FontAwesomeIcon icon={faPencil} /> {isUpdated === true ? "Cập nhật" : "Đăng"}
-                </h5>
+                </button>
               </Link>
             </div>
 
             {isUpdated === true ? (
               <>
-                <div className=" product-remove mb-3">
+                <div className="  mb-3">
                   <Link
                     style={{ textDecoration: "None", color: "black" }}
                     onClick={() => setShow(true)}
                   >
-                    <h5>
+                    <button className="product-remove">
                       <FontAwesomeIcon icon={faTrash} className="me-2" />
                       {""}
                        Xóa sản phẩm
-                    </h5>
+                    </button>
                   </Link>
                 </div>
               </>
