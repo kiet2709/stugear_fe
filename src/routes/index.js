@@ -1,9 +1,10 @@
 import MainLayout from '../layouts/MainLayout/index.js'
+import AdminLayout from '../layouts/AdminLayout/Admin.js'
 import Login from '../pages/Main/Login/index.js'
 import Register from '../pages/Main/Register/index.js'
 import ResetPassword from '../pages/Main/ResetPassword/index.js'
 import FindAccount from '../pages/Main/FindAccount/index.js'
-import { useRoutes } from 'react-router-dom'
+import { Navigate, Route, useRoutes } from 'react-router-dom'
 import LandingPage from '../pages/Main/LandingPage/index.js'
 import Info from '../pages/Main/Info/index.js'
 import Contact from '../pages/Main/Contact/index.js'
@@ -12,15 +13,27 @@ import ProductPage from '../pages/Main/ProductPage/ProductPage.js'
 import HomeLayout from '../layouts/HomeLayout/HomeLayout.js'
 import SearchPage from '../pages/Main/SearchPage/SearchPage.js'
 import PersonalLayout from '../layouts/PersonalLayout/PersonalLayout.js'
-import PersonalInfo from '../pages/Main/PersonalPage/PersinalInfo/index.js'
 import General from '../components/Profile/General/index.js'
 import Wishlist from '../components/Profile/Wishlist/Wishlist.js'
-import PageNotFound from '../pages/Main/ErrorPage/ErrorPage.js'
 import ErrorPage from '../pages/Main/ErrorPage/ErrorPage.js'
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute.js'
 import UploadProduct from '../pages/Main/UploadProduct/UploadProduct.js'
 import MyProduct from '../components/Profile/MyProduct/MyProduct.js'
+import Verify from '../pages/Main/Verify/Verify.js'
+import AdminPage from '../pages/Admin/AdminPage.js'
+import useAuth from '../hooks/useAuth.js'
+
 function useRouteElements () {
+
+  const RejectRoute = ({ children }) => {
+    const { user } = useAuth();
+    if (user?.user_id) {
+      return  <Navigate to="/home-page/category/1" />; 
+    }
+    // user is not authenticated
+    return children
+  };
+  
   const routeElements = useRoutes([
     {
       path: '',
@@ -71,12 +84,8 @@ function useRouteElements () {
       ]
     },
     {
-      path: '/member/reset-password',
-      element: <ResetPassword />
-    },
-    {
       path: '',
-      element: <MainLayout />,
+      element: <RejectRoute><MainLayout/></RejectRoute>,
       children: [
         {
           path: 'login',
@@ -87,9 +96,19 @@ function useRouteElements () {
           element: <Register />
         },
         {
+          path: '/member/reset-password/:slug',
+          element: <ResetPassword />
+        },
+        {
           path: 'find-account',
           element: <FindAccount />
         },
+      ]
+    },
+    {
+      path: '',
+      element: <MainLayout />,
+      children: [
         {
           path: '/landing-page',
           element: <LandingPage/>
@@ -115,9 +134,23 @@ function useRouteElements () {
           path: '*',
           element: <ErrorPage status="404" message={"Không tìm thấy trang bạn yêu cầu"}
           title={"Không tìm thấy trang"} />
-        }
+        },
+        {
+          path: '/verify/:slug?',
+          element: <Verify />
+        },
       ]
-    }
+    },
+    {
+      path: '',
+      element: <ProtectedRoute><AdminLayout/></ProtectedRoute>,
+      children: [
+        {
+          path: '/admin/',
+          element: <AdminPage/>
+        },
+      ]
+    },
   ])
   return routeElements
 }

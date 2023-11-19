@@ -180,31 +180,31 @@ const ProductPage = () => {
             {isOwner === true ? (
                   <>
                     <div className="mt-4 text-center product-modify">
-                      <div className=" product-edit mb-3">
+                      <div className="mb-3">
                         <Link
                           style={{ textDecoration: "None", color: "black" }}
                           
                           to={`/member/upload/${slug}`}
                         >
-                          <h5>
+                          <button className=" product-edit ">
                             {" "}
                             <FontAwesomeIcon
                               icon={faPencil}
                               className="me-2"
                             />{" "}
                             Chỉnh sửa
-                          </h5>
+                          </button>
                         </Link>
                       </div>
-                      <div className=" product-remove">
+                      <div>
                         <Link
                           style={{ textDecoration: "None", color: "black" }}
                           onClick={() => setShow(true)}
                         >
-                          <h5>
+                          <button  className=" product-remove">
                             <FontAwesomeIcon icon={faTrash} className="me-2" />{" "}
                             Xóa sản phẩm
-                          </h5>
+                          </button>
                         </Link>
                       </div>
                     </div>

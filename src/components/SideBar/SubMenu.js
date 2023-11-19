@@ -9,6 +9,7 @@ import './SubMenu.css'
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import UserService from '../../service/UserService';
 
 
 const SubMenu = ({ category, buyActive, sellActive, isAll }) => {
@@ -18,9 +19,15 @@ const SubMenu = ({ category, buyActive, sellActive, isAll }) => {
     setSubmenuOpen(!submenuOpen)
   }
 
-  // const handleSell = async () => {
-      
-  // }
+  const handleUpload = async () => {
+    const response = await UserService.getCurrentUser()
+    if (response?.is_verify == "false"){
+      const result = UserService.sendVerifyEmail(response?.email)
+      naviagate("/verify")
+    }else{
+      naviagate("/member/upload")
+    }
+  }
 
   return (
     <>
@@ -45,7 +52,7 @@ const SubMenu = ({ category, buyActive, sellActive, isAll }) => {
               />Mua</Link>
             </li>
             <li className={`sub-menu ${sellActive ? 'sub-menu-active' : ''}`}>
-              <Link to={"/member/upload"} >
+              <Link onClick={() => handleUpload()} >
               <FontAwesomeIcon
                 icon={faBookmark}
                 style={{ color: '#F3787A', marginRight: '8px' }}

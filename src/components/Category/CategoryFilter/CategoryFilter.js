@@ -4,39 +4,54 @@ import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSort } from '@fortawesome/free-solid-svg-icons'
 import ProductService from '../../../service/ProductService'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { InputGroup, Button } from 'react-bootstrap'
 const CategoryFilter = ({setTotalPage, category_id, currentPage, setCurrentPage, setProducts, setLoading}) => {
 
 
   const [transactionMethod, setTransactionMethod] = useState("")
   const [field, setField] = useState("")
   const [sort, setSort] = useState("")
+  const [query, setQuery] = useState("")
 
   const search = async(criterial, currentPage) => {
+    setLoading(true)
     const response = await ProductService.searchInCategory(criterial, currentPage)
-    console.log("dô")
-    console.log(response)
+
     setProducts(response)
     setTotalPage(response?.total_pages)
+    setLoading(false)
   }
 
   useEffect(() => {
-    setLoading(true)
+    
     const criterial = {
       category_id: category_id,
       transaction_method: transactionMethod,
       field: field,
-      sort: sort
+      sort: sort,
+      q: query
   }
-  console.log(criterial)
+
     search(criterial, currentPage)
-    setLoading(false)
-  }, [transactionMethod, field, sort, currentPage])
+    
+  }, [transactionMethod, field, sort, currentPage, query])
 
+  let debounceTimer;
 
+  const handleInputChange = (e) => {
+    clearTimeout(debounceTimer);
+
+    const input = e.target.value;
+    debounceTimer = setTimeout(() => {
+      setQuery(input);
+      setCurrentPage(1);
+    }, 400); // Adjust the debounce time (in milliseconds) as needed
+  };
   return (
     <>
       <div className="row">
-        <div className="col-10">
+        <div className="col-4 mt-2">
           <div className="form-check form-check-inline">
             <input
               className="form-check-input"
@@ -52,6 +67,7 @@ const CategoryFilter = ({setTotalPage, category_id, currentPage, setCurrentPage,
               Tự do
             </label>
           </div>
+
           <div className="form-check form-check-inline">
             <input
               className="form-check-input"
@@ -84,7 +100,23 @@ const CategoryFilter = ({setTotalPage, category_id, currentPage, setCurrentPage,
             </label>
           </div>
         </div>
-        <div className="col ms-auto">
+    
+        <div className="col">
+     <div className='row'>
+     <div className="col-4" style={{marginRight: '300px'}}>
+            <InputGroup className="form-outline" id="search-group" style={{width: '250px'}}>
+              <input
+                id="search-input"
+                placeholder="Tìm kiếm..."
+                type="search"
+                className="form-control"
+                onChange={(e) => handleInputChange(e)}
+              />
+              <Button id="search-button">
+                <FontAwesomeIcon icon={faSearch} id="search-icon" />
+              </Button>
+            </InputGroup>
+            </div>
           <div className="dropdown col">
             <button
               className="btn dropdown-toggle"
@@ -118,6 +150,7 @@ const CategoryFilter = ({setTotalPage, category_id, currentPage, setCurrentPage,
               </li>
             </ul>
           </div>
+     </div>
         </div>
       </div>
     </>
