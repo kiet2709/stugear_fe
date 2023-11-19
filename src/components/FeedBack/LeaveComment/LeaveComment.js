@@ -4,12 +4,20 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import ProductService from "../../../service/ProductService";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import Loading from "../../Loading";
 const LeaveComment = ({ productId, setKey }) => {
   const [comment, setComment] = useState({});
-
+  const [error, setError] = useState("")
   const [isAdded, setAdded] = useState(false);
+  const [isLoading, setLoading] = useState(false)
   const handleComment = async (e) => {
     e.preventDefault();
+    
+    if(comment.rating === undefined){
+      setError("Vui lòng chọn số sao")
+      return
+    }
+    setLoading(true)
     const response = await ProductService.createCommentByProductId(
       productId,
       comment
@@ -17,6 +25,7 @@ const LeaveComment = ({ productId, setKey }) => {
     if (response?.status === 500){
       console.log("Something went wrong")
     }else{
+      setError("")
       setAdded(true);
       setKey(prev => prev+1)
       toast.success("Bình luận thành công!", {
@@ -30,15 +39,18 @@ const LeaveComment = ({ productId, setKey }) => {
         theme: "light",
       });
     }
+    setLoading(false)
   };
   const handleChange = (e) => {
     setComment({ ...comment, [e.target.name]: e.target.value });
   };
   return (
     <div className="my-5">
+      {error && (
+        <div className="alert alert-danger text-center">{error}</div>
+      )}
       <div className="card-body text-center">
         <div className="comment-box text-center">
-          <h4>Bình luận</h4>
           <div className="rating leave-comment-rating">
             <input
               type="radio"
@@ -92,30 +104,39 @@ const LeaveComment = ({ productId, setKey }) => {
 
 
           </div>
-          <div className="comment-area">
-            <textarea
-              className="form-control"
-              placeholder="Ghi nhận xét của bạn tại đây"
-              rows={4}
-              defaultValue={""}
-              name="content"
-              onInput={(e) => handleChange(e)}
-              value={comment.content}
-            />
-          </div>
-          <div className="text-center mt-4">
-            <button
-              className="btn btn-success send"
-              onClick={(e) => handleComment(e)}
-            >
-              Gửi <FontAwesomeIcon icon={faArrowRight} />
-            </button>
-          </div>
+     {isLoading ? (
+      <Loading/>
+     ): (
+      <>     <div>
+
+      <div className="comment-area">
+        <textarea
+          className="form-control"
+          placeholder="Ghi nhận xét của bạn tại đây"
+          rows={4}
+          defaultValue={""}
+          name="content"
+          onInput={(e) => handleChange(e)}
+          value={comment.content}
+        />
+      </div>
+      <div className="text-center mt-4">
+        <button
+          className="btn btn-success send"
+          onClick={(e) => handleComment(e)}
+        >
+          Gửi <FontAwesomeIcon icon={faArrowRight} />
+        </button>
+      </div>
+
+      </div></>
+     )}
+
           {isAdded ? (
         <>
           <ToastContainer
             position="top-center"
-            autoClose={5000}
+            autoClose={1000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick

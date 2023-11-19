@@ -36,6 +36,17 @@ function useRouteElements () {
   
   const routeElements = useRoutes([
     {
+      path: '/',
+      element: <MainLayout />,
+      children: [
+        {
+          path: '',
+          element: <LandingPage />
+        },
+        // Other routes...
+      ]
+    },
+    {
       path: '',
       element: <HomeLayout title={"Trang chủ"}/>,
       children: [
@@ -83,6 +94,7 @@ function useRouteElements () {
         },
       ]
     },
+
     {
       path: '',
       element: <RejectRoute><MainLayout/></RejectRoute>,
@@ -113,6 +125,7 @@ function useRouteElements () {
           path: '/landing-page',
           element: <LandingPage/>
         },
+   
         {
           path: 'info',
           element: <Info/>
@@ -122,7 +135,7 @@ function useRouteElements () {
           element: <Contact/>
         },
         {
-          path: 'search',
+          path: 'search/:slug?',
           element: <SearchPage/>
         },
         {

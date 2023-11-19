@@ -19,7 +19,7 @@ class ProductService {
 
   getCommentsByProductId(id, currentPage) {
     return axios
-      .get(PRODUCT_URL + `/${id}/comments?page=${currentPage}&limit=1`)
+      .get(PRODUCT_URL + `/${id}/comments?page=${currentPage}&limit=3`)
       .then((response) => response?.data)
       .catch((error) => error?.response);
   }
@@ -180,7 +180,6 @@ class ProductService {
 
   getProductsByCriteria(criteria, currentPage){
     console.log(PRODUCT_URL + `/search-criteria?page=${currentPage}&limit=6`)
-    console.log(criteria)
     return axios
     .post(PRODUCT_URL + `/search-criteria?page=${currentPage}&limit=6`, criteria)
     .then((response) => response?.data)

@@ -40,11 +40,8 @@ const LoginForm = () => {
       localStorage.setItem("username", username);
       localStorage.setItem("roles", roles);
       setUser(response);
-      //  thunk function
-      // dispatch(createAccount(userId));
-      // dispatch(getCart(userId));
-      // dispatch(getAddresses(userId));
-      // dispatch(getDeliveries());
+      localStorage.setItem("user_image", `http://127.0.0.1:8000/api/users/${response?.user_id}/images`)
+      setUser({...response, user_image: `http://127.0.0.1:8000/api/users/${response?.user_id}/images`})
       if (roles.includes("ADMIN")) {
         navigate("/admin");
       } else {  

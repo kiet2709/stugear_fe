@@ -45,7 +45,7 @@ const UserHeader = () => {
 
 
         <img
-          src={`http://127.0.0.1:8000/api/users/${user?.user_id}/images`}
+          src={user?.user_image}
           alt=""
           onClick={handleClick}
           className="popImg"
