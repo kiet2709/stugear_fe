@@ -2,12 +2,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebookF, faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faLock } from '@fortawesome/free-solid-svg-icons'
 import './index.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AuthService from '../../../service/AuthService'
 import Loading from '../../../components/Loading'
+import UserService from '../../../service/UserService'
+import { useParams } from 'react-router-dom'
+import useAuth from '../../../hooks/useAuth'
 const ResetPassword = () => {
-  const [resetInfo, setResetInfo] = useState({})
+  const {user, setUser} = useAuth()
+  let {slug} = useParams()
+  const [resetInfo, setResetInfo] = useState({
+    email: slug,
+    verify_code: "",
+    password: ""
+  })
   const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const navigator = useNavigate()
@@ -19,13 +28,17 @@ const ResetPassword = () => {
     return resetInfo.password === resetInfo.confirmPassword
   }
 
+  useEffect(() => {
+    localStorage.clear()
+    setUser("")
+  }, [])
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (handleCheckPassword()) {
       setErrorMessage('')
       setLoading(true)
       const response = await AuthService.resetPassword(resetInfo)
-      console.log(response)
       setLoading(false)
       if (response.status === 200) {
         navigator('/login')
@@ -41,7 +54,7 @@ const ResetPassword = () => {
 
   return (
         <div className="row my-3 justify-content-center w-100">
-            <div className="col col-3 box-shadow px-5">
+            <div className="col col-4 box-shadow p-5">
 
                 <div className="social mt-5 align-items-center  justify-content-lg-start">
                     {loading && (
@@ -106,7 +119,7 @@ const ResetPassword = () => {
             <div className="col col-1">
 
             </div>
-            <div className="col col-3 text-center">
+            <div className="col col-4 text-center">
                 <h1 >Cập nhật mật khẩu</h1>
                 <p className="font-italic text-muted mb-0">Hãy thay đổi mật khẩu của bạn</p>
                 <img src="/assets/images/get-pass.gif" alt="" className="img-fluid" />

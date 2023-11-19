@@ -5,6 +5,7 @@ import AOS from 'aos'
 import CategoryList from '../../../components/Landing/CategoryList'
 import TopContributorList from '../../../components/Landing/TopContributorList'
 import CategoryService from '../../../service/CategoryService'
+import UserService from '../../../service/UserService'
 const LandingPage = () => {
   const [categories, setCategories] = useState([])
   const aos_init = () => {
@@ -19,6 +20,8 @@ const LandingPage = () => {
     const categoriesResponse = await CategoryService.getAllCategories()
     const top3Categories = categoriesResponse.slice(0, 3)
     setCategories(top3Categories)
+
+    
   }
   useEffect(() => {
     window.addEventListener('load', () => {

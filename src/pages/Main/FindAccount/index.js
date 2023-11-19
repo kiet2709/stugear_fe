@@ -22,7 +22,7 @@ const FindAccount = () => {
     const response = await AuthService.findUserByEmail(email)
     setLoading(false)
     if (response.status === 200) {
-      navigator('/member/reset-password')
+      navigator(`/member/reset-password/${email}`)
     } else if (response.status === 404) {
       setErrorMessage('Không tìm thấy tài khoản với email này')
     }
@@ -30,7 +30,7 @@ const FindAccount = () => {
 
   return (
         <div className="row my-3 justify-content-center w-100">
-            <div className="col col-3 box-shadow px-5">
+            <div className="col col-4 box-shadow p-4">
 
                 <div className="social mt-5 align-items-center  justify-content-lg-start">
                     {loading && (

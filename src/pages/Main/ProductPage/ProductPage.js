@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import CustomModal from "../../../components/Modal/Modal";
 const ProductPage = () => {
   const [product, setProduct] = useState({});
   const [isLoading, setLoading] = useState(true);
@@ -126,6 +127,14 @@ const ProductPage = () => {
       ],
     },
   ];
+
+  const [show, setShow] = useState(false);
+  const handleClose =() => {
+    setShow(false)
+  }
+  const handleSave = () => {
+    handleDelete()
+  }
   return (
     <div>
       {isLoading ? (
@@ -171,31 +180,31 @@ const ProductPage = () => {
             {isOwner === true ? (
                   <>
                     <div className="mt-4 text-center product-modify">
-                      <div className=" product-edit mb-3">
+                      <div className="mb-3">
                         <Link
                           style={{ textDecoration: "None", color: "black" }}
                           
                           to={`/member/upload/${slug}`}
                         >
-                          <h5>
+                          <button className=" product-edit ">
                             {" "}
                             <FontAwesomeIcon
                               icon={faPencil}
                               className="me-2"
                             />{" "}
                             Chỉnh sửa
-                          </h5>
+                          </button>
                         </Link>
                       </div>
-                      <div className=" product-remove">
+                      <div>
                         <Link
                           style={{ textDecoration: "None", color: "black" }}
-                          onClick={(e) => handleDelete(e)}
+                          onClick={() => setShow(true)}
                         >
-                          <h5>
+                          <button  className=" product-remove">
                             <FontAwesomeIcon icon={faTrash} className="me-2" />{" "}
                             Xóa sản phẩm
-                          </h5>
+                          </button>
                         </Link>
                       </div>
                     </div>
@@ -209,6 +218,8 @@ const ProductPage = () => {
               </div>
             </div>
           </div>
+          <CustomModal handleSave={handleSave} handleClose={handleClose} show={show} heading={"Xóa sản phẩm"} body={"Bạn muốn xóa đi sản phẩm này?"}></CustomModal>
+        
         </>
       )}
     </div>

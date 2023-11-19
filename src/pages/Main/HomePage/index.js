@@ -14,22 +14,15 @@ const HomePage = () => {
   useEffect(() => {
     const loadData = async () => {
       setLoading(true)
-      if (slug !== 'all') {
-        const response = await CategoryService.getCategoriesById(slug)
 
+        const response = await CategoryService.getCategoriesById(slug)
+        console.log(response)
         if (response?.status === 500) {
           console.log('Something wentwrong')
         } else {
           setCategories([response])
         }
-      } else {
-        const response = await CategoryService.getAllCategories()
-        if (response?.status === 500) {
-          console.log('Something wentwrong')
-        } else {
-          setCategories(response)
-        }
-      }
+
       setLoading(false)
     }
     loadData()

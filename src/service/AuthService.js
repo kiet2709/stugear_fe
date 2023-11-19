@@ -33,15 +33,24 @@ class AuthService {
   }
 
   resetPassword (resetInfo) {
-    console.log(resetInfo)
     return axios.post(AUTH_URL + '/reset-password', {
-      email: 'duckhailinux@gmail.com',
+      email: resetInfo.email,
       verify_code: resetInfo.pin,
       password: resetInfo.password
     })
       .then(response => response)
       .catch(error => error?.response)
   }
+
+  sendVerifyPin(email, pin){
+    return axios.post('http://127.0.0.1:8000/api/products/verify-email', {
+      email: email,
+      verify_code: pin,
+    })
+      .then(response => response?.data)
+      .catch(error => error?.response)
+  }
 }
+
 
 export default new AuthService()

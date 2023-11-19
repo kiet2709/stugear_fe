@@ -6,11 +6,18 @@ import UserService from "../../../service/UserService";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from "react";
+import CustomModal from "../../Modal/Modal";
 
 const WishlistItem =({item, setKey}) =>{
 
   const [isRemoved, setRemoved] = useState(false)
-
+  const [show, setShow] = useState(false);
+  const handleClose =() => {
+    setShow(false)
+  }
+  const handleSave = () => {
+    handleRemoveItem()
+  }
   const handleRemoveItem = async () => {
     const response = await UserService.removeCurrentUserWishListByProductId(item.id)
     
@@ -23,7 +30,7 @@ const WishlistItem =({item, setKey}) =>{
       setKey(prev => prev+1)
       toast.success('Xóa sản phẩm thành công!', {
         position: "top-center",
-        autoClose: 5000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -64,7 +71,7 @@ const WishlistItem =({item, setKey}) =>{
         </td>
         <td>
           <div className="mt-5">
-            <Link style={{textDecoration: 'None'}} onClick={() => handleRemoveItem()}>
+            <Link style={{textDecoration: 'None'}} onClick={() => setShow(true)}>
               <FontAwesomeIcon icon={faTrashCan} size="2x"/>
             </Link>
             {isRemoved && (
@@ -83,6 +90,8 @@ const WishlistItem =({item, setKey}) =>{
             )}
           </div>
         </td>
+        <CustomModal handleSave={handleSave} handleClose={handleClose} show={show} heading={"Xóa sản phẩm"} body={"Bạn muốn xóa đi sản phẩm này ra khỏi danh sách yêu thích?"}></CustomModal>
+        
       </tr>
     )
 }

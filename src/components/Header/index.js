@@ -55,7 +55,7 @@ const Header = ({ sticky }) => {
         <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mainNav">
             <Nav.Item>
-              <Link to="/home-page/category/all" className="nav-link">
+              <Link to="/home-page/category/1" className="nav-link">
                 Trang chủ
               </Link>
             </Nav.Item>

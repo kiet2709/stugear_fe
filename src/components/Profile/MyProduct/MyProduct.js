@@ -2,8 +2,6 @@ import "./MyProduct.css";
 import ProductCard from "../../Product/ProductCard/ProductCard";
 import UserService from "../../../service/UserService";
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import CustomPagination from "../../../components/Pagination/Pagination";
 import Loading from "../../Loading";
@@ -14,6 +12,7 @@ const MyProduct = () => {
     
     setLoading(true);
     const response = await UserService.getCurrentUserProducts(currentPage);
+    console.log(response)
     setTotalPage(response?.total_page);
     setProducts(response?.data);
     
@@ -32,14 +31,13 @@ const MyProduct = () => {
   };
 
   const handleProductLink = (status, id) =>{
+    
     if (status==="Đã duyệt"){
       return `/home-page/product-detail/${id}` 
     }else if (status ==="Chờ duyệt"){
       return `/home-page/product-detail/${id}` 
-    } else {
+    } else if (status==="Nháp"){
       return `/member/upload/${id}`  
-
-      
     }
   }
 
@@ -55,7 +53,7 @@ const MyProduct = () => {
         ) : (
           <>
             {products.map((product) => (
-              <div className="col-4">
+              <div className="col-4 mt-5">
                 <Link
                   className="my-product-item"
                   style={{ textDecoration: "none", color: "black" }}

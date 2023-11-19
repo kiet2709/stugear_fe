@@ -5,7 +5,7 @@ const TAG_URL = 'http://127.0.0.1:8000/api/tags'
 class TagService {
     getAllTags(){
         return axios
-            .get(TAG_URL)
+            .get(TAG_URL+"?page=1&limit=200")
             .then((response) => response?.data?.data)
             .catch((error) => error?.response)
       }

@@ -1,40 +1,52 @@
+import { useEffect, useState } from 'react'
 import TopContributor from '../TopContributor'
 import './index.css'
+import UserService from '../../../service/UserService'
 const TopContributorList = () => {
-  const contributors = [
-    {
-      id: 1,
-      imgURL: '/assets/images/contributor.jpg',
-      username: 'Khải',
-      phoneNumber: '0783516718',
-      bio: 'Rerum voluptate non adipisci animi distinctio et deserunt amet voluptas. Quia aut aliquid doloremque ut possimus ipsum officia.'
-    },
-    {
-      id: 2,
-      imgURL: '/assets/images/contributor.jpg',
-      username: 'Kiệt',
-      phoneNumber: '0783516718',
-      bio: 'Rerum voluptate non adipisci animi distinctio et deserunt amet voluptas. Quia aut aliquid doloremque ut possimus ipsum officia.'
 
-    },
-    {
-      id: 3,
-      imgURL: '/assets/images/contributor.jpg',
-      username: 'Khang',
-      phoneNumber: '0783516718',
-      bio: 'Rerum voluptate non adipisci animi distinctio et deserunt amet voluptas. Quia aut aliquid doloremque ut possimus ipsum officia.'
+  const [contributors, setContributors] = useState([])
+  const loadData = async () => {
+    const response = await UserService.getTopContributors()
+    setContributors(response?.data.slice(0, 4))
+  }
+  useEffect(() => {
+    loadData()
+  }, [])
 
-    },
-    {
-      id: 4,
-      imgURL: '/assets/images/contributor.jpg',
-      username: 'Thịnh',
-      phoneNumber: '0783516718',
-      bio: 'Rerum voluptate non adipisci animi distinctio et deserunt amet voluptas. Quia aut aliquid doloremque ut possimus ipsum officia.'
+  // const contributors = [
+  //   {
+  //     id: 1,
+  //     imgURL: '/assets/images/contributor.jpg',
+  //     username: 'Khải',
+  //     phoneNumber: '0783516718',
+  //     bio: 'Rerum voluptate non adipisci animi distinctio et deserunt amet voluptas. Quia aut aliquid doloremque ut possimus ipsum officia.'
+  //   },
+  //   {
+  //     id: 2,
+  //     imgURL: '/assets/images/contributor.jpg',
+  //     username: 'Kiệt',
+  //     phoneNumber: '0783516718',
+  //     bio: 'Rerum voluptate non adipisci animi distinctio et deserunt amet voluptas. Quia aut aliquid doloremque ut possimus ipsum officia.'
 
-    }
+  //   },
+  //   {
+  //     id: 3,
+  //     imgURL: '/assets/images/contributor.jpg',
+  //     username: 'Khang',
+  //     phoneNumber: '0783516718',
+  //     bio: 'Rerum voluptate non adipisci animi distinctio et deserunt amet voluptas. Quia aut aliquid doloremque ut possimus ipsum officia.'
 
-  ]
+  //   },
+  //   {
+  //     id: 4,
+  //     imgURL: '/assets/images/contributor.jpg',
+  //     username: 'Thịnh',
+  //     phoneNumber: '0783516718',
+  //     bio: 'Rerum voluptate non adipisci animi distinctio et deserunt amet voluptas. Quia aut aliquid doloremque ut possimus ipsum officia.'
+
+  //   }
+
+  // ]
   return (
         <section id="team" className="team mt-5">
             <div className="container" data-aos="fade-up">
