@@ -21,6 +21,8 @@ import UploadProduct from '../pages/Main/UploadProduct/UploadProduct.js'
 import MyProduct from '../components/Profile/MyProduct/MyProduct.js'
 import Verify from '../pages/Main/Verify/Verify.js'
 import AdminPage from '../pages/Admin/AdminPage.js'
+import AdminUser from "../pages/Admin/AdminUser.js"
+import AdminProduct from "../pages/Admin/AdminProduct.js"
 import useAuth from '../hooks/useAuth.js'
 
 function useRouteElements () {
@@ -28,6 +30,10 @@ function useRouteElements () {
   const RejectRoute = ({ children }) => {
     const { user } = useAuth();
     if (user?.user_id) {
+      console.log(user?.roles)
+      if(user?.roles?.includes("ADMIN")){
+        return  <Navigate to="/admin" />; 
+      }
       return  <Navigate to="/home-page/category/1" />; 
     }
     // user is not authenticated
@@ -154,13 +160,22 @@ function useRouteElements () {
         },
       ]
     },
+  
     {
       path: '',
       element: <ProtectedRoute><AdminLayout/></ProtectedRoute>,
       children: [
         {
           path: '/admin/',
-          element: <AdminPage/>
+          element:  <AdminUser/>
+        },
+        {
+          path: '/admin/users',
+          element: <AdminUser/>
+        },
+        {
+          path: '/admin/products',
+          element: <AdminProduct/>
         },
       ]
     },

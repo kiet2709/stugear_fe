@@ -75,6 +75,11 @@ class UserService {
     .then(response => response?.data)
     .catch(error => error?.response)
   }
+  getAllUsers(){
+    return axiosPrivate.get(USER_URL)
+    .then(response => response?.data?.data)
+    .catch(error => error?.response)
+  }
 }
 
 export default new UserService()
