@@ -59,25 +59,13 @@ const Header = ({ sticky }) => {
                 Trang chủ
               </Link>
             </Nav.Item>
-            <Nav.Item>
-              <Link to="/info" className="nav-link">
-                Thông tin
-              </Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Link to="/contact" className="nav-link">
-                Liên hệ
-              </Link>
-            </Nav.Item>
+          
             <Nav.Item>
               <Link to="/search" className="nav-link">
                 Tìm kiếm
               </Link>
             </Nav.Item>
-            <Nav.Item>
 
-           
-            </Nav.Item>
           </Nav>
 
           <Nav className="ms-auto mainNav">

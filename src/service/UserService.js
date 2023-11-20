@@ -55,6 +55,31 @@ class UserService {
     .then(response => response?.data)
     .catch(error => error?.response)
   }
+  uploadImage(userId, file){
+    console.log(file)
+    return axiosPrivate.post(USER_URL+ `/${userId}/upload-image`, {
+      image: file
+    }, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then(response => response?.data)
+    .catch(error => error?.response)
+  }
+  updateUserProfile(userInfo){
+    return axiosPrivate.patch(USER_URL+"/info", {
+      first_name: userInfo.first_name,
+      last_name: userInfo.last_name
+    })
+    .then(response => response?.data)
+    .catch(error => error?.response)
+  }
+  getAllUsers(){
+    return axiosPrivate.get(USER_URL)
+    .then(response => response?.data?.data)
+    .catch(error => error?.response)
+  }
 }
 
 export default new UserService()

@@ -113,7 +113,7 @@ const Comment = ({
           <div className="mt-1 mb-3">
             <span className="text-muted">
               {" "}
-              <FontAwesomeIcon icon={faClock} /> {comment.last_updated}
+              <FontAwesomeIcon icon={faClock} className="me-2"/> {comment.last_updated}
             </span>
           </div>
           <p>

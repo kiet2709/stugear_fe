@@ -26,6 +26,7 @@
     background-color: #E5E5E5;
     padding: 10px;
     border-radius: 1rem;
+    width: 100%;
 }
 
 .product-edit:hover {
@@ -37,6 +38,8 @@
 }
 
 .product-remove {
+    
+    width: 100%;
     background-color: #FFE4E6;
     border-radius: 1rem;
     padding: 10px;

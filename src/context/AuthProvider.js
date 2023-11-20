@@ -9,7 +9,8 @@ const AuthProvider = ({ children }) => {
     access_token: localStorage.getItem("access_token"),
     refresh_token: localStorage.getItem("refresh_token"),
     roles: localStorage.getItem("roles"),
-    username: localStorage.getItem("username")
+    username: localStorage.getItem("username"),
+    user_image: localStorage.getItem("user_image")
   })
 
 
