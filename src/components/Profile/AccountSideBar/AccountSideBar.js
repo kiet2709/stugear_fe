@@ -16,9 +16,11 @@ import { useNavigate } from "react-router-dom";
 import UserService from "../../../service/UserService";
 import AuthService from "../../../service/AuthService"
 import { useEffect, useState } from "react";
+import Loading from "../../Loading";
 const AccountSideBar = () => {
   const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState({})
+  const [isLoading, setLoading] = useState(false)
   let {user, setUser} = useAuth()
   const handleLogout = (e) => {
     e.preventDefault()
@@ -33,8 +35,10 @@ const AccountSideBar = () => {
     navigate(`/member/reset-password/${userInfo?.email}`)
   }
   const getCurrentUserInfo = async() => {
+    setLoading(true)
     const response = await UserService.getCurrentUser()
     setUserInfo(response)
+    setLoading(false)
   }
   useEffect(() => {
     getCurrentUserInfo()
@@ -48,7 +52,14 @@ const AccountSideBar = () => {
     </div>
     <div className="user-info">
       <div className="user-avatar">
-        <a className="edit-avatar" href="#" /><img src={`http://127.0.0.1:8000/api/users/${userInfo.id}/images`} alt="User" /></div>
+        <Link className="edit-avatar" href="#" />
+        {isLoading ? (
+          <Loading/>
+        ): (
+          <img src={user?.user_image} alt="User" />
+        )}
+        
+        </div>
       <div className="user-data">
         <h4>{user.username}</h4><span>Tham gia vào tháng 6, 2017</span>
       </div>

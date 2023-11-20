@@ -18,9 +18,9 @@ const Footer = () => {
                     }
                 </Row>
                 <Col md={6} lg={3} className="fAboutUs">
-                    <h5>ABOUT US</h5>
+                    <h5>VỀ CHÚNG TÔI</h5>
                     <span className="animate-border"></span>
-                    <p className="aboutUsDes">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, voluptate quod facere quas rem quaerat.</p>
+                    <p className="aboutUsDes">Giải pháp hiện đại cho việc trao đổi tài liệu học tập.</p>
                     <ul className="socialIcons">
                         <li>
                             <Link to="/" >
@@ -44,11 +44,11 @@ const Footer = () => {
                         </li>
                     </ul>
                 </Col>
-                <FooterCol key="2" menuItems={usefulLink} title="USEFUL LINK"/>
-                <FooterCol key="3" menuItems={ourServices} title="OUR SERVICES"/>
-                <FooterCol key="4" menuItems={otherLinks} title="OTHER LINKS"/>
+                <FooterCol key="2" menuItems={usefulLink} title="LINK HỮU ÍCH"/>
+                <FooterCol key="3" menuItems={ourServices} title="DỊCH VỤ CỦA CHÚNG TÔI"/>
+                <FooterCol key="4" menuItems={otherLinks} title="LINK KHÁC"/>
             </Row>
-            <p className="copyRight">Copyright &copy; 2021 <span className="fHighlight">Ujjal zaman</span>. All rights reserved.</p>
+            <p className="copyRight">Copyright &copy; 2023 <span className="fHighlight">Khải & Kiệt</span>. All rights reserved.</p>
         </section>
   )
 }

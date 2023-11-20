@@ -37,6 +37,7 @@ const RatingSection = ({productId}) => {
   return (
     <>
       <div id="reviews" className="review-section my-5">
+        <h3 className='text-center my-5'>Đánh giá</h3>
         {isLoading ? (
           <Loading/>
         ): (

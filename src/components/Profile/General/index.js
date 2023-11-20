@@ -5,38 +5,60 @@ import {
   faPhone,
   faSchool,
   faBirthdayCake,
+  faAddressBook,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import UserService from "../../../service/UserService";
+import useAuth from "../../../hooks/useAuth";
+import { ToastContainer, toast } from "react-toastify";
 const General = () => {
-  const handleUploadImage = () => {
-    UserService.uploadImage();
-  };
 
-  const [user, setUser] = useState({});
+
+  const [userInfo, setUserInfo] = useState({});
+  const {user,setUser} = useAuth()
+  const [isUpdated, setUpdated] = useState(false);
 
   const getCurrentUser = async (id) => {
     const response = await UserService.getCurrentUser();
-    console.log(response)
+
     if (response == 500) {
       console.log("Something went wrong");
     } else {
-      setUser(response);
+      setUserInfo(response);
     }
   };
 
   useEffect(() => {
     getCurrentUser();
-  }, [localStorage.getItem("user_id")]);
-
+  }, []);
+  const handleChange = (e) => {
+    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+  };
+  const handleFileChange = async(e) => {
+    await UserService.uploadImage(user?.user_id, e.target.files[0])
+    setUser({...user, user_image: `http://127.0.0.1:8000/api/users/${user?.user_id}/images/` + `?timestamp=${new Date().getTime()}`})
+  };
+  const handleSubmit = async(e) => {
+    e.preventDefault()
+    const response = await UserService.updateUserProfile(userInfo)
+    setUpdated(true)
+    toast.success("Thay đổi thông tin thành công!", {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  }
   return (
     <div className="tab-pane fade active show" id="account-general">
       <div className="card-body row d-flex media align-items-center">
         <div className="col-2">
           <img
-            src={`http://127.0.0.1:8000/api/users/${localStorage.getItem(
-              "user_id"
-            )}/images`}
+            src={user?.user_image}
             alt=""
             className="img-fluid"
           />
@@ -44,7 +66,8 @@ const General = () => {
         <div className="media-body col">
   <label className="btn btn-outline-primary">
     Thay đổi ảnh đại diện
-    <input type="file" className="account-settings-file" style={{ display: 'none' }} />
+    <input type="file" className="account-settings-file" style={{ display: 'none' }} 
+     onChange={(e) => handleFileChange(e)}/>
   </label>
   <div className="text-light text-dark small mt-3">
     Cho phép JPG, hoặc PNG.
@@ -54,12 +77,12 @@ const General = () => {
       </div>
 
       <div className="card-body">
-        <form action="#">
-          <div className="form-group">
+        <form onSubmit={(e) => handleSubmit(e)}>
+          {/* <div className="form-group">
             <label className="form-label">Tiểu sử</label>
             <textarea className="form-control" rows={5} name="bio" />
           </div>
-          <hr className="border-dark my-5" />
+          <hr className="border-dark my-5" /> */}
 
           <h4 className="font-weight-bold pl-4">Thông tin cá nhân</h4>
           <div className="row mt-3">
@@ -70,10 +93,12 @@ const General = () => {
               </span>
               <input
                 required
+                disabled
                 type="text"
                 className="form-control"
                 placeholder="Tên đăng nhập"
-                value={user.name}
+                value={userInfo.name}
+                onChange={(e) => handleChange(e)}
                 name="name"
               />
             </div>
@@ -82,12 +107,15 @@ const General = () => {
                 {" "}
                 <FontAwesomeIcon icon={faEnvelope} />
               </span>
+              
               <input
                 required
                 type="email"
+                disabled
                 className="form-control"
                 placeholder="Email"
-                value={user.email}
+                value={userInfo.email}
+                onChange={(e) => handleChange(e)}
                 name="email"
               />
             </div>
@@ -104,8 +132,9 @@ const General = () => {
                 type="text"
                 className="form-control"
                 placeholder="Tên"
-                value={user.first_name}
-                name="firstName"
+                value={userInfo.first_name}
+                onChange={(e) => handleChange(e)}
+                name="first_name"
               />
             </div>
             <div className="col my-3 input-group flex-nowrap">
@@ -118,8 +147,9 @@ const General = () => {
                 type="text"
                 className="form-control"
                 placeholder="Họ"
-                value={user.last_name}
-                name="lastName"
+                value={userInfo.last_name}
+                onChange={(e) => handleChange(e)}
+                name="last_name"
               />
             </div>
           </div>
@@ -128,15 +158,17 @@ const General = () => {
             <div className="col my-3 input-group flex-nowrap">
               <span className="input-group-text">
                 {" "}
-                <FontAwesomeIcon icon={faBirthdayCake} />
+                <FontAwesomeIcon icon={faAddressBook} />
               </span>
               <input
                 required
+                disabled
                 type="text"
                 className="form-control"
-                placeholder="Ngày sinh"
-                value={user.birthdate}
-                name="name"
+                placeholder="Địa chỉ"
+                value={userInfo.full_address}
+                onChange={(e) => handleChange(e)}
+                name="full_address"
               />
             </div>
             <div className="col my-3 input-group flex-nowrap">
@@ -148,20 +180,40 @@ const General = () => {
                 required
                 type="text"
                 className="form-control"
+                disabled
                 placeholder="Số điện thoại"
-                value={user.phone_number}
-                name="name"
+                value={userInfo.phone_number}
+                onChange={(e) => handleChange(e)}
+                name="phone_number"
               />
             </div>
           </div>
           <div className="mt-3 d-flex justify-content-end">
-            <button type="button" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary">
               Lưu thay đổi
             </button>
             &nbsp;
           </div>
         </form>
       </div>
+      {isUpdated ? (
+            <>
+              <ToastContainer
+                position="top-center"
+                autoClose={1000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+              />
+            </>
+          ) : (
+            <></>
+          )}
     </div>
   );
 };
