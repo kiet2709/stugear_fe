@@ -19,14 +19,14 @@ const AppSideBar = () => {
     return (
         <>
 
-  <nav id="sidebar">
+  <nav id="sidebar" className="admin-sidebar sidebar">
     <div className="custom-menu">
       <button type="button" id="sidebarCollapse" className="btn btn-primary">
         <FontAwesomeIcon icon={faBars}/>
       </button>
     </div>
     <div className="p-4 pt-5">
-      <h1><a href="index.html" className="logo">STUGEAR</a></h1>
+      <h1><Link className="logo">STUGEAR</Link></h1>
         <div className="text-center">    
         <img
           src={user?.user_image}

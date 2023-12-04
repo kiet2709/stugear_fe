@@ -2,7 +2,6 @@
     background-color: rgba(255, 0, 0, 0.53) !important;
 }
 
-a:hover {
+.admin-sidebar a:hover {
     background-color: #6749B9 !important;
 }
-
