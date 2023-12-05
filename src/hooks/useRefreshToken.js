@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const AUTH_URL = 'http://127.0.0.1:8000/api/auth';
+const AUTH_URL = 'http://54.144.166.72/api/auth';
 
 const useRefreshToken = () => {
     return (

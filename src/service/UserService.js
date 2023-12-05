@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {axiosPrivate} from "../api/axios"
-const USER_URL = 'http://127.0.0.1:8000/api/users'
+const USER_URL = 'http://54.144.166.72/api/users'
 
 
 class UserService {
@@ -12,7 +12,7 @@ class UserService {
 
   removeCurrentUserWishListByProductId(id){
     console.log(id)
-    return axiosPrivate.post("http://127.0.0.1:8000/api/wishlists/remove", {
+    return axiosPrivate.post("http://54.144.166.72/api/wishlists/remove", {
       "product_id": id
     })
     .then(response => response?.data?.data)
@@ -40,13 +40,13 @@ class UserService {
   }
 
   getCurrentUserProducts(currentPage){
-    return axiosPrivate.get(`http://127.0.0.1:8000/api/products/current?page=${currentPage}&limit=3`)
+    return axiosPrivate.get(`http://54.144.166.72/api/products/current?page=${currentPage}&limit=3`)
       .then(response => response?.data)
       .catch(error => error?.response)
   }
 
   sendVerifyEmail(email){
-    return axiosPrivate.get(`http://127.0.0.1:8000/api/products/send-verify-email?email=${email}`)
+    return axiosPrivate.get(`http://54.144.166.72/api/products/send-verify-email?email=${email}`)
     .then(response => response?.data)
     .catch(error => error?.response)
   }
