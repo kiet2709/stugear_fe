@@ -99,7 +99,6 @@
 .user-info-wrapper .user-info .user-avatar .edit-avatar::before {
     font-family: feather;
     font-size: 17px;
-    content: '\e058'
 }
 
 .user-info-wrapper .user-info .user-avatar:hover .edit-avatar {

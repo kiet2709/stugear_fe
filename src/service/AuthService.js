@@ -1,11 +1,12 @@
 import axios from 'axios'
 
 
-// const AUTH_URL = 'http://54.144.166.72/api/auth';
-const AUTH_URL = 'http://54.144.166.72/api/auth';
+// const AUTH_URL = 'http://localhost:8000/api/auth';
+const AUTH_URL = 'http://localhost:8000/api/auth';
 
 class AuthService {
   register (user) {
+    console.log(user.name)
     return axios.post(AUTH_URL + '/register', {
       name: user.name,
       email: user.email,
@@ -44,7 +45,7 @@ class AuthService {
   }
 
   sendVerifyPin(email, pin){
-    return axios.post('http://54.144.166.72/api/products/verify-email', {
+    return axios.post('http://localhost:8000/api/products/verify-email', {
       email: email,
       verify_code: pin,
     })

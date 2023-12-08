@@ -3,11 +3,13 @@ import "./AccountSideBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faDashboard,
+  faFileUpload,
   faInfo,
   faLock,
   faMedal,
   faPeopleCarry,
   faTh,
+  faUpload,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faProductHunt } from "@fortawesome/free-brands-svg-icons";
@@ -43,6 +45,10 @@ const AccountSideBar = () => {
   useEffect(() => {
     getCurrentUserInfo()
   }, [])
+  const handleFileChange = async(e) => {
+    await UserService.uploadImage(user?.user_id, e.target.files[0])
+    setUser({...user, user_image: `http://localhost:8000/api/users/${user?.user_id}/images/` + `?timestamp=${new Date().getTime()}`})
+  };
   return (
     <>
 <div>
@@ -52,7 +58,12 @@ const AccountSideBar = () => {
     </div>
     <div className="user-info">
       <div className="user-avatar">
-        <Link className="edit-avatar" href="#" />
+        
+        <label >
+        <div className="edit-avatar"> <FontAwesomeIcon icon={faFileUpload}/></div>
+    <input type="file" className="account-settings-file" style={{ display: 'none' }} 
+     onChange={(e) => handleFileChange(e)}/>
+  </label>
         {isLoading ? (
           <Loading/>
         ): (

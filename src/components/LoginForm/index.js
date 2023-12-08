@@ -40,8 +40,8 @@ const LoginForm = () => {
       localStorage.setItem("username", username);
       localStorage.setItem("roles", roles);
       setUser(response);
-      localStorage.setItem("user_image", `http://54.144.166.72/api/users/${response?.user_id}/images`)
-      setUser({...response, user_image: `http://54.144.166.72/api/users/${response?.user_id}/images`})
+      localStorage.setItem("user_image", `http://localhost:8000/api/users/${response?.user_id}/images`)
+      setUser({...response, user_image: `http://localhost:8000/api/users/${response?.user_id}/images`})
    
       if (roles.includes("ADMIN")) {
         navigate("/admin");

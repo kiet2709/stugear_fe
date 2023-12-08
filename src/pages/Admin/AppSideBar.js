@@ -27,13 +27,16 @@ const AppSideBar = () => {
     </div>
     <div className="p-4 pt-5">
       <h1><Link className="logo">STUGEAR</Link></h1>
-        <div className="text-center">    
+        <div className="text-center">  
+        <Link to={"/member/general"}>
         <img
           src={user?.user_image}
           alt=""
           className="rounded-circle"
           style={{width: '40%', height: '70px'}}
         />
+          </Link>  
+    
         
         
         </div>

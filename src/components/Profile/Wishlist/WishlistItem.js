@@ -54,10 +54,10 @@ const WishlistItem =({item, setKey}) =>{
             </Link>
             <div className="product-info my-auto ms-4">
               <h4 className="product-title py-2">
-                <Link to={`/home-page/product-detail/${item.id}`}>{item.name}</Link>
+                <Link style={{textDecoration: 'None', color: 'Black'}} to={`/home-page/product-detail/${item.id}`}>{item.name}</Link>
               </h4>
               <div className="text-lg text-medium text-muted py-2">
-                {item.price}
+                {item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})} 
               </div>
               <div>
                 Tình trạng:
@@ -71,7 +71,7 @@ const WishlistItem =({item, setKey}) =>{
         </td>
         <td>
           <div className="mt-5">
-            <Link style={{textDecoration: 'None'}} onClick={() => setShow(true)}>
+            <Link style={{textDecoration: 'None', color: 'Black'}} onClick={() => setShow(true)}>
               <FontAwesomeIcon icon={faTrashCan} size="2x"/>
             </Link>
             {isRemoved && (
