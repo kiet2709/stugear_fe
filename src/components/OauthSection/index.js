@@ -9,8 +9,10 @@ import Loading from "../Loading/index"
 const OauthSection = ({ text }) => {
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(false)
+  const [isError, setError] = useState("")
   const { setUser } = useAuth();
   const handleOauthResponse = (jwtResponse) => {
+    setError("")
     const userInfo = jwtDecode(jwtResponse.credential);
     handleCreateAccount({
       name: userInfo?.name,
@@ -27,7 +29,11 @@ const OauthSection = ({ text }) => {
     await AuthService.register(oauthUser);
 
     const response = await AuthService.login(oauthUser);
-
+    if(response.status === 401){
+      setError("Email này đã được đăng ký")
+      setLoading(false)
+      return
+    }
     const accessToken = response.access_token;
     const refreshToken = response.refresh_token;
     const userId = response.user_id;
@@ -65,7 +71,6 @@ const OauthSection = ({ text }) => {
           <Loading/>
         </>
       ): (
-     
         <GoogleLogin
         
         onSuccess={(credentialResponse) => {
@@ -75,6 +80,14 @@ const OauthSection = ({ text }) => {
           console.log("Login Failed");
         }}
       />
+      )}
+       {isError ? (
+          <>
+            <div className="alert alert-danger my-4">{isError}</div>
+          </>
+        ) :
+      (
+        <></>
       )}
      
     </div>

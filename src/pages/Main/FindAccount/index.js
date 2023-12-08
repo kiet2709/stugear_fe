@@ -6,6 +6,7 @@ import { useState } from 'react'
 import AuthService from '../../../service/AuthService'
 import { useNavigate } from 'react-router-dom'
 import Loading from '../../../components/Loading'
+import OauthSection from '../../../components/OauthSection'
 const FindAccount = () => {
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
@@ -65,15 +66,7 @@ const FindAccount = () => {
                     <div className="divider d-flex align-items-center my-4">
                         <p className="text-center fw-bold mx-3 mb-0">Hoặc</p>
                     </div>
-                    <div className="social mt-2  d-flex flex-row align-items-center  justify-content-lg-start">
-                        <p className="lead fw-normal mb-0 me-3">Đăng nhập với: </p>
-                        <button type="button" className="btn btn-secondary btn-floating mx-1">
-                            <FontAwesomeIcon icon={faFacebookF} />
-                        </button>
-                        <button type="button" className="btn btn-secondary btn-floating mx-1">
-                            <FontAwesomeIcon icon={faGoogle} />
-                        </button>
-                    </div>
+                   <OauthSection/>
 
                 </form>
 

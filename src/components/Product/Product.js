@@ -27,7 +27,8 @@ const Product = ({ product }) => {
                 key={index}
                 className={`btn btn-outline tag badge ${tag.color}`}
               >
-                {tag.name}
+                <Link style={{textDecoration: 'None', color:'White'}} to={`/search/?tag=${tag.id}`}>{tag.name}</Link>
+                
               </button>
             ))}
         </div>

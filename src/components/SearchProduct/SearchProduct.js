@@ -7,8 +7,8 @@ import CategoryService from "../../service/CategoryService";
 import CustomPagination from "../Pagination/Pagination";
 import Loading from "../Loading";
 import { Link } from "react-router-dom";
-
 const SearchProduct = () => {
+
 
   const [products, setProducts] = useState([{}])
   const [isLoading, setLoading] = useState(true)

@@ -12,6 +12,9 @@ import "react-calendar/dist/Calendar.css";
 import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
 import ProductService from "../../service/ProductService";
 import { debounce } from 'lodash';
+
+import { useLocation } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 const SearchSideBar = ({
   setProducts,
   setTotalPage,
@@ -19,6 +22,8 @@ const SearchSideBar = ({
   setCurrentPage,
   setLoading,
 }) => {
+  let {slug} = useParams()
+  let location = useLocation();
   const tenYearsAgo = new Date();
   tenYearsAgo.setFullYear(tenYearsAgo.getFullYear() - 10);
   const [startDate, setStartDate] = useState(tenYearsAgo);
@@ -61,6 +66,7 @@ const SearchSideBar = ({
 
     getAllCategories();
     getAllTags();
+   
 
   }, []);
 
@@ -150,7 +156,7 @@ const SearchSideBar = ({
 
       console.log("lấy");
       const criteria = {
-                tags: selected.map((item) => item.value),
+        tags: selected.map((item) => item.value),
         category_id: cateSelected.map((item) => item.value),
         condition: conditionSelected.map((item) => item.value),
         status: statusSelected.map((item) => item.value),
@@ -160,6 +166,24 @@ const SearchSideBar = ({
         price_to: priceRange.max.toString(),
         date_from: startDate?.toLocaleDateString("en-GB"),
         date_to: endDate?.toLocaleDateString("en-GB"),
+      }
+      if (slug !== "") {
+        console.log("select here");
+        console.log(slug);
+  
+        // Parse the search query from the URL
+        const searchParams = new URLSearchParams(location.search);
+        const tagFromUrl = searchParams.get('tag'); // Get the tag value from the URL
+  
+        // Check if the tag is a number
+        if (tagFromUrl && !isNaN(tagFromUrl)) {
+          
+  
+          // If the tag is found, set it as the selected tag
+          
+            criteria.tags = [...criteria.tags, parseInt(tagFromUrl)]
+          
+        }
       }
 
 
@@ -253,6 +277,7 @@ const SearchSideBar = ({
               options={tags}
               value={selected}
               onChange={(selected) => {
+                console.log(selected)
                 setSelected(selected);
                 setCurrentPage(1) // Reset currentPage
               }}

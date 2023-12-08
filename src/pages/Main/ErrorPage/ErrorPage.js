@@ -10,7 +10,7 @@ const ErrorPage =({status, title, message}) => {
 			</div>
 			<h2>{status} - {title}</h2>
 			<p>{message}.</p>
-			<Link to={"/home-page/category/all"}>Trở về trang chủ</Link>
+			<Link to={"/home-page/category/1"}>Trở về trang chủ</Link>
 		</div>
 	</div>
 

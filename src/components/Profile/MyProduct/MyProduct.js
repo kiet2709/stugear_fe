@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CustomPagination from "../../../components/Pagination/Pagination";
 import Loading from "../../Loading";
+import { useNavigate } from "react-router-dom";
 const MyProduct = () => {
   const [products, setProducts] = useState([]);
-
+  const navigate = useNavigate()
   const getProductsByCurrentUser = async () => {
     
     setLoading(true);
@@ -44,7 +45,15 @@ const MyProduct = () => {
   useEffect(() => {
     getProductsByCurrentUser();
   }, [currentPage]);
-
+  const handleUpload = async () => {
+    const response = await UserService.getCurrentUser()
+    if (response?.is_verify == "false"){
+      const result = UserService.sendVerifyEmail(response?.email)
+      navigate("/verify")
+    }else{
+      navigate("/member/upload")
+    }
+  }
   return (
     <>
       <div className="row mb-5">
@@ -52,7 +61,16 @@ const MyProduct = () => {
           <Loading />
         ) : (
           <>
-            {products.map((product) => (
+          {products.length == 0 ? (
+              <>
+              <div className="text-center mt-3">
+                Không có sản phẩm nào. <Link onClick={() => handleUpload()}>Đăng bán ?</Link>
+              </div>
+              </>
+          ): 
+          (
+              <>
+              {products.map((product) => (
               <div className="col-4 mt-5">
                 <Link
                   className="my-product-item"
@@ -63,6 +81,9 @@ const MyProduct = () => {
                 </Link>
               </div>
             ))}
+              </>
+          )}
+            
           </>
         )}
       </div>

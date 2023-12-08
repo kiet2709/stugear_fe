@@ -57,7 +57,7 @@ const ProductPage = () => {
   const handleDelete = async () => {
     await ProductService.deleteProduct(product?.id);
 ;
-    navigate("/home-page/category/all");
+    navigate("/home-page/category/1");
   };
 
   const [show, setShow] = useState(false);

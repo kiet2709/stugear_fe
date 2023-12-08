@@ -17,6 +17,7 @@ import ProductService from "../../../service/ProductService";
 
 import { ToastContainer, toast } from "react-toastify";
 import Vote from "../Vote/Vote";
+import useAuth from "../../../hooks/useAuth"
 const Comment = ({
   children,
   comment,
@@ -27,6 +28,7 @@ const Comment = ({
   parentComment,
   isSubComment,
 }) => {
+  const {user} = useAuth()
   const [showReplyInput, setShowReplyInput] = useState(false);
   const [replyComment, setReplyComment] = useState({
     reply_on: comment?.owner_id,
@@ -124,13 +126,20 @@ const Comment = ({
           </p>
           <div>
   
-
-            <button
+            {user?.user_id ? (
+              <>
+                        <button
               className="btn  btn-sm btn-reply  "
               onClick={(e) => handleReplyClick(e)}
             >
               Trả lời
             </button>
+              </>
+            ): 
+            (
+              <></>
+            )}
+  
           </div>
           <div className="reply-section">
             <hr />

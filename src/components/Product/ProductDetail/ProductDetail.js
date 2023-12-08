@@ -7,14 +7,16 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 const ProductDetail = ({ product, isMember }) => {
   const [isAdded, setAdded] = useState(false);
+  const [isExist, setExist] = useState("")
   const addToWishlist = async () => {
     const response = await UserService.addCurrentWishtlistByProductId(
       product.id
     );
     if (response == 500) {
-      console.log("Something went wrong");
+      console.log("Some thing wrong")
     } else {
       setAdded(true);
       toast.success("Thêm vào yêu thích thành công!", {
@@ -67,7 +69,8 @@ const ProductDetail = ({ product, isMember }) => {
                 key={index}
                 className={`btn btn-outline tag badge ${tag.color}`}
               >
-                {tag.name}
+                <Link style={{textDecoration: 'None', color:'White'}} to={`/search/?tag=${tag.id}`}>{tag.name}</Link>
+                
               </button>
             ))}
           </div>
@@ -98,6 +101,14 @@ const ProductDetail = ({ product, isMember }) => {
         <button className="btn" onClick={() => addToWishlist()}>
           <FontAwesomeIcon icon={faHeart} /> Yêu thích
         </button>
+        {isExist !== "" ? (
+          <>
+            <div className="alert alert-danger">{isExist}</div>
+          </>
+        ) : 
+        (
+          <></>
+        )}
       </div></>
       )}
      

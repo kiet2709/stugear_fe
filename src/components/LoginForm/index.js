@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./index.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faEye, faEyeSlash, faLock } from "@fortawesome/free-solid-svg-icons";
 import OauthSection from "../../components/OauthSection";
 import Divider from "../../components/Divider";
 import AuthService from "../../service/AuthService";
@@ -11,10 +11,14 @@ import Loading from "../Loading";
 
 const LoginForm = () => {
   const {user, setUser} = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const navigate = useNavigate(); 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(false);
@@ -81,21 +85,23 @@ const LoginForm = () => {
             />
           </div>
           <div className="my-3 input-group flex-nowrap">
-            <span className="input-group-text">
-              {" "}
-              <FontAwesomeIcon icon={faLock} />
-            </span>
-            <input
-              required
-              type="password"
-              className="form-control"
-              id="floatingPassword"
-              placeholder="Nhập mật khẩu"
-              name="password"
-              onInput={(e) => handleChange(e)}
-              value={user.password}
-            />
-          </div>
+      <span className="input-group-text">
+        <FontAwesomeIcon icon={faLock} />
+      </span>
+      <input
+        required
+        type={showPassword ? 'text' : 'password'}
+        className="form-control"
+        id="floatingPassword"
+        placeholder="Nhập mật khẩu"
+        name="password"
+        onInput={handleChange}
+        value={user.password}
+      />
+      <span className="input-group-text" onClick={togglePasswordVisibility}>
+        <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+      </span>
+    </div>
 
           <div className="d-flex justify-content-between align-items-center">
             <div className="form-check mb-0">
