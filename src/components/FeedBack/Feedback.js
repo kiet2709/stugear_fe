@@ -4,7 +4,7 @@ import "./Feedback.css";
 import LeaveComment from "./LeaveComment/LeaveComment";
 import RatingSection from "./RatingSection/RatingSection";
 import { Link } from "react-router-dom";
-const Feedback = ({ productId }) => {
+const Feedback = ({ productId, isUnApproved }) => {
   const [key, setKey] = useState(0);
   return (
     <>
@@ -12,7 +12,7 @@ const Feedback = ({ productId }) => {
 
       <RatingSection productId={productId} key={key + 1} />
       {localStorage.getItem("user_id") ? (
-        <LeaveComment productId={productId} setKey={setKey} />
+        <LeaveComment productId={productId} setKey={setKey} isUnApproved={isUnApproved} />
       ) : (
         <><div className="text-center my-5">
           <p>Vui lòng <Link to={"/login"}>đăng nhập</Link> để bình luận</p>

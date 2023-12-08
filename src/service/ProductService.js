@@ -188,7 +188,7 @@ class ProductService {
 
   searchInCategory(criteria, currentPage){
     return axios
-    .post(PRODUCT_URL + `/category-search?page=${currentPage}&limit=2`, criteria)
+    .post(PRODUCT_URL + `/category-search?page=${currentPage}&limit=4`, criteria)
     .then((response) => response?.data)
     .catch((error) => error?.response);
   }

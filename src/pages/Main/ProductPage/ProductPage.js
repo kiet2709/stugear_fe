@@ -101,14 +101,23 @@ const ProductPage = () => {
           <div className="row">
             <div className="col-8">
               {isOwner ? (
+                <>
+                
                 <ProductDetail product={product} isMember={true} />
+               
+                </>
+               
               ): (
+                <>
                 <ProductDetail product={product} />
-              )}
               
-              <div>
-                <Feedback productId={product.id} />
+                </>
+                
+              )}
+                <div>
+                <Feedback productId={product.id} isUnApproved={product?.status == "Chờ duyệt" ? true: false} />
               </div>
+   
             </div>
             <div className="col-4">
               {isOwner === true ? (

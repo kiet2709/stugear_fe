@@ -16,6 +16,7 @@ const Category = ({ category }) => {
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState()
+  const [totalProduct, setTotalProduct] = useState()
   const nextPage = () => {
     setCurrentPage(currentPage + 1);
   };
@@ -50,7 +51,7 @@ const Category = ({ category }) => {
         {isStaticLoading ? <Loading /> : <CategoryStatistic item={statistic} />}
 
         <div className="my-4 category-filter">
-          <CategoryFilter key={category.id} setLoading={setLoading} setTotalPage={setTotalPage} category_id={category?.id} currentPage={currentPage} setCurrentPage={setCurrentPage} setProducts={setProducts}/>
+          <CategoryFilter setTotalProduct={setTotalProduct}  key={category.id} setLoading={setLoading} setTotalPage={setTotalPage} category_id={category?.id} currentPage={currentPage} setCurrentPage={setCurrentPage} setProducts={setProducts}/>
         </div>
 
         <div>
@@ -83,6 +84,7 @@ const Category = ({ category }) => {
             prevPage={prevPage}
             nextPage={nextPage}
             setCurrentPage={setCurrentPage}
+            totalProduct={totalProduct}
           />
       </div>
     </div>

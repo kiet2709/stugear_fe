@@ -148,7 +148,9 @@ const UploadProduct = () => {
       return;
     }
     const formData = new FormData();
-    formData.append("image", selectedFile);
+    if(selectedFile){
+      formData.append("image", selectedFile);
+    }
     await ProductService.uploadImage(productId, formData);
     const newItems = selected.filter((item) => item.__isNew__);
     const tag_ids = await TagService.createTags(

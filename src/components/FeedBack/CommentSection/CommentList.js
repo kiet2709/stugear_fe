@@ -13,6 +13,7 @@ const CommentList = ({ productId }) => {
   const [isLoading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState();
+  const [totalProduct, setTotalProduct] = useState()
   const [key, setKey] = useState(0);
   const nextPage = () => {
     setCurrentPage(currentPage + 1);
@@ -88,6 +89,7 @@ const CommentList = ({ productId }) => {
           prevPage={prevPage}
           nextPage={nextPage}
           setCurrentPage={setCurrentPage}
+          
         /></div>
     </div>
   );

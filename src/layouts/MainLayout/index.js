@@ -7,7 +7,7 @@ const MainLayout = () => {
         <>
 
             <Header sticky={true }/>
-            <div className="body container">
+            <div className="body container my-5">
                 <Outlet/>
             </div>
             <Footer/>

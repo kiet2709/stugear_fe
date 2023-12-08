@@ -64,7 +64,7 @@ const OauthSection = ({ text }) => {
   };
 
   return (
-    <div className="social mt-4 " >
+    <div className="social mt-4 " style={{marginLeft:'60px', marginRight:'35px'}} >
       {isLoading ? (
         <>
 

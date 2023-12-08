@@ -1,7 +1,7 @@
 import React from 'react';
 import Pagination from 'react-bootstrap/Pagination';
 
-const CustomPagination = ({ currentPage, totalPage, prevPage, nextPage, setCurrentPage }) => {
+const CustomPagination = ({ currentPage, totalPage, prevPage, nextPage, setCurrentPage, totalProduct }) => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -14,7 +14,10 @@ const CustomPagination = ({ currentPage, totalPage, prevPage, nextPage, setCurre
       <></>
     ): (
       <>
-      <Pagination>
+        <div className='row'>
+
+        <div className='col-10'>
+     <Pagination>
       <Pagination.Prev onClick={prevPage} disabled={currentPage === 1} />
       {[...Array(totalPage).keys()].map((page) => (
         <Pagination.Item
@@ -26,7 +29,21 @@ const CustomPagination = ({ currentPage, totalPage, prevPage, nextPage, setCurre
         </Pagination.Item>
       ))}
       <Pagination.Next onClick={nextPage} disabled={currentPage === totalPage} />
+   
     </Pagination>
+     </div>
+
+    <div className='col'>
+      {totalProduct ? (
+        <><p>Tổng: {totalProduct} sản phẩm</p></>
+      ):
+      (
+        <></>
+      )}
+      
+    </div>
+        </div>
+ 
       </>
     )}
 </>

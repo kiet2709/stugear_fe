@@ -6,7 +6,7 @@ import { faSort } from '@fortawesome/free-solid-svg-icons'
 import ProductService from '../../../service/ProductService'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { InputGroup, Button } from 'react-bootstrap'
-const CategoryFilter = ({setTotalPage, category_id, currentPage, setCurrentPage, setProducts, setLoading}) => {
+const CategoryFilter = ({setTotalProduct, setTotalPage, category_id, currentPage, setCurrentPage, setProducts, setLoading}) => {
 
 
   const [transactionMethod, setTransactionMethod] = useState("")
@@ -20,6 +20,7 @@ const CategoryFilter = ({setTotalPage, category_id, currentPage, setCurrentPage,
 
     setProducts(response)
     setTotalPage(response?.total_pages)
+    setTotalProduct(response?.total_in_all_page)
     setLoading(false)
   }
 

@@ -30,7 +30,7 @@ const SearchSideBar = ({
   const [endDate, setEndDate] = useState(new Date());
   const [priceRange, setPriceRange] = useState({
     min: 0,
-    max: 10000000,
+    max: 1000000,
   });
 
 
@@ -242,7 +242,7 @@ const SearchSideBar = ({
             <h5 className="mb-3">Giá</h5>
             <MultiRangeSlider
               min={0}
-              max={10000000}
+              max={1000000}
               onChange={({ min, max }) => handlePrice({ min, max })}
             />
           </div>
