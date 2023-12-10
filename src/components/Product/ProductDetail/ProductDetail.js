@@ -1,6 +1,6 @@
 import "./ProductDetail.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import UserService from "../../../service/UserService";
 import { useState } from "react";
@@ -8,15 +8,17 @@ import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const ProductDetail = ({ product, isMember }) => {
   const [isAdded, setAdded] = useState(false);
-  const [isExist, setExist] = useState("")
+  const [isExist, setExist] = useState("");
+  const navigate = useNavigate()
   const addToWishlist = async () => {
     const response = await UserService.addCurrentWishtlistByProductId(
       product.id
     );
     if (response == 500) {
-      console.log("Some thing wrong")
+      console.log("Some thing wrong");
     } else {
       setAdded(true);
       toast.success("Thêm vào yêu thích thành công!", {
@@ -31,6 +33,10 @@ const ProductDetail = ({ product, isMember }) => {
       });
     }
   };
+  const hanldeCheckout=(e) => {
+    e.preventDefault()
+    navigate("/member/checkout")
+  }
   return (
     <div>
       <div className="text-center mb-5">
@@ -69,8 +75,12 @@ const ProductDetail = ({ product, isMember }) => {
                 key={index}
                 className={`btn btn-outline tag badge ${tag.color}`}
               >
-                <Link style={{textDecoration: 'None', color:'White'}} to={`/search/?tag=${tag.id}`}>{tag.name}</Link>
-                
+                <Link
+                  style={{ textDecoration: "None", color: "White" }}
+                  to={`/search/?tag=${tag.id}`}
+                >
+                  {tag.name}
+                </Link>
               </button>
             ))}
           </div>
@@ -94,24 +104,39 @@ const ProductDetail = ({ product, isMember }) => {
           </div>
         </div>
       </div>
-      {isMember ===true ? (
-<></>
-      ): (
-<> <div className="wishtlist-btn">
-        <button className="btn" onClick={() => addToWishlist()}>
-          <FontAwesomeIcon icon={faHeart} /> Yêu thích
-        </button>
-        {isExist !== "" ? (
-          <>
-            <div className="alert alert-danger">{isExist}</div>
-          </>
-        ) : 
-        (
-          <></>
-        )}
-      </div></>
+      {isMember === true ? (
+        <></>
+      ) : (
+        <>
+          <div className="d-flex">
+            <div className="checkout-btn">
+              <button className="btn" onClick={(e) => hanldeCheckout(e)}>
+                <FontAwesomeIcon icon={faCartShopping} /> Mua ngay
+              </button>
+              {isExist !== "" ? (
+                <>
+                  <div className="alert alert-danger">{isExist}</div>
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
+            <div className="wishtlist-btn">
+              <button className="btn" onClick={() => addToWishlist()}>
+                <FontAwesomeIcon icon={faHeart} /> Yêu thích
+              </button>
+              {isExist !== "" ? (
+                <>
+                  <div className="alert alert-danger">{isExist}</div>
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
+          </div>
+        </>
       )}
-     
+
       {isAdded ? (
         <>
           <ToastContainer

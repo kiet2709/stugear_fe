@@ -1,0 +1,46 @@
+.balance-page {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin-top: 50px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 70px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: #f9f9f9;
+}
+
+.balance-section, .add-balance-section {
+    margin-bottom: 30px;
+}
+
+
+.balance-img {
+    width: 200px;
+}
+
+.add-balance-form input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.add-balance-form button {
+    background-color: #4CAF50;
+    width: 100px;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-balance-form button:hover {
+    background-color: #45a049;
+}
+
+.balance-page .icon-group {
+    margin-left: 170px;
+    margin-right: 170px;
+}
