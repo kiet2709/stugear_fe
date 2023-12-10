@@ -108,6 +108,13 @@ class UserService {
       .then((response) => response?.data?.data)
       .catch((error) => error?.response);
   }
+
+  getUserById(userId){
+    return axiosPrivate
+    .get(USER_URL + `/${userId}`)
+    .then((response) => response?.data?.data)
+    .catch((error) => error?.response);
+}
 }
 
 export default new UserService();

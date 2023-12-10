@@ -1,12 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import Popover from "react-bootstrap/Popover";
 import "./index.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAddressCard } from "@fortawesome/free-regular-svg-icons";
+import { faAddressCard, faCreditCard, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { Overlay } from "react-bootstrap";
-import { faHeart, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import UserService from "../../service/UserService";
+import { faDollar, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 const UserHeader = () => {
@@ -32,9 +31,7 @@ const UserHeader = () => {
       <div className="d-flex">
         
         <div className="member-section">
-          <Link style={{textDecoration: 'None', color: 'black'}} to={"/member/cart"} className="me-3">
-            <FontAwesomeIcon className="member-icon" icon={faShoppingCart } />
-          </Link>
+
 
           <Link style={{textDecoration: 'None', color: 'black'}} to={"/member/wishlist"} className="me-3">
             <FontAwesomeIcon icon={faHeart} className="member-icon"/>
@@ -59,15 +56,23 @@ const UserHeader = () => {
         >
           <Popover id="popover-contained">
             <ul className="menu text-center">
+              <li style={{background: '#E7E9EB'}}>
+                Số dư: 0 VNĐ
+              </li>
               <li>{user?.username}</li>
-              <li>
+              <li className="personal-li">
                 <Link className="link" to="/member/general">
                   <FontAwesomeIcon icon={faAddressCard} /> Trang cá nhân
                 </Link>
               </li>
-              <li>
+              <li className="personal-li">
                 <Link className="link" to="/member/wishlist">
                   <FontAwesomeIcon icon={faHeart} /> Yêu thích
+                </Link>
+              </li>
+              <li className="personal-li">
+                <Link className="link" to="/member/wallet">
+                  <FontAwesomeIcon icon={faCreditCard} /> Nạp tiền
                 </Link>
               </li>
 

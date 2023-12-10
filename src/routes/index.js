@@ -24,6 +24,10 @@ import AdminPage from '../pages/Admin/AdminPage.js'
 import AdminUser from "../pages/Admin/AdminUser.js"
 import AdminProduct from "../pages/Admin/AdminProduct.js"
 import useAuth from '../hooks/useAuth.js'
+import MyWallet from '../components/Profile/MyWallet/MyWallet.js'
+import CheckoutPage from '../pages/Main/Checkout/index.js'
+import MyOrder from '../components/Profile/MyOrder/MyOrder.js'
+import OrderPage from '../pages/Main/OrderPage/index.js'
 
 function useRouteElements () {
 
@@ -88,6 +92,14 @@ function useRouteElements () {
           path: '/member/my-product',
           element: <MyProduct/>
         },
+        {
+          path: '/member/wallet',
+          element: <MyWallet/>
+        },
+        {
+          path: '/member/order',
+          element: <MyOrder/>
+        },
       ]
     },
     {
@@ -97,6 +109,14 @@ function useRouteElements () {
         {
           path: '/member/upload/:slug?',
           element: <UploadProduct/>
+        },
+        {
+          path: '/member/checkout/:slug',
+          element: <CheckoutPage/>
+        },
+        {
+          path: '/member/order-detail/:slug',
+          element: <OrderPage/>
         },
       ]
     },

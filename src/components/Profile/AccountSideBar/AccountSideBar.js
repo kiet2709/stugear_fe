@@ -7,7 +7,9 @@ import {
   faInfo,
   faLock,
   faMedal,
+  faMoneyBill,
   faPeopleCarry,
+  faReorder,
   faTh,
   faUpload,
 } from "@fortawesome/free-solid-svg-icons";
@@ -19,6 +21,7 @@ import UserService from "../../../service/UserService";
 import AuthService from "../../../service/AuthService"
 import { useEffect, useState } from "react";
 import Loading from "../../Loading";
+import { faCreditCard } from "@fortawesome/free-regular-svg-icons";
 const AccountSideBar = () => {
   const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState({})
@@ -79,7 +82,10 @@ const AccountSideBar = () => {
   <nav className="list-group">
     <NavLink className="list-group-item with-badge" to={"/member/general"}><FontAwesomeIcon icon={faTh}/> <i className=" fa fa-th" />Thông tin cá nhân</NavLink>
     <NavLink className="list-group-item" to={"/member/my-product"}><FontAwesomeIcon icon={faProductHunt}/> Sản phẩm của tôi</NavLink>
+    <NavLink className="list-group-item with-badge " to={""}><FontAwesomeIcon icon={faMoneyBill}/> Đơn hàng của tôi</NavLink>
     <NavLink className="list-group-item with-badge " to={"/member/wishlist"}><FontAwesomeIcon icon={faHeart}/> Yêu thích</NavLink>
+    <NavLink className="list-group-item with-badge " to={"/member/wallet"}><FontAwesomeIcon icon={faCreditCard}/> Nạp tiền</NavLink>
+    <NavLink className="list-group-item with-badge " to={"/member/order"}><FontAwesomeIcon icon={faReorder}/> Lịch sử mua hàng</NavLink>
     <NavLink className="list-group-item with-badge" to={""} onClick={(e) => handleResetPassword(e)}><FontAwesomeIcon icon={faLock}/> Đặt lại mật khẩu</NavLink>
   </nav>
 </div>
