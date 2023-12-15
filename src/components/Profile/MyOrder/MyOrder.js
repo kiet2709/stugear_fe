@@ -1,49 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./MyOrder.css";
 import { useNavigate } from "react-router-dom";
+import UserService from "../../../service/UserService";
 const MyOrder = () => {
   const navigate = useNavigate()
-  const [order, setOrder] = useState([
-    {
-      id: 1,
-      product_id: 1,
-      product_title: "Product 1",
-      status: "Đang giao",
-      created_date: "2023-12-01",
-    },
-    {
-      id: 2,
-      product_id: 2,
-      product_title: "Product 2",
-      status: "Đã giao",
-      created_date: "2023-12-02",
-    },
-    {
-      id: 3,
-      product_id: 3,
-      product_title: "Product 3",
-      status: "Đang duyệt",
-      created_date: "2023-12-03",
-    },
-  ]);
+
+  const [order, setOrder] = useState([]);
 
   const hanldeViewDetail = (e, orderId) => {
     e.preventDefault();
     navigate(`/member/order-detail/${orderId}`)
   };
+  const getOrders = async () => {
+    const response = await UserService.getCurrentUserOrdersHistory()
+    console.log(response)
+    if(response?.status !== 400) {
+      setOrder(response?.data)
+    }
+  }
+  useEffect(() => {
+    getOrders()
+  }, [])
   return (
     <>
       <div>
         <table className="order-table table ">
           <thead style={{ background: "#7355F7" }}>
             <tr>
-              <th
-                className="text-white"
-                style={{ background: "#7355F7" }}
-                scope="col"
-              >
-                #
-              </th>
+
               <th
                 className="text-white"
                 style={{ background: "#7355F7" }}
@@ -85,7 +69,7 @@ const MyOrder = () => {
             {order.map((item) => {
               return (
                 <tr>
-                  <th scope="row">1</th>
+
                   <td>{item.id}</td>
                   <td>{item.product_title}</td>
                   <td>{item.status}</td>

@@ -6,21 +6,13 @@ import CustomModal from "../Modal/Modal";
 import { ToastContainer, toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import OrderService from "../../service/OrderService";
 const OrderDetail = () => {
   let {slug} = useParams()
   const navigate = useNavigate()
   const {user} = useAuth()
   const [isConfirm, setConfirm] = useState(false)
-  const [order, setOrder] = useState({
-    id: 1,
-    product_image: "http://localhost:8000/api/products/8/images",
-    product_title: "Oracle HTML Handbook",
-    product_price: "12,000 VNĐ",
-    quantity: 2,
-    status: "Đã giao hàng",
-    created_date: "12/10/2023",
-    total_price: "24, 000 VNĐ"
-  })
+  const [order, setOrder] = useState({})
 
   const [show, setShow] = useState(false);
   const handleClose = () => {
@@ -44,9 +36,27 @@ const OrderDetail = () => {
   const handleConfirmOrder = async () => {
     setOrder({...order, status: "Đã nhận hàng"})
   };
+  const getOrder = async (orderId) => {
+    let response = await OrderService.getOrderById(orderId)
+
+    if(response?.status !== 400){
+
+      const formattedProduct = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+    }).format(response?.product_price);
+
+    const formattedTotal = new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+  }).format(response?.total_price);
+      response={...response, product_price: formattedProduct, total_price: formattedTotal}
+      setOrder(response)
+    }
+  }
   useEffect(() => {
     if(slug){
-
+      getOrder(slug)
     }else{
         navigate("/not-found")
     }
@@ -130,7 +140,7 @@ const OrderDetail = () => {
                     
                       <div className="d-flex flex-row justify-content-between align-items-center align-content-center">
                         
-                        {order?.status === "Chờ xác nhận" ? (
+                        {order?.status === "Đang xử lý" ? (
                             <>
                                  <span
                           className="d-flex justify-content-center 
@@ -196,7 +206,7 @@ const OrderDetail = () => {
                       </div>
                       <div className="d-flex flex-row justify-content-between align-items-center">
                         <div className="d-flex flex-column align-items-start">
-                          <span>Chờ Xác nhận</span>
+                          <span>Đang xử lý</span>
                         </div>
                         <div className="d-flex flex-column align-items-start">
                           <span>Đang giao hàng</span>

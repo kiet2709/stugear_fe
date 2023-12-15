@@ -28,6 +28,7 @@ import MyWallet from '../components/Profile/MyWallet/MyWallet.js'
 import CheckoutPage from '../pages/Main/Checkout/index.js'
 import MyOrder from '../components/Profile/MyOrder/MyOrder.js'
 import OrderPage from '../pages/Main/OrderPage/index.js'
+import PaymentSucess from '../pages/Main/PaymentSucess/PaymentSucess.js'
 
 function useRouteElements () {
 
@@ -38,7 +39,7 @@ function useRouteElements () {
       if(user?.roles?.includes("ADMIN")){
         return  <Navigate to="/admin" />; 
       }
-      return  <Navigate to="/home-page/category/1" />; 
+      return  <Navigate to="/landing-page" />; 
     }
     // user is not authenticated
     return children
@@ -199,6 +200,16 @@ function useRouteElements () {
         },
       ]
     },
+    {
+      path: '',
+      element: <ProtectedRoute><MainLayout/></ProtectedRoute>,
+      children: [
+        {
+          path: '/payment-success/',
+          element:  <PaymentSucess/>
+        }
+      ]
+    }
   ])
   return routeElements
 }

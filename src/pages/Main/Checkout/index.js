@@ -9,20 +9,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import OrderService from "../../../service/OrderService";
 const CheckoutPage = () => {
-  const { user } = useAuth();
-  const navigate = useNavigate()
-  let {slug} = useParams()
+  const { user, setUser } = useAuth();
+  const navigate = useNavigate();
+  let { slug } = useParams();
+  const [address, setAddress] = useState("")
+  const [quantity, setQuantity] = useState(1);
   const [userInfo, setUserInfo] = useState({});
   const [product, setProduct] = useState({});
   const [isLoading, setLoading] = useState(false);
+  const [totalPrice, setTotalPrice] = useState();
+  const [isError, setError] = useState("");
   const getProductById = async (id) => {
     setLoading(true);
     const response = await ProductService.getProductById(id);
     if (response.status == 404) {
-      navigate("/not-found")
-    }else{
-        setProduct(response);
+      navigate("/not-found");
+    } else {
+      setProduct(response);
+      setTotalPrice(response?.price);
     }
     setLoading(false);
   };
@@ -31,23 +37,54 @@ const CheckoutPage = () => {
     const response = await UserService.getCurrentUser();
     if (response.status !== 400) {
       setUserInfo(response);
+      setAddress(response?.full_address)
     }
     setLoading(false);
   };
+  const handleQuantity = (e) => {
+    setQuantity(e.target.value);
 
+    // Convert the price to a number and calculate the total
+    const total = product?.price.replace(/[^0-9.-]+/g, "") * e.target.value;
+
+    // Format the total as a number with commas
+    const formattedTotal = new Intl.NumberFormat("vi-VN").format(total);
+
+    // Append 'VNĐ' to the formatted total
+    setTotalPrice(formattedTotal + " VNĐ");
+  };
 
   useEffect(() => {
-    if(slug){
-        const productId = slug
-        getProductById(productId);
-    }else{
-        navigate("/not-found")
+    if (slug) {
+      const productId = slug;
+      getProductById(productId);
+    } else {
+      navigate("/not-found");
     }
-    
+
     getCurrentUserInfo();
-  }, [])
+  }, []);
 
+  const handleCheckout = async () => {
+    const response = await OrderService.createOrder(
+      product.id,
+      quantity,
+      product?.price.replace(/[^0-9.-]+/g, "")
+    );
 
+    if (response?.status !== 400) {
+      const balanceResponse = await UserService.getCurrentUserBalance();
+      if (balanceResponse.status !== 400) {
+        localStorage.setItem("balance", balanceResponse.balance);
+        setUser({ ...user, balance: balanceResponse.balance });
+      }
+
+      navigate(`/member/order`);
+    } else {
+      console.log(response);
+      setError(response?.data?.message);
+    }
+  };
 
   return (
     <>
@@ -97,7 +134,7 @@ const CheckoutPage = () => {
                       <img
                         src={product?.product_image}
                         className="d-block "
-                        style={{width: '230px', height: '230px'}}
+                        style={{ width: "230px", height: "230px" }}
                         alt=""
                       />
                     </div>
@@ -118,7 +155,17 @@ const CheckoutPage = () => {
                   <span className="dis fw-bold info my-3">Tình trạng: </span>
                   <span className="dis">{product?.condition}</span>
                 </p>
-
+                <div className="input-group mb-3">
+                  <input
+                    type="number"
+                    value={quantity}
+                    onChange={(e) => handleQuantity(e)}
+                    placeholder="Nhập số lượng"
+                    min={1}
+                    className="form-control"
+                  />
+                  <span className="input-group-text"> Sản phẩm</span>
+                </div>
               </div>
             </div>
             <div className="box-2">
@@ -153,7 +200,7 @@ const CheckoutPage = () => {
                       />
                       <span className="dis">
                         {" "}
-                        Số dư: 0 VNĐ{" "}
+                        Số dư: {localStorage.getItem("balance")}{" "}
                         <Link to={"/member/wallet"}>.Nạp tiền?</Link>
                       </span>
                     </div>
@@ -171,9 +218,10 @@ const CheckoutPage = () => {
                       <p className="dis fw-bold mb-3">Địa chỉ giao hàng *</p>
                       <input
                         className="form-control"
-                        value={userInfo?.full_address}
+                        value={address}
+                        onInput={(e) => {setAddress(e.target.value)}}
                       />
-                      {userInfo?.full_address === "" ? (
+                      {address === "" ? (
                         <>
                           <p className="dis my-3" style={{ color: "red" }}>
                             Vui lòng thêm địa chỉ giao hàng
@@ -194,6 +242,13 @@ const CheckoutPage = () => {
                           </p>
                         </div>
                         <div className="d-flex align-items-center justify-content-between mb-2">
+                          <p>Số lượng</p>
+                          <p>
+                            <span className="fas fa-dollar-sign" />
+                            {quantity}
+                          </p>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-between mb-2">
                           <p>
                             VAT <span>(0%)</span>
                           </p>
@@ -205,12 +260,39 @@ const CheckoutPage = () => {
                           <p className="fw-bold">Tổng</p>
                           <p className="fw-bold">
                             <span className="fas fa-dollar-sign" />
-                            {product?.price}
+                            {totalPrice}
                           </p>
                         </div>
-                        <div className="btn btn-primary mt-2">
+                        {isError !== "" 
+                        ? (
+                          <>
+                            <p className="text-danger">Bạn không đủ số dư để thanh toán</p>
+                          </>
+                        ) : (
+                          <></>
+                        )}
+
+                        {address === "" || isError ? (
+                          <>
+                                     <button
+                          className="btn btn-primary mt-2"
+                          disabled
+                          
+                        >
                           Thanh toán {product?.price}
-                        </div>
+                        </button>
+                          </>
+                        ) : (
+                          <>
+                            <div
+                              className="btn btn-primary mt-2"
+                              onClick={() => handleCheckout()}
+                            >
+                              Thanh toán {product?.price}
+                            </div>
+                          </>
+                        )}
+             
                       </div>
                     </div>
                   </div>

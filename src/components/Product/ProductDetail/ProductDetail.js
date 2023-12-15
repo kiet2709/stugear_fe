@@ -17,9 +17,13 @@ const ProductDetail = ({ product, isMember }) => {
     const response = await UserService.addCurrentWishtlistByProductId(
       product.id
     );
+    console.log(response)
     if (response == 500) {
       console.log("Some thing wrong");
-    } else {
+    } else if(response?.status === 400){
+      setExist(response?.data?.message)
+    }
+    else {
       setAdded(true);
       toast.success("Thêm vào yêu thích thành công!", {
         position: "top-center",
@@ -33,9 +37,9 @@ const ProductDetail = ({ product, isMember }) => {
       });
     }
   };
-  const hanldeCheckout=(e) => {
+  const hanldeCheckout=(e, productId) => {
     e.preventDefault()
-    navigate("/member/checkout")
+    navigate(`/member/checkout/${productId}`)
   }
   return (
     <div>
@@ -110,31 +114,27 @@ const ProductDetail = ({ product, isMember }) => {
         <>
           <div className="d-flex">
             <div className="checkout-btn">
-              <button className="btn" onClick={(e) => hanldeCheckout(e)}>
+              <button className="btn" onClick={(e) => hanldeCheckout(e,product?.id)}>
                 <FontAwesomeIcon icon={faCartShopping} /> Mua ngay
               </button>
-              {isExist !== "" ? (
-                <>
-                  <div className="alert alert-danger">{isExist}</div>
-                </>
-              ) : (
-                <></>
-              )}
+            
             </div>
             <div className="wishtlist-btn">
               <button className="btn" onClick={() => addToWishlist()}>
                 <FontAwesomeIcon icon={faHeart} /> Yêu thích
               </button>
-              {isExist !== "" ? (
+
+            </div>
+          </div>
+          {isExist !== "" ? (
                 <>
-                  <div className="alert alert-danger">{isExist}</div>
+                  <div className="alert alert-danger my-3">{isExist}</div>
                 </>
               ) : (
                 <></>
               )}
-            </div>
-          </div>
         </>
+        
       )}
 
       {isAdded ? (
