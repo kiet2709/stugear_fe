@@ -57,7 +57,7 @@ const UserHeader = () => {
           <Popover id="popover-contained">
             <ul className="menu text-center">
               <li style={{background: '#E7E9EB'}}>
-                Số dư: {localStorage.getItem("balance")}
+                <span style={{fontSize: '12px'}}>Số dư: {user?.balance}</span>
               </li>
               <li>{user?.username}</li>
               <li className="personal-li">

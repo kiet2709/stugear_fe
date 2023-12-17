@@ -71,7 +71,7 @@ label.box .circle {
     display: inline-block;
 }
 
-input[type="radio"] {
+.checkout-page input[type="radio"] {
     display: none;
 }
 

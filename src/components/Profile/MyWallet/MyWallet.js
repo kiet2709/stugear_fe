@@ -8,7 +8,7 @@ import usePayment from "../../../hooks/usePayment";
 import Loading from "../../Loading";
 import UserService from "../../../service/UserService";
 const BalancePage = () => {
-  const navigate = useNavigate();
+
   const [amountToAdd, setAmountToAdd] = useState("");
   const [method, setMethod] = useState("");
   const { user, setUser } = useAuth();
@@ -49,19 +49,22 @@ const BalancePage = () => {
   const getCurrentBalance = async() => {
     const balanceResponse = await UserService.getCurrentUserBalance()
     if(balanceResponse.status !== 400){
-      
-    setBalance(balanceResponse.balance)
+      setBalance(balanceResponse.balance)
+      setUser({...user, balance: balanceResponse.balance})
+      localStorage.setItem("balance", balanceResponse.balance)
     }
   }
   useEffect(() => {
     if(paymentStatus === "Thanh toán thành công"){
+      console.log("THanhhhhhhhhhhhhh")
       getCurrentBalance()
+      
     }
   }, [paymentStatus])
   useEffect(() => {
 
       getCurrentBalance()
-
+     
   }, [])
 
 

@@ -80,13 +80,13 @@ const AccountSideBar = () => {
     </div>
   </aside>
   <nav className="list-group">
-    <NavLink className="list-group-item with-badge" to={"/member/general"}><FontAwesomeIcon icon={faTh}/> <i className=" fa fa-th" />Thông tin cá nhân</NavLink>
-    <NavLink className="list-group-item" to={"/member/my-product"}><FontAwesomeIcon icon={faProductHunt}/> Sản phẩm của tôi</NavLink>
-    <NavLink className="list-group-item with-badge " to={""}><FontAwesomeIcon icon={faMoneyBill}/> Đơn hàng của tôi</NavLink>
-    <NavLink className="list-group-item with-badge " to={"/member/wishlist"}><FontAwesomeIcon icon={faHeart}/> Yêu thích</NavLink>
-    <NavLink className="list-group-item with-badge " to={"/member/wallet"}><FontAwesomeIcon icon={faCreditCard}/> Nạp tiền</NavLink>
-    <NavLink className="list-group-item with-badge " to={"/member/order"}><FontAwesomeIcon icon={faReorder}/> Lịch sử mua hàng</NavLink>
-    <NavLink className="list-group-item with-badge" to={""} onClick={(e) => handleResetPassword(e)}><FontAwesomeIcon icon={faLock}/> Đặt lại mật khẩu</NavLink>
+    <NavLink className="list-group-item with-badge" to={"/member/general"}><FontAwesomeIcon icon={faTh} style={{marginRight: '10px'}}/> Thông tin cá nhân</NavLink>
+    <NavLink className="list-group-item" to={"/member/my-product"}><FontAwesomeIcon icon={faProductHunt} style={{marginRight: '10px'}}/> Sản phẩm của tôi</NavLink>
+    <NavLink className="list-group-item with-badge " to={"/member/my-sell"}><FontAwesomeIcon icon={faMoneyBill} style={{marginRight: '10px'}}/> Đơn hàng của tôi</NavLink>
+    <NavLink className="list-group-item with-badge " to={"/member/wishlist"}><FontAwesomeIcon icon={faHeart} style={{marginRight: '10px'}}/> Yêu thích</NavLink>
+    <NavLink className="list-group-item with-badge " to={"/member/wallet"}><FontAwesomeIcon icon={faCreditCard} style={{marginRight: '10px'}}/> Nạp tiền</NavLink>
+    <NavLink className="list-group-item with-badge " to={"/member/order"}><FontAwesomeIcon icon={faReorder} style={{marginRight: '10px'}}/> Lịch sử mua hàng</NavLink>
+    <NavLink className="list-group-item with-badge" to={""} onClick={(e) => handleResetPassword(e)}><FontAwesomeIcon icon={faLock} style={{marginRight: '10px'}}/> Đặt lại mật khẩu</NavLink>
   </nav>
 </div>
 

@@ -114,10 +114,17 @@ const ProductDetail = ({ product, isMember }) => {
         <>
           <div className="d-flex">
             <div className="checkout-btn">
-              <button className="btn" onClick={(e) => hanldeCheckout(e,product?.id)}>
+              {product?.transaction_method === "Trên trang web" ? (
+                <>
+                         <button className="btn" onClick={(e) => hanldeCheckout(e,product?.id)}>
                 <FontAwesomeIcon icon={faCartShopping} /> Mua ngay
               </button>
             
+                </>
+              ): (
+                <></>
+              )}
+     
             </div>
             <div className="wishtlist-btn">
               <button className="btn" onClick={() => addToWishlist()}>

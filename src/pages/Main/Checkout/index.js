@@ -77,9 +77,11 @@ const CheckoutPage = () => {
       if (balanceResponse.status !== 400) {
         localStorage.setItem("balance", balanceResponse.balance);
         setUser({ ...user, balance: balanceResponse.balance });
-      }
 
-      navigate(`/member/order`);
+      }
+    
+      navigate(`/member/order-detail/${response?.order_id}`);
+      
     } else {
       console.log(response);
       setError(response?.data?.message);
