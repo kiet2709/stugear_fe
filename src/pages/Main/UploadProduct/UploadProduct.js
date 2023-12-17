@@ -22,6 +22,7 @@ import CustomModal from "../../../components/Modal/Modal";
 const UploadProduct = () => {
   let { slug } = useParams();
   const navigate = useNavigate();
+  const [isError, setError] = useState(false)
   const [isAdded, setAdded] = useState(false);
   const [isUpdated, setupdated] = useState(false);
   const [product, setProduct] = useState({
@@ -151,7 +152,11 @@ const UploadProduct = () => {
     if(selectedFile){
       formData.append("image", selectedFile);
     }
-    await ProductService.uploadImage(productId, formData);
+    const responseImg = await ProductService.uploadImage(productId, formData);
+    console.log(responseImg)
+    if(responseImg?.status === 400){
+      console.log("aaa")
+    }
     const newItems = selected.filter((item) => item.__isNew__);
     const tag_ids = await TagService.createTags(
       newItems.map((item) => item.value)
@@ -205,6 +210,11 @@ const UploadProduct = () => {
     setLoading(true);
     setProduct({ ...product, status: 2 });
     const response = await ProductService.createProduct(product);
+    if(response?.status === 400){
+      setError("Vui lòng điền đầy đủ thông tin")
+      setLoading(false)
+      return
+    }
     let productId = 0;
     if (response?.id) {
       productId = response.id;
@@ -260,6 +270,11 @@ const UploadProduct = () => {
         <Loading />
       ) : (
         <div className="card my-5 p-5">
+          {isError ? (
+              <><p className="text-danger">{isError}</p></>
+          ): (
+            <></>
+          )}
           <form>
             <div className="row product-type my-5 ">
               <div className="col-5 text-start">
@@ -539,8 +554,7 @@ const UploadProduct = () => {
                 </div>
               </div>
             </div>
-          </form>
-          <div className="ms-auto mt-5 d-flex">
+            <div style={{marginLeft: '76%'}} className="mt-5 d-flex">
             {slug == undefined && (
               <>
                 <div className=" mb-3 me-2">
@@ -548,7 +562,7 @@ const UploadProduct = () => {
                     style={{ textDecoration: "None", color: "black" }}
                     onClick={(e) => handleDraft(e)}
                   >
-                    <button className="product-draft">
+                    <button className="product-draft" >
                       {" "}
                       <FontAwesomeIcon icon={faDraftingCompass} className="me-2" /> Lưu
                       bản nháp
@@ -592,6 +606,8 @@ const UploadProduct = () => {
               <></>
             )}
           </div>
+          </form>
+          
           {isAdded ? (
             <>
               <ToastContainer

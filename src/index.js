@@ -9,15 +9,18 @@ import "aos/dist/aos.css";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { PaymentProvider } from "./context/PaymentProvider";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
 
   <BrowserRouter>
     <GoogleOAuthProvider clientId="1043189901162-7csr13i8ku1dvcrsa7i08756qp6eb13m.apps.googleusercontent.com">
+      <PaymentProvider>
       <AuthProvider>
         <App />
       </AuthProvider>
+      </PaymentProvider>
     </GoogleOAuthProvider>
     
   </BrowserRouter>
