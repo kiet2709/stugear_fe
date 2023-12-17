@@ -8,9 +8,11 @@ import AuthService from "../../service/AuthService";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import Loading from "../Loading";
+import UserService from "../../service/UserService";
 
 const LoginForm = () => {
   const {user, setUser} = useAuth();
+  const [credentials, setCredentials] = useState({}) 
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -23,7 +25,7 @@ const LoginForm = () => {
     e.preventDefault();
     setError(false);
     setLoading(true);
-    const response = await AuthService.login(user);
+    let response = await AuthService.login(credentials);
     setLoading(false);
     if (response.status === 401) {
       setMessage("Mật khẩu không đúng ");
@@ -32,21 +34,29 @@ const LoginForm = () => {
       setMessage("Email chưa được đăng ký");
       setError(true);
     } else {
+            
+
       const accessToken = response.access_token;
       const refreshToken = response.refresh_token;
       const userId = response.user_id;
       const username = response.username;
       const roles = response.roles;
+      
 
       localStorage.setItem("access_token", accessToken);
       localStorage.setItem("refresh_token", refreshToken);
       localStorage.setItem("user_id", userId);
       localStorage.setItem("username", username);
       localStorage.setItem("roles", roles);
+      const balanceResponse = await UserService.getCurrentUserBalance()
+      if(balanceResponse.status !== 400){
+        localStorage.setItem("balance", balanceResponse.balance);
+      }
+      response = {...response, balance: balanceResponse.balance}
       setUser(response);
       localStorage.setItem("user_image", `http://localhost:8000/api/users/${response?.user_id}/images`)
       setUser({...response, user_image: `http://localhost:8000/api/users/${response?.user_id}/images`})
-   
+      
       if (roles.includes("ADMIN")) {
         navigate("/admin");
       } else {  
@@ -55,8 +65,10 @@ const LoginForm = () => {
     }
   };
 
+
+
   const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
   return (
@@ -81,7 +93,7 @@ const LoginForm = () => {
               placeholder="Nhập địa chỉ email"
               name="email"
               onInput={(e) => handleChange(e)}
-              value={user.email}
+              value={credentials.email}
             />
           </div>
           <div className="my-3 input-group flex-nowrap">
@@ -96,7 +108,7 @@ const LoginForm = () => {
         placeholder="Nhập mật khẩu"
         name="password"
         onInput={handleChange}
-        value={user.password}
+        value={credentials.password}
       />
       <span className="input-group-text" onClick={togglePasswordVisibility}>
         <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />

@@ -1,6 +1,6 @@
 import "./ProductDetail.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import UserService from "../../../service/UserService";
 import { useState } from "react";
@@ -8,16 +8,22 @@ import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const ProductDetail = ({ product, isMember }) => {
   const [isAdded, setAdded] = useState(false);
-  const [isExist, setExist] = useState("")
+  const [isExist, setExist] = useState("");
+  const navigate = useNavigate()
   const addToWishlist = async () => {
     const response = await UserService.addCurrentWishtlistByProductId(
       product.id
     );
+    console.log(response)
     if (response == 500) {
-      console.log("Some thing wrong")
-    } else {
+      console.log("Some thing wrong");
+    } else if(response?.status === 400){
+      setExist(response?.data?.message)
+    }
+    else {
       setAdded(true);
       toast.success("Thêm vào yêu thích thành công!", {
         position: "top-center",
@@ -31,6 +37,10 @@ const ProductDetail = ({ product, isMember }) => {
       });
     }
   };
+  const hanldeCheckout=(e, productId) => {
+    e.preventDefault()
+    navigate(`/member/checkout/${productId}`)
+  }
   return (
     <div>
       <div className="text-center mb-5">
@@ -69,8 +79,12 @@ const ProductDetail = ({ product, isMember }) => {
                 key={index}
                 className={`btn btn-outline tag badge ${tag.color}`}
               >
-                <Link style={{textDecoration: 'None', color:'White'}} to={`/search/?tag=${tag.id}`}>{tag.name}</Link>
-                
+                <Link
+                  style={{ textDecoration: "None", color: "White" }}
+                  to={`/search/?tag=${tag.id}`}
+                >
+                  {tag.name}
+                </Link>
               </button>
             ))}
           </div>
@@ -94,24 +108,42 @@ const ProductDetail = ({ product, isMember }) => {
           </div>
         </div>
       </div>
-      {isMember ===true ? (
-<></>
-      ): (
-<> <div className="wishtlist-btn">
-        <button className="btn" onClick={() => addToWishlist()}>
-          <FontAwesomeIcon icon={faHeart} /> Yêu thích
-        </button>
-        {isExist !== "" ? (
-          <>
-            <div className="alert alert-danger">{isExist}</div>
-          </>
-        ) : 
-        (
-          <></>
-        )}
-      </div></>
-      )}
+      {isMember === true ? (
+        <></>
+      ) : (
+        <>
+          <div className="d-flex">
+            <div className="checkout-btn">
+              {product?.transaction_method === "Trên trang web" ? (
+                <>
+                         <button className="btn" onClick={(e) => hanldeCheckout(e,product?.id)}>
+                <FontAwesomeIcon icon={faCartShopping} /> Mua ngay
+              </button>
+            
+                </>
+              ): (
+                <></>
+              )}
      
+            </div>
+            <div className="wishtlist-btn">
+              <button className="btn" onClick={() => addToWishlist()}>
+                <FontAwesomeIcon icon={faHeart} /> Yêu thích
+              </button>
+
+            </div>
+          </div>
+          {isExist !== "" ? (
+                <>
+                  <div className="alert alert-danger my-3">{isExist}</div>
+                </>
+              ) : (
+                <></>
+              )}
+        </>
+        
+      )}
+
       {isAdded ? (
         <>
           <ToastContainer

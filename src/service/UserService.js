@@ -108,6 +108,33 @@ class UserService {
       .then((response) => response?.data?.data)
       .catch((error) => error?.response);
   }
+
+  getUserById(userId){
+    return axiosPrivate
+    .get(USER_URL + `/${userId}`)
+    .then((response) => response?.data?.data)
+    .catch((error) => error?.response);
+}
+  getCurrentUserBalance(){
+    return axiosPrivate
+    .get(USER_URL + '/balance')
+    .then((response) => response?.data)
+    .catch((error) => error?.response);
+  }
+
+  getCurrentUserOrdersHistory(){
+    return axiosPrivate
+    .get(USER_URL + '/buy/orders?page=1&limit=10')
+    .then((response) => response?.data)
+    .catch((error) => error?.response);
+  }
+  
+  getCurrentUserOrders(){
+    return axiosPrivate
+    .get(USER_URL + '/sell/orders?page=1&limit=10')
+    .then((response) => response?.data)
+    .catch((error) => error?.response);
+  }
 }
 
 export default new UserService();

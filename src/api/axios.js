@@ -25,10 +25,11 @@ axiosPrivate.interceptors.request.use(
 
 axiosPrivate.interceptors.response.use(
   (response) => {
+
     return response;
   },
   async (error) => {
-
+    console.log("innnnnn")
     const prevRequest = error?.config;
     if (
       (error.response.status === 498 || error.response.status === 403) &&
@@ -59,11 +60,13 @@ axiosPrivate.interceptors.response.use(
     } else if (error.response.status === 500){
       console.log("500 rui")
       console.log(error)
-      window.location.href = "/internal-error" 
+      // window.location.href = "/internal-error" 
     } else if (error.response.status === 401){
       console.log("Need login")
       window.location.href = "/login"
-    } 
+    } else if (error.response.status === 400){
+      return Promise.reject(error)
+    }
   }
 );
 

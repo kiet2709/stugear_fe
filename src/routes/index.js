@@ -24,20 +24,23 @@ import AdminPage from '../pages/Admin/AdminPage.js'
 import AdminUser from "../pages/Admin/AdminUser.js"
 import AdminProduct from "../pages/Admin/AdminProduct.js"
 import useAuth from '../hooks/useAuth.js'
+import MyWallet from '../components/Profile/MyWallet/MyWallet.js'
+import CheckoutPage from '../pages/Main/Checkout/index.js'
+import MyOrder from '../components/Profile/MyOrder/MyOrder.js'
+import OrderPage from '../pages/Main/OrderPage/index.js'
+import PaymentSucess from '../pages/Main/PaymentSucess/PaymentSucess.js'
+import MySell from '../components/Profile/MySell/MySell.js'
 
 function useRouteElements () {
 
+  const AdminRoute = ({ children }) => {
+    const { user } = useAuth();
+    return user?.roles?.includes("ADMIN") ? children : <Navigate to="/landing-page" />;
+  };
+  
   const RejectRoute = ({ children }) => {
     const { user } = useAuth();
-    if (user?.user_id) {
-      console.log(user?.roles)
-      if(user?.roles?.includes("ADMIN")){
-        return  <Navigate to="/admin" />; 
-      }
-      return  <Navigate to="/home-page/category/1" />; 
-    }
-    // user is not authenticated
-    return children
+    return user?.user_id ? <Navigate to="/landing-page" /> : children;
   };
   
   const routeElements = useRoutes([
@@ -88,6 +91,18 @@ function useRouteElements () {
           path: '/member/my-product',
           element: <MyProduct/>
         },
+        {
+          path: '/member/my-sell',
+          element: <MySell/>
+        },
+        {
+          path: '/member/wallet',
+          element: <MyWallet/>
+        },
+        {
+          path: '/member/order',
+          element: <MyOrder/>
+        },
       ]
     },
     {
@@ -98,6 +113,14 @@ function useRouteElements () {
           path: '/member/upload/:slug?',
           element: <UploadProduct/>
         },
+        {
+          path: '/member/checkout/:slug',
+          element: <CheckoutPage/>
+        },
+        {
+          path: '/member/order-detail/:slug',
+          element: <OrderPage/>
+        },
       ]
     },
 
@@ -106,11 +129,11 @@ function useRouteElements () {
       element: <RejectRoute><MainLayout/></RejectRoute>,
       children: [
         {
-          path: 'login',
+          path: '/login',
           element: <Login />
         },
         {
-          path: 'register',
+          path: '/register',
           element: <Register />
         },
         {
@@ -163,7 +186,7 @@ function useRouteElements () {
   
     {
       path: '',
-      element: <ProtectedRoute><AdminLayout/></ProtectedRoute>,
+      element: <AdminRoute><AdminLayout/></AdminRoute>,
       children: [
         {
           path: '/admin/',
@@ -179,6 +202,16 @@ function useRouteElements () {
         },
       ]
     },
+    {
+      path: '',
+      element: <ProtectedRoute><MainLayout/></ProtectedRoute>,
+      children: [
+        {
+          path: '/payment-success/',
+          element:  <PaymentSucess/>
+        }
+      ]
+    }
   ])
   return routeElements
 }

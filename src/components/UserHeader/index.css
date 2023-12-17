@@ -34,7 +34,7 @@
     color: #333;
 }
 
-.menu li:hover {
+.menu .personal-li:hover {
     background-color: #4B24F5;
     color: white;
 }

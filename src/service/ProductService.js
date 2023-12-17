@@ -61,7 +61,8 @@ class ProductService {
           "Content-Type": "multipart/form-data",
         },
       }
-    );
+    ).then((response) => response?.data?.data)
+    .catch((error) => error?.response);
   }
 
   getImageByProductId(productId) {
