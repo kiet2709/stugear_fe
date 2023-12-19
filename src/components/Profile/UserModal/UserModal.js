@@ -133,8 +133,8 @@ const UserModal = ({ userId }) => {
 
                       <button
                         onClick={closeModal}
-                        className="btn "
-                        style={{ backgroundColor: "#ce0c23" , marginLeft: '80%'}}
+                        className="btn ms-auto"
+                        style={{ backgroundColor: "#ce0c23" }}
                       >
                         {" "}
                         Đóng

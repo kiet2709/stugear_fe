@@ -33,6 +33,12 @@ class AskService {
       .then((response) => response?.data)
       .catch((error) => error?.response);
   }
+  getListWithdrawsHistory(page){
+    return axiosPrivate
+      .get(ASK_URL + `/current/withdraws?limit=3&page=${page}`)
+      .then((response) => response?.data)
+      .catch((error) => error?.response);
+  }
 
   updateReportStatus(reportId, status){
     return axiosPrivate

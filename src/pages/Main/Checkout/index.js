@@ -279,7 +279,7 @@ const CheckoutPage = () => {
                         {address === "" || isError ? (
                           <>
                             <button className="btn btn-primary mt-2" disabled>
-                              Thanh toán {product?.price}
+                              Thanh toán {totalPrice}
                             </button>
                           </>
                         ) : (
@@ -288,7 +288,7 @@ const CheckoutPage = () => {
                               className="btn btn-primary mt-2"
                               onClick={() => handleCheckout()}
                             >
-                              Thanh toán {product?.price}
+                              Thanh toán {totalPrice}
                             </div>
                           </>
                         )}

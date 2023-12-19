@@ -88,7 +88,11 @@ class UserService {
       .patch(USER_URL + "/info", {
         first_name: userInfo.first_name,
         last_name: userInfo.last_name,
+        phone_number: userInfo.phone_number,
+        social_link: userInfo.social_link,
+        birthdate: userInfo.birthdate,
         address: userInfo.full_address,
+        gender: userInfo.gender
       })
       .then((response) => response?.data)
       .catch((error) => error?.response);
