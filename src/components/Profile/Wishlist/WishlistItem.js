@@ -63,7 +63,7 @@ const WishlistItem =({item, setKey}) =>{
                 Tình trạng:
                 <div className="d-inline text-success py-2">
                   {" "}
-                  {item.status}
+                  {item.status === "Đã duyệt" ? "Đang bán" : item.status}
                 </div>
               </div>
             </div>

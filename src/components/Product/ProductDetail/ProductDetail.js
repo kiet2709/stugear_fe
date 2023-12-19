@@ -112,7 +112,7 @@ const ProductDetail = ({ product, isMember }) => {
         <></>
       ) : (
         <>
-          <div className="d-flex">
+          <div className="d-flex justify-content-between">
             <div className="checkout-btn">
               {product?.transaction_method === "Trên trang web" ? (
                 <>
@@ -126,7 +126,8 @@ const ProductDetail = ({ product, isMember }) => {
               )}
      
             </div>
-            <div className="wishtlist-btn">
+            
+            <div className="wishtlist-btn" >
               <button className="btn" onClick={() => addToWishlist()}>
                 <FontAwesomeIcon icon={faHeart} /> Yêu thích
               </button>
@@ -148,7 +149,7 @@ const ProductDetail = ({ product, isMember }) => {
         <>
           <ToastContainer
             position="top-center"
-            autoClose={5000}
+            autoClose={1000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick

@@ -162,7 +162,6 @@ const General = () => {
               </span>
               <input
                 required
-                disabled
                 type="text"
                 className="form-control"
                 placeholder="Địa chỉ"

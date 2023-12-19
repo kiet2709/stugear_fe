@@ -7,14 +7,20 @@ import { useNavigate } from "react-router-dom";
 import usePayment from "../../../hooks/usePayment";
 import Loading from "../../Loading";
 import UserService from "../../../service/UserService";
+import Modal from "react-modal";
+import AskService from "../../../service/AskService";
+
+import { ToastContainer, toast } from "react-toastify";
 const BalancePage = () => {
 
   const [amountToAdd, setAmountToAdd] = useState("");
-  const [method, setMethod] = useState("");
+  const [method, setMethod] = useState("1");
   const { user, setUser } = useAuth();
   const [balance, setBalance] = useState()
   const { paymentStatus, setPaymentStatus } = usePayment(); 
   const [errorMessage, setError] = useState("");
+  const [withDrawError, setWithdrawError] = useState("")
+  const [isConfirm, setConfirm] = useState(false)
   const handleInputChange = (e) => {
     setError("");
     setAmountToAdd(e.target.value);
@@ -35,7 +41,7 @@ const BalancePage = () => {
         setPaymentStatus("Đang thanh toán");
         window.open(response?.payUrl);
       }
-    } else {
+    } else if (method === "2") {
       const response = await PaymentService.VNPay(amountToAdd);
       console.log(response);
       if (response?.status === 400) {
@@ -67,11 +73,111 @@ const BalancePage = () => {
      
   }, [])
 
+  const [modalIsOpen, setIsOpen] = useState(false);
 
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+  const [withdrawRequest, setWithdrawRequest] = useState({
+    amount: 20000,
+    description: ""
+  })
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+  };
+  const handleSubmitReturn = async (e) => {
+    e.preventDefault()
+    const response = await AskService.requestWithdraw(withdrawRequest.amount, withdrawRequest.description)
+    if(response?.status === 400){
+      setWithdrawError(response?.data?.message)
+    }else{
+      setIsOpen(false)
+      setConfirm(true);
+      toast.success("Yêu cầu rút tiền thành công!", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }
   return (
     <>
       <>
         <div className="balance-page text-center ">
+        <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+
+<>
+            <div className="form-group mb-2"  style={{minWidth: '300px'}} >
+             
+            <p className="form-label">Số tiền</p>
+            <div className="input-group ">
+            
+                  <input
+                    type="number"
+                    name="amount"
+                    value={withdrawRequest.amount}
+                    onChange={(e) => {setWithdrawRequest({...withdrawRequest, amount: e.target.value}); setWithdrawError("")}}
+                    placeholder="Nhập số tiền muốn hoàn"
+                    min={0}
+
+                    className="form-control"
+                  />
+                  <span className="input-group-text">VNĐ</span>
+                  
+                </div>
+                {withDrawError !== "" ? (
+                <><span className="text-danger mb-2" style={{fontSize: '12px'}}>{withDrawError}</span></>
+              ): (
+                <></>
+              )}
+            <div>
+            <label className="form-label">Nội dung yêu cầu</label>
+              <textarea
+                className="form-control"
+                rows={5}
+                name="content"
+              value={withdrawRequest.description}
+                onChange={(e) => setWithdrawRequest({...withdrawRequest, description: e.target.value})}
+                placeholder="Nhập só tài khoản, lý do rút tiền,... "
+              />
+            </div>
+            </div>
+            <div className="d-flex justify-content-between">
+              <button className="btn" onClick={(e) => handleSubmitReturn(e)}>
+                Gửi
+              </button>
+              <button
+                className="btn"
+                style={{ backgroundColor: "red" }}
+                onClick={closeModal}
+              >
+                Thoát
+              </button>
+            </div>
+          </>
+      </Modal>
+
           <div className="row">
             <div className="balance-section  col-5">
               <img
@@ -84,6 +190,13 @@ const BalancePage = () => {
                   Số dư: <span>{balance}</span>
                 </h4>
               </div>
+              <button
+                          className="btn btn-danger mt-4"
+                          style={{ backgroundColor: "#cc0a0a" }}
+                          onClick={openModal}
+                        >
+                          Rút tiền
+                        </button>
             </div>
             <div className="col-2">
                 <hr className="bg-dark vertical-hr"/>
@@ -184,16 +297,17 @@ const BalancePage = () => {
                         type="radio"
                         name="box"
                         id="one"
-                        checked
-                        value="1"
-                        onChange={(e) => setMethod(e.target.value)}
+                        defaultChecked
+                        defaultValue={"1"}
+                        onChange={(e) => setMethod("1")}
                       />
                       <input
                         type="radio"
                         name="box"
                         id="two"
-                        value="2"
-                        onChange={(e) => setMethod(e.target.value)}
+ 
+                        defaultValue={"2"}
+                        onChange={(e) => setMethod("2")}
                       />
                       <label htmlFor="one" className="box py-2 first" >
                         <div className="d-flex ">
@@ -237,6 +351,24 @@ const BalancePage = () => {
               )}
             </div>
           </div>
+          {isConfirm ? (
+              <>
+                <ToastContainer
+                  position="top-center"
+                  autoClose={1000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  theme="light"
+                />
+              </>
+            ) : (
+              <></>
+            )}
         </div>
       </>
     </>

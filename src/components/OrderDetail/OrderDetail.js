@@ -9,7 +9,9 @@ import { useNavigate } from "react-router-dom";
 import OrderService from "../../service/OrderService";
 import Loading from "../Loading";
 import UserService from "../../service/UserService";
-
+import UserModal from "../Profile/UserModal/UserModal";
+import Modal from "react-modal";
+import AskService from "../../service/AskService";
 // 1: đang xử lý (auto)
 // 2: đang giao hàng (seller)
 // 3: đã giao hàng (seller)
@@ -31,6 +33,11 @@ const OrderDetail = () => {
   const [selectedStatus, setSelectedStatus] = useState();
   const [status, setStatus] = useState();
   const [isLoading, setLoading] = useState(false);
+  const [isError, setError] = useState();
+  const [withdrawRequest, setWithdrawRequest] = useState({
+    amount: 20000,
+    description: ""
+  })
   const handleClose = () => {
     setShow(false);
   };
@@ -51,6 +58,7 @@ const OrderDetail = () => {
   const handleCancleClose = () => {
     setCancleShow(false);
   };
+
   const handleConfirmClose = () => {
     setConfirmShow(false);
   };
@@ -115,6 +123,19 @@ const OrderDetail = () => {
       };
 
       setOrder(response);
+      if (response.owner_id == user.user_id) {
+        setOwner(true);
+        setStatus(
+          response?.status === "Đang xử lý"
+            ? 1
+            : response?.status === "Đang giao hàng"
+            ? 2
+            : response?.status === "Đã giao hàng"
+            ? 3
+            : 0 // Default or initial status
+        );
+      }
+      
       setLoading(false);
       if (response?.status === "Đã giao hàng" && isOwner !== true) {
         setShow(true);
@@ -122,18 +143,7 @@ const OrderDetail = () => {
         getCurrentBalance();
       }
     }
-    if (response.owner_id == user.user_id) {
-      setOwner(true);
-      setStatus(
-        response?.status === "Đang xử lý"
-          ? 1
-          : response?.status === "Đang giao hàng"
-          ? 2
-          : response?.status === "Đã giao hàng"
-          ? 3
-          : 0 // Default or initial status
-      );
-    }
+   
   };
   useEffect(() => {
     if (slug) {
@@ -156,22 +166,110 @@ const OrderDetail = () => {
   const handleChangeStatusClose = () => {
     setChangeStatusShow(false);
   };
-  const handleChangeStatusSave = () => {
-    const response = OrderService.updateStatusBySeller(
+  const handleChangeStatusSave = async () => {
+    setError("");
+    setChangeStatusShow(false);
+    const response = await OrderService.updateStatusBySeller(
       order.id,
       parseInt(selectedStatus)
     );
-    if (response?.status != 400) {
+
+    if (response?.status !== 400) {
       setStatus(selectedStatus);
-      setChangeStatusShow(false);
     } else {
-      console.log(response);
-      console.log("wrong");
+      setError(response?.data?.message);
     }
   };
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+  };
+  const handleSubmitReturn = (e) => {
+    e.preventDefault()
+    const response = AskService.requestWithdraw(withdrawRequest.amount, withdrawRequest.description)
+    if(response?.status !== 400){
+      setIsOpen(false)
+      setConfirm(true);
+    toast.success("Yêu cầu trả hàng thành công!", {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+    
+    }
+  }
   return (
     <>
       <section className="h-100 gradient-custom">
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+
+<>
+            <div className="form-group mb-2"  style={{minWidth: '300px'}} >
+            <p className="form-label">Số tiền</p>
+            <div className="input-group mb-3">
+            
+                  <input
+                    type="number"
+                    name="amount"
+                    value={withdrawRequest.amount}
+                    onChange={(e) => setWithdrawRequest({...withdrawRequest, amount: e.target.value})}
+                    placeholder="Nhập số tiền muốn hoàn"
+                    min={0}
+
+                    className="form-control"
+                  />
+                  <span className="input-group-text">VNĐ</span>
+                </div>
+              <label className="form-label">Nội dung yêu cầu</label>
+              <textarea
+                className="form-control"
+                rows={5}
+                name="content"
+              value={withdrawRequest.description}
+                onChange={(e) => setWithdrawRequest({...withdrawRequest, description: e.target.value})}
+                placeholder="Nhập só tài khoản, lý do hoàn trả hàng,... "
+              />
+            </div>
+            <div className="d-flex justify-content-between">
+              <button className="btn" onClick={(e) => handleSubmitReturn(e)}>
+                Gửi
+              </button>
+              <button
+                className="btn"
+                style={{ backgroundColor: "red" }}
+                onClick={closeModal}
+              >
+                Thoát
+              </button>
+            </div>
+          </>
+      </Modal>
+
         <CustomModal
           handleSave={handleConfirmSave}
           handleClose={handleConfirmClose}
@@ -257,6 +355,16 @@ const OrderDetail = () => {
                         <></>
                       )}
                     </div>
+                    {isError ? (
+                      <>
+                        {" "}
+                        <div className="my-3">
+                          <span className="text-danger ">{isError}</span>
+                        </div>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                     <div className="card shadow-0 border mb-4">
                       <div className="card-body">
                         <div className="row">
@@ -266,8 +374,11 @@ const OrderDetail = () => {
                                 <th width="5%">Hình</th>
                                 <th width="10%">Tựa sách</th>
                                 <th width="30%">Giá</th>
-                                <th width="20%">Số lượng</th>
-                                <th width="30%">Tổng cộng</th>
+                                <th width="30%">Số lượng</th>
+                                <th width="30%">Tổng</th>
+                                <th width="30%">
+                                  {isOwner ? "Người mua" : "Người bán"}
+                                </th>
                               </tr>
                             </thead>
                             <tbody>
@@ -285,14 +396,14 @@ const OrderDetail = () => {
                                   <div
                                     style={{
                                       height: 70,
-                                      width: 300,
+                                      width: 250,
                                       overflow: "auto",
                                     }}
                                   >
                                     {order?.product_title}
                                   </div>
                                 </td>
-                                <td className="price-pr">
+                                <td className="price-pr ">
                                   <p>{order.product_price}</p>
                                 </td>
                                 <td className="quantity-box">
@@ -300,6 +411,33 @@ const OrderDetail = () => {
                                 </td>
                                 <td>
                                   <p>{order.total_price}</p>
+                                </td>
+                                <td>
+                                  <div
+                                    className="text-center"
+                                    style={{
+                                      width: 90,
+                                    }}
+                                  >
+                                    <p>
+                                      {isLoading ? (
+                                        <><Loading/></>
+                                      ): (
+                                        <>{isOwner !== true ? (
+                                          <>
+                                          <UserModal userId={order?.owner_id} />
+                                          
+                                          </>
+                                        ) : (
+                                          <>
+                                              <UserModal userId={order?.buyer_id} />
+                                          </>
+                                        )}</>
+                                      )}
+                                      
+                                      
+                                    </p>
+                                  </div>
                                 </td>
                               </tr>
                             </tbody>
@@ -449,23 +587,39 @@ const OrderDetail = () => {
                           >
                             Xác nhận đã nhận được hàng
                           </button>
+
+                          <p className="text-success mt-3">
+                            Nếu hàng có vấn đề, xin hãy tạo yêu cầu hoàn hàng:
+                          </p>
+                          <button
+                          className="btn btn-danger "
+                          style={{ backgroundColor: "red" }}
+                          onClick={openModal}
+                        >
+                          Yêu cầu hoàn hàng
+                        </button>
                         </>
                       ) : (
                         <></>
                       )}
                     </div>
-                    {order?.status !== "Đã giao hàng" && order?.status !== "Đã nhận được hàng" && isOwner!=true ? (
+                    {order?.status !== "Đã giao hàng" &&
+                    order?.status !== "Đã nhận được hàng" &&
+                    order?.status !== "Đang giao hàng" &&
+                    isOwner != true ? (
                       <>
-                      <button
-                      className="btn btn-danger mt-3"
-                      style={{ backgroundColor: "red" }}
-                      onClick={() => setCancleShow(true)}
-                    >
-                      Hủy đơn hàng
-                    </button></>
-                    ): (
+                        <button
+                          className="btn btn-danger mt-3"
+                          style={{ backgroundColor: "red" }}
+                          onClick={() => setCancleShow(true)}
+                        >
+                          Hủy đơn hàng
+                        </button>
+                      </>
+                    ) : (
                       <></>
                     )}
+             
                   </div>
                   <div
                     className="card-footer border-0 px-4 py-5"
@@ -514,7 +668,7 @@ const OrderDetail = () => {
               <>
                 <ToastContainer
                   position="top-center"
-                  autoClose={5000}
+                  autoClose={1000}
                   hideProgressBar={false}
                   newestOnTop={false}
                   closeOnClick

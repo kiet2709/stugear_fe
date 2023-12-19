@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import Category from "../../components/Landing/Category"
 import { useEffect, useState } from "react"
 import CategoryService from "../../service/CategoryService"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBars, faBook, faUser } from "@fortawesome/free-solid-svg-icons"
+import { faBars, faBook, faFlag, faMoneyBill, faUser } from "@fortawesome/free-solid-svg-icons"
 import useAuth from "../../hooks/useAuth"
 import "./AdminSideBar.css"
 import { useNavigate } from "react-router-dom"
@@ -41,18 +41,13 @@ const AppSideBar = () => {
         
         </div>
         <button className="btn admin-logout ms-5 my-4" onClick={(e) => signOut(e)}>Đăng xuất</button>
-      <ul className="list-unstyled components mb-5">
-      
-        <li >
-          
-          <Link className="p-2" to="/admin/users"> <FontAwesomeIcon className="me-2" icon={faUser}/>  Người dùng</Link>
-        </li>
-      
-        <li>
-          <Link className="p-2" to="/admin/products"><FontAwesomeIcon className="me-2" icon={faBook}/> Sản phẩm</Link>
-        </li>
-      </ul>
 
+      <nav className="list-group">
+    <NavLink className="list-group-item with-badge" to={"/admin/users"}><FontAwesomeIcon icon={faUser} style={{marginRight: '10px'}}/> Người dùng</NavLink>
+    <NavLink className="list-group-item" to={"/admin/products"}><FontAwesomeIcon icon={faBook} style={{marginRight: '10px'}}/> Sản phẩm</NavLink>
+    <NavLink className="list-group-item with-badge " to={"/admin/reports"}><FontAwesomeIcon icon={faFlag} style={{marginRight: '10px'}}/> Đơn tố cáo</NavLink>
+    <NavLink className="list-group-item with-badge " to={"/admin/withdraws"}><FontAwesomeIcon icon={faMoneyBill} style={{marginRight: '10px'}}/> Đơn hoàn tiền</NavLink>
+   </nav>
     </div>
   </nav>
 
