@@ -53,12 +53,38 @@ const UserModal = ({ userId }) => {
       transform: "translate(-50%, -50%)",
     },
   };
-  const handleReport = (e) => {
+  const handleReport = async (e) => {
     e.preventDefault();
-    const response = AskService.reportUser(userId, reportContent);
+    const response = await AskService.reportUser(userId, reportContent);
+
+
     if (response?.status !== 400) {
       setReportShow(false);
+      
+      if(selectedImageUrl){
+            const formData = new FormData();
+  
+      formData.append("image", selectedImage);
+  
+        const imageResponse = await AskService.uploadReportImage(response?.ask_id, formData);
+        if(imageResponse?.status === 400){
+          setReportMessage(imageResponse?.data?.message)
+        }
+      }
       setReportMessage("Báo cáo người dùng này thành công");
+    }
+  };
+  const [selectedImageUrl, setSelectedImageUrl] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setSelectedImageUrl(imageUrl);
+      setSelectedImage(file)
+    } else {
+      setSelectedImageUrl(null);
+      
     }
   };
   return (
@@ -67,7 +93,7 @@ const UserModal = ({ userId }) => {
         <img
           src={`http://localhost:8000/api/users/${user?.id}/images`}
           className="pic rounded-circle"
-          style={{ width: "40px", height: '40px' }}
+          style={{ width: "40px", height: "40px" }}
           alt=""
         />
       </span>
@@ -79,6 +105,31 @@ const UserModal = ({ userId }) => {
       >
         {reportShow ? (
           <>
+            <div className="row media ">
+              <div className="col">
+                <label className="btn btn-outline-primary">
+                  Chọn hình ảnh minh chứng
+                  <input
+                    type="file"
+                    className=""
+                    style={{ display: "none" }}
+                    onChange={(e) => handleFileChange(e)}
+                  />
+                </label>
+                <div className="my-4" style={{ marginLeft: "80px" }}>
+                  {selectedImageUrl ? (
+                    <img
+                      src={selectedImageUrl}
+                      alt=""
+                      className="img-fluid "
+                      style={{ width: "150px", height: "150px" }}
+                    />
+                  ) : (
+                    <div className="empty-image">Chưa có</div>
+                  )}
+                </div>
+              </div>
+            </div>
             <div className="form-group mb-2" style={{ minWidth: "300px" }}>
               <label className="form-label">Nội dung báo cáo</label>
               <textarea
@@ -89,6 +140,7 @@ const UserModal = ({ userId }) => {
                 placeholder="Nhập nội dung báo cáo tại đây... "
               />
             </div>
+
             <div className="d-flex justify-content-between">
               <button className="btn" onClick={(e) => handleReport(e)}>
                 Gửi
@@ -170,7 +222,7 @@ const UserModal = ({ userId }) => {
                             </p>
                           </div>
                           <div>
-                            <p className="small text-muted mb-1">Độ uy tính</p>
+                            <p className="small text-muted mb-1">Độ uy tín</p>
                             <p className="mb-0">{user?.reputation}</p>
                           </div>
                         </div>

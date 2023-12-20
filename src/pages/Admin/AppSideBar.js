@@ -46,7 +46,8 @@ const AppSideBar = () => {
     <NavLink className="list-group-item with-badge" to={"/admin/users"}><FontAwesomeIcon icon={faUser} style={{marginRight: '10px'}}/> Người dùng</NavLink>
     <NavLink className="list-group-item" to={"/admin/products"}><FontAwesomeIcon icon={faBook} style={{marginRight: '10px'}}/> Sản phẩm</NavLink>
     <NavLink className="list-group-item with-badge " to={"/admin/reports"}><FontAwesomeIcon icon={faFlag} style={{marginRight: '10px'}}/> Đơn tố cáo</NavLink>
-    <NavLink className="list-group-item with-badge " to={"/admin/withdraws"}><FontAwesomeIcon icon={faMoneyBill} style={{marginRight: '10px'}}/> Đơn hoàn tiền</NavLink>
+    <NavLink className="list-group-item with-badge " to={"/admin/withdraws"}><FontAwesomeIcon icon={faMoneyBill} style={{marginRight: '10px'}}/> Yêu cầu rút tiền</NavLink>
+    <NavLink className="list-group-item with-badge " to={"/admin/orders"}><FontAwesomeIcon icon={faMoneyBill} style={{marginRight: '10px'}}/> Đơn hàng</NavLink>
    </nav>
     </div>
   </nav>

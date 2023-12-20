@@ -39,7 +39,7 @@ const MySell = () => {
                       <><p className="mt-5 text-center">Không có đơn hàng nào đang bán</p></>
                   ) : 
                   (<>
-                    <table className="order-table table ">
+                    <table className="order-table table table-bordered">
                 <thead style={{ background: "#7355F7" }}>
                   <tr>
       

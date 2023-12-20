@@ -21,15 +21,28 @@ class AskService {
       .then((response) => response?.data?.data)
       .catch((error) => error?.response);
   }
-  getListReport(){
+  getListReport(currentPage) {
+    let url = ASK_URL + '/reports';
+    if (currentPage !== undefined) {
+      url += `?limit=4&page=${currentPage}`;
+    }else{
+      url += `?page=1&limit=100`;
+    }
+  
     return axiosPrivate
-      .get(ASK_URL + "/reports")
+      .get(url)
       .then((response) => response?.data)
-      .catch((error) => error?.response);
-  }
-  getListWithdraws(){
+      .catch((error) => error)
+  }  
+  getListWithdraws(currentPage){
+    let url = ASK_URL + '/withdraws';
+    if (currentPage !== undefined) {
+      url += `?limit=4&page=${currentPage}`;
+    }else{
+      url += `?page=1&limit=100`;
+    }
     return axiosPrivate
-      .get(ASK_URL + "/withdraws")
+      .get(url)
       .then((response) => response?.data)
       .catch((error) => error?.response);
   }
@@ -57,6 +70,14 @@ class AskService {
     .then((response) => response?.data)
     .catch((error) => error?.response);
   }
+
+  uploadReportImage(reportId, image){
+    return axiosPrivate
+    .post(ASK_URL + `/${reportId}/upload-image`, image)
+    .then((response) => response?.data)
+    .catch((error) => error?.response);
+  }
+
 }
 
 export default new AskService();

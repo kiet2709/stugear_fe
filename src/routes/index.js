@@ -31,6 +31,7 @@ import PaymentSucess from '../pages/Main/PaymentSucess/PaymentSucess.js'
 import MySell from '../components/Profile/MySell/MySell.js'
 import AdminReport from '../pages/Admin/AdminReport.js'
 import AdminWithdraw from '../pages/Admin/AdminWithdraw.js'
+import AdminOrder from '../pages/Admin/AdminOrders.js'
 function useRouteElements () {
 
   const AdminRoute = ({ children }) => {
@@ -207,6 +208,10 @@ function useRouteElements () {
         {
           path: '/admin/withdraws',
           element: <AdminWithdraw/>
+        },
+        {
+          path: '/admin/orders',
+          element: <AdminOrder/>
         },
       ]
     },

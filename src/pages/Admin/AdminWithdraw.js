@@ -7,31 +7,34 @@ import CustomModal from "../../components/Modal/Modal";
 import AskService from "../../service/AskService";
 import UserModal from "../../components/Profile/UserModal/UserModal"
 import Modal from "react-modal";
+import CustomPagination from "../../components/Pagination/Pagination";
+import { CSVLink } from "react-csv";
 const AdminWithdraw = () => {
   const [withdraws, setWithdraws] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  
-//   const handleStatusChange = async () => {
-    
-//     const updatedUsers = users.map((user) => {
-//       if (user.id === selectedUserId) {
-//         return { ...user, is_enable: selectedStatus };
-//       }
-//       return user;
-//     });
-//     console.log(updatedUsers)
-//     setUsers(updatedUsers);
-//     await UserService.updateUserStatus(selectedUserId, selectedStatus);
-    
-//   };
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState();
+  const [selectedStatus, setSelectedStatus] = useState();
+const [selectedWithdraw, setSelectedWithdraw] = useState();
+const [changeStatusShow, setChangeStatusShow] = useState(false);
+const [isError, setError] = useState("")
+  const nextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const prevPage = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
   const loadData = async () => {
     setLoading(true);
-    const response = await AskService.getListWithdraws();
+    const response = await AskService.getListWithdraws(currentPage);
 
     if (response?.status === 400) {
       console.log("Something wentwrong");
     } else {
       setWithdraws(response?.data);
+      setTotalPage(response?.total_page)
     }
     setLoading(false);
     
@@ -39,13 +42,10 @@ const AdminWithdraw = () => {
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [currentPage]);
 
 
-const [selectedStatus, setSelectedStatus] = useState();
-const [selectedWithdraw, setSelectedWithdraw] = useState();
-const [changeStatusShow, setChangeStatusShow] = useState(false);
-const [isError, setError] = useState("")
+
 const handleChangeStatusClose = () => {
   setChangeStatusShow(false);
 };
@@ -81,10 +81,52 @@ const handleChangeStatusSave = async () => {
     setError(response?.data?.message);
   }
 };
+const [headers, setHeaders] = useState([]);
+const [data, setData] = useState([]);
+const handleDownload = async () => {
+  setHeaders([
+    { label: "ID", key: "id" },
+    { label: "Người yêu cầu", key: "owner_id" },
+    { label: "Số tiền", key: "amount" },
+    { label: "Nội dung", key: "description" },
+    { label: "Trạng thái", key: "status" },
+    { label: "Ngày yêu cầu", key: "date" },
+
+  ]);
+  
+  const response = await AskService.getListWithdraws();
+  const withdraws = response?.data;
+
+  if (Array.isArray(withdraws)) {
+    setData(
+      withdraws.map((withdraw) => ({
+        id: withdraw?.id,
+        owner_id: withdraw?.owner_id,
+        amount: withdraw?.amount,
+        status: withdraw?.status,
+        description: withdraw?.description,
+        date: withdraw?.date
+        
+      }))
+    );
+  } 
+}
   return (
     <>
       <div style={{ height: "780px" }}>
-   
+      <CSVLink
+          data={data}
+          headers={headers}
+          asyncOnClick={true}
+          style={{ textDecoration: "none" }}
+          className="btn my-3"
+          onClick={() => {
+            handleDownload();
+          }}
+          filename={"withdraws.csv"}
+        >
+          Xuất toàn bộ dữ liệu
+        </CSVLink>
       {isError!=="" ? (
           <><span className="text-danger">{isError}</span></>
         ): (
@@ -129,7 +171,7 @@ const handleChangeStatusSave = async () => {
                         <select
                           className="form-select"
                           aria-label="Default select example"
-                          value={withdraw?.status === "Đã xử lý hoàn tất" ? 2 : "Đã hủy" ? 3: 1}
+                          value={withdraw?.status === "Đã xử lý hoàn tất" ? 2 : (withdraw?.status === "Đã hủy" ? 3 : 1)}
                           onChange={(e) => {
                             setSelectedWithdraw(withdraw?.id)
                             setSelectedStatus(e.target.value)
@@ -150,8 +192,15 @@ const handleChangeStatusSave = async () => {
             )}
           </tbody>
         </table>
-        {/* <CustomModal handleSave={handleSave} handleClose={handleClose} show={show} heading={"Đổi trạng thái người dùng?"} body={"Bạn có muốn đổi trạng thái người dùng"}></CustomModal>
-         */}
+        <div className="">
+          <CustomPagination
+            currentPage={currentPage}
+            totalPage={totalPage}
+            prevPage={prevPage}
+            nextPage={nextPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </div>
       </div>
     </>
   );
