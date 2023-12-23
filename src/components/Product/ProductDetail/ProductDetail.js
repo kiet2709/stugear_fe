@@ -5,12 +5,13 @@ import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import UserService from "../../../service/UserService";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-
+import useProduct from "../../../hooks/useProduct";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 const ProductDetail = ({ product, isMember }) => {
   const [isAdded, setAdded] = useState(false);
+  const {productCount, setProductCount} = useProduct()
   const [isExist, setExist] = useState("");
   const navigate = useNavigate()
   const addToWishlist = async () => {
@@ -35,6 +36,7 @@ const ProductDetail = ({ product, isMember }) => {
         progress: undefined,
         theme: "light",
       });
+      setProductCount({...productCount, wishlist: productCount.wishlist+1})
     }
   };
   const hanldeCheckout=(e, productId) => {

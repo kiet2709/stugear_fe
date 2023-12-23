@@ -159,7 +159,7 @@ const CheckoutPage = () => {
                   <input
                     type="number"
                     value={quantity}
-                    onChange={(e) => handleQuantity(e)}
+                    onChange={(e) => {handleQuantity(e); setError("")}}
                     placeholder="Nhập số lượng"
                     min={1}
                     className="form-control"

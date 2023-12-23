@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import "./UserModal.css";
 import UserService from "../../../service/UserService";
 import Modal from "react-modal";
-import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

@@ -44,9 +44,16 @@ class UserService {
   }
 
   getCurrentUserProducts(currentPage) {
+    let url = `http://localhost:8000/api/products/current`;
+    if (currentPage !== undefined) {
+      url += `?page=${currentPage}&limit=3`;
+    }else{
+      url += `?page=1&limit=100`;
+    }
+
     return axiosPrivate
       .get(
-        `http://localhost:8000/api/products/current?page=${currentPage}&limit=3`
+        url
       )
       .then((response) => response?.data)
       .catch((error) => error?.response);

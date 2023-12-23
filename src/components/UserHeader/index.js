@@ -6,15 +6,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAddressCard,
   faCreditCard,
+  faCreditCardAlt,
   faHeart,
 } from "@fortawesome/free-regular-svg-icons";
 import { Overlay } from "react-bootstrap";
 import { faDollar, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import useProduct from "../../hooks/useProduct";
 const UserHeader = () => {
   const { user, setUser } = useAuth();
-
+  const {productCount} = useProduct()
   const [show, setShow] = useState(false);
   const [target, setTarget] = useState(null);
   const navigate = useNavigate();
@@ -29,6 +31,7 @@ const UserHeader = () => {
     setUser("");
     navigate("/login");
   };
+  console.log(productCount)
   return (
     <>
       <div className="d-flex">
@@ -38,9 +41,26 @@ const UserHeader = () => {
             to={"/member/wishlist"}
             className="me-3"
           >
-            <FontAwesomeIcon icon={faHeart} className="member-icon" />
+            
+            <FontAwesomeIcon icon={faHeart} className="member-icon" /> 
+            <span className="badge badge-warning" id='lblWishlistCount'>{productCount?.wishlist}</span>
           </Link>
+         
         </div>
+
+        <div className="member-section">
+          <Link
+            style={{ textDecoration: "None", color: "black" }}
+            to={"/member/wallet"}
+            className="me-3"
+          >
+            
+            <FontAwesomeIcon icon={faCreditCardAlt} className="member-icon" /> 
+            
+          </Link>
+         
+        </div>
+
 
         <img
           src={user?.user_image}
@@ -70,13 +90,13 @@ const UserHeader = () => {
 
               <Link className="link" to="/member/wishlist" style={{textDecoration: 'none'}}>
                 <li className="personal-li">
-                  <FontAwesomeIcon icon={faHeart} /> Yêu thích
+                  <FontAwesomeIcon icon={faHeart} /> Yêu thích <div className="counter">{productCount?.wishlist}</div>
                 </li>
               </Link>
 
               <Link className="link" to="/member/wallet" style={{textDecoration: 'none'}}>
                 <li className="personal-li">
-                  <FontAwesomeIcon icon={faCreditCard} /> Ví tiền
+                  <FontAwesomeIcon icon={faCreditCard} /> Ví tiền 
                 </li>
               </Link>
 
