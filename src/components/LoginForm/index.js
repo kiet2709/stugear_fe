@@ -1,7 +1,12 @@
 import { useState } from "react";
 import "./index.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faEye, faEyeSlash, faLock } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEnvelope,
+  faEye,
+  faEyeSlash,
+  faLock,
+} from "@fortawesome/free-solid-svg-icons";
 import OauthSection from "../../components/OauthSection";
 import Divider from "../../components/Divider";
 import AuthService from "../../service/AuthService";
@@ -9,15 +14,16 @@ import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import Loading from "../Loading";
 import UserService from "../../service/UserService";
-
+import useProduct from "../../hooks/useProduct";
 const LoginForm = () => {
-  const {user, setUser} = useAuth();
-  const [credentials, setCredentials] = useState({}) 
+  const { user, setUser } = useAuth();
+  const { productCount, setProductCount } = useProduct();
+  const [credentials, setCredentials] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -34,38 +40,71 @@ const LoginForm = () => {
       setMessage("Email chưa được đăng ký");
       setError(true);
     } else {
-            
-
       const accessToken = response.access_token;
       const refreshToken = response.refresh_token;
       const userId = response.user_id;
       const username = response.username;
       const roles = response.roles;
-      
 
       localStorage.setItem("access_token", accessToken);
       localStorage.setItem("refresh_token", refreshToken);
       localStorage.setItem("user_id", userId);
       localStorage.setItem("username", username);
       localStorage.setItem("roles", roles);
-      const balanceResponse = await UserService.getCurrentUserBalance()
-      if(balanceResponse.status !== 400){
+      const balanceResponse = await UserService.getCurrentUserBalance();
+      if (balanceResponse.status !== 400) {
         localStorage.setItem("balance", balanceResponse.balance);
       }
-      response = {...response, balance: balanceResponse.balance}
+      response = { ...response, balance: balanceResponse.balance };
       setUser(response);
-      localStorage.setItem("user_image", `http://localhost:8000/api/users/${response?.user_id}/images`)
-      setUser({...response, user_image: `http://localhost:8000/api/users/${response?.user_id}/images`})
+      await getUserInfo()
+      localStorage.setItem(
+        "user_image",
+        `http://localhost:8000/api/users/${response?.user_id}/images`
+      );
+      setUser({
+        ...response,
+        user_image: `http://localhost:8000/api/users/${response?.user_id}/images`,
+      });
       
       if (roles.includes("ADMIN")) {
         navigate("/admin");
-      } else {  
+      } else {
         navigate("/landing-page");
       }
     }
   };
 
+  const getUserInfo = async () => {
+    let wishlistCount = 0;
+    let orderCount = 0;
+    let productCount = 0;
+    const wishlistResponse = await UserService.getCurrentUserWishlist();
+    if (wishlistResponse?.status != 400) {
+      wishlistCount = wishlistResponse?.length;
+      localStorage.setItem("wishlist", wishlistCount)
+    }
 
+    const orderResponse = await UserService.getCurrentUserOrders();
+    if (orderResponse?.status != 400) {
+      orderCount = orderResponse?.total_items;
+      console.log(orderResponse)
+      localStorage.setItem("order", orderCount)
+    }
+
+    const productResponse = await UserService.getCurrentUserProducts();
+    if (productResponse?.status != 400) {
+      productCount = productResponse?.total_items;
+      localStorage.setItem("product", productCount)
+    }
+
+    setProductCount({
+      ...productCount,
+      wishlist: wishlistCount,
+      myProduct: productCount,
+      myOrder: orderCount,
+    });
+  };
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -97,23 +136,26 @@ const LoginForm = () => {
             />
           </div>
           <div className="my-3 input-group flex-nowrap">
-      <span className="input-group-text">
-        <FontAwesomeIcon icon={faLock} />
-      </span>
-      <input
-        required
-        type={showPassword ? 'text' : 'password'}
-        className="form-control"
-        id="floatingPassword"
-        placeholder="Nhập mật khẩu"
-        name="password"
-        onInput={handleChange}
-        value={credentials.password}
-      />
-      <span className="input-group-text" onClick={togglePasswordVisibility}>
-        <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-      </span>
-    </div>
+            <span className="input-group-text">
+              <FontAwesomeIcon icon={faLock} />
+            </span>
+            <input
+              required
+              type={showPassword ? "text" : "password"}
+              className="form-control"
+              id="floatingPassword"
+              placeholder="Nhập mật khẩu"
+              name="password"
+              onInput={handleChange}
+              value={credentials.password}
+            />
+            <span
+              className="input-group-text"
+              onClick={togglePasswordVisibility}
+            >
+              <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+            </span>
+          </div>
 
           <div className="d-flex justify-content-between align-items-center">
             <div className="form-check mb-0">

@@ -5,12 +5,13 @@ import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import UserService from "../../../service/UserService";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-
+import useProduct from "../../../hooks/useProduct";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 const ProductDetail = ({ product, isMember }) => {
   const [isAdded, setAdded] = useState(false);
+  const {productCount, setProductCount} = useProduct()
   const [isExist, setExist] = useState("");
   const navigate = useNavigate()
   const addToWishlist = async () => {
@@ -35,6 +36,7 @@ const ProductDetail = ({ product, isMember }) => {
         progress: undefined,
         theme: "light",
       });
+      setProductCount({...productCount, wishlist: productCount.wishlist+1})
     }
   };
   const hanldeCheckout=(e, productId) => {
@@ -112,7 +114,7 @@ const ProductDetail = ({ product, isMember }) => {
         <></>
       ) : (
         <>
-          <div className="d-flex">
+          <div className="d-flex justify-content-between">
             <div className="checkout-btn">
               {product?.transaction_method === "Trên trang web" ? (
                 <>
@@ -126,7 +128,8 @@ const ProductDetail = ({ product, isMember }) => {
               )}
      
             </div>
-            <div className="wishtlist-btn">
+            
+            <div className="wishtlist-btn" >
               <button className="btn" onClick={() => addToWishlist()}>
                 <FontAwesomeIcon icon={faHeart} /> Yêu thích
               </button>
@@ -148,7 +151,7 @@ const ProductDetail = ({ product, isMember }) => {
         <>
           <ToastContainer
             position="top-center"
-            autoClose={5000}
+            autoClose={1000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick

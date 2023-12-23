@@ -20,7 +20,6 @@ import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute.js'
 import UploadProduct from '../pages/Main/UploadProduct/UploadProduct.js'
 import MyProduct from '../components/Profile/MyProduct/MyProduct.js'
 import Verify from '../pages/Main/Verify/Verify.js'
-import AdminPage from '../pages/Admin/AdminPage.js'
 import AdminUser from "../pages/Admin/AdminUser.js"
 import AdminProduct from "../pages/Admin/AdminProduct.js"
 import useAuth from '../hooks/useAuth.js'
@@ -30,7 +29,9 @@ import MyOrder from '../components/Profile/MyOrder/MyOrder.js'
 import OrderPage from '../pages/Main/OrderPage/index.js'
 import PaymentSucess from '../pages/Main/PaymentSucess/PaymentSucess.js'
 import MySell from '../components/Profile/MySell/MySell.js'
-
+import AdminReport from '../pages/Admin/AdminReport.js'
+import AdminWithdraw from '../pages/Admin/AdminWithdraw.js'
+import AdminOrder from '../pages/Admin/AdminOrders.js'
 function useRouteElements () {
 
   const AdminRoute = ({ children }) => {
@@ -199,6 +200,18 @@ function useRouteElements () {
         {
           path: '/admin/products',
           element: <AdminProduct/>
+        },
+        {
+          path: '/admin/reports',
+          element: <AdminReport/>
+        },
+        {
+          path: '/admin/withdraws',
+          element: <AdminWithdraw/>
+        },
+        {
+          path: '/admin/orders',
+          element: <AdminOrder/>
         },
       ]
     },

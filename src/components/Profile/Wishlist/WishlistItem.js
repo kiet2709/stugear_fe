@@ -7,10 +7,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from "react";
 import CustomModal from "../../Modal/Modal";
-
+import useProduct from "../../../hooks/useProduct";
 const WishlistItem =({item, setKey}) =>{
 
   const [isRemoved, setRemoved] = useState(false)
+  const {productCount, setProductCount} = useProduct()
   const [show, setShow] = useState(false);
   const handleClose =() => {
     setShow(false)
@@ -38,6 +39,7 @@ const WishlistItem =({item, setKey}) =>{
         progress: undefined,
         theme: "light",
         });
+        setProductCount({...productCount, wishlist: productCount.wishlist-1})
     }
   }
 
@@ -63,7 +65,7 @@ const WishlistItem =({item, setKey}) =>{
                 Tình trạng:
                 <div className="d-inline text-success py-2">
                   {" "}
-                  {item.status}
+                  {item.status === "Đã duyệt" ? "Đang bán" : item.status}
                 </div>
               </div>
             </div>

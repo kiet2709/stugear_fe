@@ -57,7 +57,7 @@ const CategoryFilter = ({setTotalProduct, setTotalPage, category_id, currentPage
             <input
               className="form-check-input"
               type="radio"
-             
+              name="exampleRadios"
               id="cash-radio"
               value="cash"
              

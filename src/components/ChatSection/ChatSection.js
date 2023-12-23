@@ -1,3 +1,4 @@
+import UserModal from '../Profile/UserModal/UserModal'
 import './ChatSection.css'
 
 const ChatSection = ({ product }) => {
@@ -5,7 +6,7 @@ const ChatSection = ({ product }) => {
     <>
       <div className="card">
         <div className="card-body chat-section-body">
-          <p>Nhắn với <b>{product.owner_name}</b> ngay bây giờ</p>
+          <p>Nhắn với <UserModal userId={product?.owner_id}/><b> {product.owner_name}</b> ngay bây giờ</p>
           <form method="POST" action="#">
             <textarea
               className="form-control input-group"
