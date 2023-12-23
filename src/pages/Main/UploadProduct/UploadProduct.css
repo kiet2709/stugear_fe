@@ -11,3 +11,7 @@
     border-radius: 1rem;
     padding: 10px;
 }
+
+.require {
+    color: red;
+}

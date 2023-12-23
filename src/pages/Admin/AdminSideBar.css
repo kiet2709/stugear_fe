@@ -3,5 +3,9 @@
 }
 
 .admin-sidebar a:hover {
-    background-color: #6749B9 !important;
+    background-color: #F7F7F8 !important;
+}
+
+.admin-sidebar a.active:hover {
+    background-color: #4B24F5 !important;
 }

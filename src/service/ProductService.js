@@ -173,8 +173,14 @@ class ProductService {
   }
 
   getAllProducts(currentPage){
+    let url = PRODUCT_URL;
+    if (currentPage !== undefined) {
+      url += `?page=${currentPage}&limit=6`;
+    }else{
+      url += `?page=1&limit=100`;
+    }
     return axios
-    .get(PRODUCT_URL + `?page=${currentPage}&limit=6`)
+    .get(url)
     .then((response) => response?.data)
     .catch((error) => error?.response);
   }

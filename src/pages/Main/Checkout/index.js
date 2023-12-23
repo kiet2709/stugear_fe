@@ -6,15 +6,22 @@ import ProductService from "../../../service/ProductService";
 import Loading from "../../../components/Loading/index";
 import UserService from "../../../service/UserService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAddressCard,
+  faEnvelope,
+  faGlobe,
+  faPhone,
+} from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import OrderService from "../../../service/OrderService";
+import UserModal from "../../../components/Profile/UserModal/UserModal";
 const CheckoutPage = () => {
   const { user, setUser } = useAuth();
+  const [owner, setOwner] = useState();
   const navigate = useNavigate();
   let { slug } = useParams();
-  const [address, setAddress] = useState("")
+  const [address, setAddress] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [userInfo, setUserInfo] = useState({});
   const [product, setProduct] = useState({});
@@ -28,6 +35,7 @@ const CheckoutPage = () => {
       navigate("/not-found");
     } else {
       setProduct(response);
+      await getUserById(response?.owner_id);
       setTotalPrice(response?.price);
     }
     setLoading(false);
@@ -37,7 +45,7 @@ const CheckoutPage = () => {
     const response = await UserService.getCurrentUser();
     if (response.status !== 400) {
       setUserInfo(response);
-      setAddress(response?.full_address)
+      setAddress(response?.full_address);
     }
     setLoading(false);
   };
@@ -52,6 +60,13 @@ const CheckoutPage = () => {
 
     // Append 'VNĐ' to the formatted total
     setTotalPrice(formattedTotal + " VNĐ");
+  };
+  const getUserById = async (id) => {
+    const response = await UserService.getUserById(id);
+    console.log(response);
+    if (response?.status !== 400) {
+      setOwner(response[0]);
+    }
   };
 
   useEffect(() => {
@@ -77,13 +92,10 @@ const CheckoutPage = () => {
       if (balanceResponse.status !== 400) {
         localStorage.setItem("balance", balanceResponse.balance);
         setUser({ ...user, balance: balanceResponse.balance });
-
       }
-    
+
       navigate(`/member/order-detail/${response?.order_id}`);
-      
     } else {
-      console.log(response);
       setError(response?.data?.message);
     }
   };
@@ -94,54 +106,35 @@ const CheckoutPage = () => {
         <Loading />
       ) : (
         <>
-          <div className="checkout-page  d-lg-flex">
+          <div className="checkout-page  d-lg-flex justify-content-between">
+            
+           
+         
             <div className="box-1 bg-light user">
+            <div class="d-flex align-items-center mb-3">
+            <UserModal userId={owner?.id} />
+                <div className="mt-3">
+                  <span className="ps-4 fw-bold info">Người bán:</span>
+                  <p className="ps-4 info" style={{fontSize: '12px'}}> {owner?.name}</p>
+                </div>
+              </div>
               <div className="box-inner-1 pb-3 mb-3 ">
                 <div className="d-flex justify-content-between mb-3 userdetails">
                   <p className="fw-bold">{product?.title}</p>
                 </div>
+
                 <div
-                  id="my"
-                  className="carousel slide carousel-fade img-details"
-                  data-bs-ride="carousel"
-                  data-bs-interval={2000}
+                  className="carousel-item active my-4"
+                  style={{ marginLeft: "80px", marginRight: "20px" }}
                 >
-                  <div className="carousel-indicators">
-                    <button
-                      type="button"
-                      data-bs-target="#my"
-                      data-bs-slide-to={0}
-                      className="active"
-                      aria-current="true"
-                      aria-label="Slide 1"
-                    />
-                    <button
-                      type="button"
-                      data-bs-target="#my"
-                      data-bs-slide-to={1}
-                      aria-label="Slide 2"
-                    />
-                    <button
-                      type="button"
-                      data-bs-target="#my"
-                      data-bs-slide-to={2}
-                      aria-label="Slide 3"
-                    />
-                  </div>
-                  <div className="carousel-inner">
-                    <div
-                      className="carousel-item active"
-                      style={{ marginLeft: "80px", marginRight: "20px" }}
-                    >
-                      <img
-                        src={product?.product_image}
-                        className="d-block "
-                        style={{ width: "230px", height: "230px" }}
-                        alt=""
-                      />
-                    </div>
-                  </div>
+                  <img
+                    src={product?.product_image}
+                    className="d-block "
+                    style={{ width: "230px", height: "230px" }}
+                    alt=""
+                  />
                 </div>
+
                 <p className="dis info my-3">{product?.description}</p>
                 <p>
                   <span className="dis fw-bold info my-3">
@@ -157,17 +150,23 @@ const CheckoutPage = () => {
                   <span className="dis fw-bold info my-3">Tình trạng: </span>
                   <span className="dis">{product?.condition}</span>
                 </p>
+                <p>
+                  <span className="dis fw-bold info my-3">Còn lại: </span>
+                  <span className="dis">{product?.quantity}</span>
+                </p>
+
                 <div className="input-group mb-3">
                   <input
                     type="number"
                     value={quantity}
-                    onChange={(e) => handleQuantity(e)}
+                    onChange={(e) => {handleQuantity(e); setError("")}}
                     placeholder="Nhập số lượng"
                     min={1}
                     className="form-control"
                   />
                   <span className="input-group-text"> Sản phẩm</span>
                 </div>
+               
               </div>
             </div>
             <div className="box-2">
@@ -217,11 +216,15 @@ const CheckoutPage = () => {
 
                   <div>
                     <div className="address">
-                      <p className="dis fw-bold mb-3">Địa chỉ giao hàng *</p>
+                      <p className="dis fw-bold mb-3">
+                        Địa chỉ giao hàng <span className="text-danger">*</span>
+                      </p>
                       <input
                         className="form-control"
                         value={address}
-                        onInput={(e) => {setAddress(e.target.value)}}
+                        onInput={(e) => {
+                          setAddress(e.target.value);
+                        }}
                       />
                       {address === "" ? (
                         <>
@@ -265,10 +268,9 @@ const CheckoutPage = () => {
                             {totalPrice}
                           </p>
                         </div>
-                        {isError !== "" 
-                        ? (
+                        {isError !== "" ? (
                           <>
-                            <p className="text-danger">Bạn không đủ số dư để thanh toán</p>
+                            <p className="text-danger">{isError}</p>
                           </>
                         ) : (
                           <></>
@@ -276,13 +278,9 @@ const CheckoutPage = () => {
 
                         {address === "" || isError ? (
                           <>
-                                     <button
-                          className="btn btn-primary mt-2"
-                          disabled
-                          
-                        >
-                          Thanh toán {product?.price}
-                        </button>
+                            <button className="btn btn-primary mt-2" disabled>
+                              Thanh toán {totalPrice}
+                            </button>
                           </>
                         ) : (
                           <>
@@ -290,11 +288,10 @@ const CheckoutPage = () => {
                               className="btn btn-primary mt-2"
                               onClick={() => handleCheckout()}
                             >
-                              Thanh toán {product?.price}
+                              Thanh toán {totalPrice}
                             </div>
                           </>
                         )}
-             
                       </div>
                     </div>
                   </div>
