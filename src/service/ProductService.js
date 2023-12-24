@@ -1,7 +1,7 @@
 import axios from "axios";
 import { axiosPrivate } from "../api/axios";
 
-const PRODUCT_URL = "http://localhost:8000/api/products";
+const PRODUCT_URL = "http://52.205.41.43/api/products";
 class ProductService {
   getProductsByCategoryId(id, page) {
     return axios

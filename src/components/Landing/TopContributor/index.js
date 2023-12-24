@@ -7,7 +7,7 @@ const TopContributor = ({ contributor }) => {
         <div className="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay={400}>
             <div className="member">
                 <div className="member-img">
-                    <img src={`http://localhost:8000/api/users/${contributor.id}/images`} className="img-fluid" alt 
+                    <img src={`http://52.205.41.43/api/users/${contributor.id}/images`} className="img-fluid" alt 
                     style={{ width: '100%', height: '200px', objectFit: 'cover' }}/>
                     <div className="social" style={{ backgroundColor: 'transparent' }}>
                     <button type="button" className=" btn btn-secondary btn-floating my-1 d-block">

@@ -41,7 +41,7 @@ const General = () => {
     setUser({
       ...user,
       user_image:
-        `http://localhost:8000/api/users/${user?.user_id}/images/` +
+        `http://52.205.41.43/api/users/${user?.user_id}/images/` +
         `?timestamp=${new Date().getTime()}`,
     });
   };

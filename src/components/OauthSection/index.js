@@ -48,11 +48,11 @@ const OauthSection = ({ text }) => {
     setUser(response);
     localStorage.setItem(
       "user_image",
-      `http://localhost:8000/api/users/${response?.user_id}/images`
+      `http://52.205.41.43/api/users/${response?.user_id}/images`
     );
     setUser({
       ...response,
-      user_image: `http://localhost:8000/api/users/${response?.user_id}/images`,
+      user_image: `http://52.205.41.43/api/users/${response?.user_id}/images`,
     });
     setLoading(false)
 

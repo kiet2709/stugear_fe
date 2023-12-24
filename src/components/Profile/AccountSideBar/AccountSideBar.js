@@ -52,7 +52,7 @@ const AccountSideBar = () => {
   }, [])
   const handleFileChange = async(e) => {
     await UserService.uploadImage(user?.user_id, e.target.files[0])
-    setUser({...user, user_image: `http://localhost:8000/api/users/${user?.user_id}/images/` + `?timestamp=${new Date().getTime()}`})
+    setUser({...user, user_image: `http://52.205.41.43/api/users/${user?.user_id}/images/` + `?timestamp=${new Date().getTime()}`})
   };
   return (
     <>

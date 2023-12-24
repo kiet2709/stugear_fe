@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const CATEGORY_URL = 'http://localhost:8000/api/categories'
+const CATEGORY_URL = 'http://52.205.41.43/api/categories'
 class CategoryService {
   getAllCategories () {
     return axios.get(CATEGORY_URL)

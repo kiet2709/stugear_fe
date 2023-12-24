@@ -90,7 +90,7 @@ const UserModal = ({ userId }) => {
     <>
       <span onClick={openModal}>
         <img
-          src={`http://localhost:8000/api/users/${user?.id}/images`}
+          src={`http://52.205.41.43/api/users/${user?.id}/images`}
           className="pic rounded-circle"
           style={{ width: "40px", height: "40px" }}
           alt=""
@@ -195,7 +195,7 @@ const UserModal = ({ userId }) => {
                     <div className="d-flex text-black">
                       <div className="flex-shrink-0">
                         <img
-                          src={`http://localhost:8000/api/users/${user?.id}/images`}
+                          src={`http://52.205.41.43/api/users/${user?.id}/images`}
                           alt=""
                           className="img-fluid"
                           style={{ width: 148, height: 150, borderRadius: 10 }}
